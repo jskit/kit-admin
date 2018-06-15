@@ -92,12 +92,12 @@ export const asyncRouterMap = [
       //   },
       // },
       {
-        path: 'user',
-        component: _import('user/user'),
-        name: 'user',
+        path: 'account',
+        component: _import('user/account'),
+        name: 'account',
         meta: {
-          title: 'user',
-          icon: 'user',
+          title: 'account',
+          icon: 'admin',
         },
       },
       {
@@ -106,18 +106,27 @@ export const asyncRouterMap = [
         name: 'auth',
         meta: {
           title: 'role',
-          icon: 'group',
+          icon: 'role',
         },
       },
       {
-        path: 'menu',
+        path: 'power',
         component: _import('doing/doing'),
-        name: 'menu',
+        name: 'power',
         meta: {
-          title: 'menu',
-          icon: 'category',
+          title: 'power',
+          icon: 'role2',
         },
       },
+      // {
+      //   path: 'menu',
+      //   component: _import('doing/doing'),
+      //   name: 'menu',
+      //   meta: {
+      //     title: 'menu',
+      //     icon: 'category',
+      //   },
+      // },
 
       // {
       //   path: 'rule',
@@ -150,31 +159,31 @@ export const asyncRouterMap = [
   },
 
   {
-    path: '/org',
+    path: '/peoples',
     component: Layout,
     redirect: 'noredirect',
-    name: 'org',
+    name: 'peoples',
     meta: {
-      title: 'org',
-      icon: 'org',
+      title: 'peoples',
+      icon: 'peoples',
     },
     children: [
       {
-        path: 'depart',
-        component: _import('doing/doing'),
-        name: 'depart',
-        meta: {
-          title: 'depart',
-          icon: 'depart',
-        },
-      },
-      {
         path: 'people',
-        component: _import('doing/doing'),
+        component: _import('user/people'),
         name: 'people',
         meta: {
           title: 'people',
-          icon: 'group',
+          icon: 'user',
+        },
+      },
+      {
+        path: 'cert',
+        component: _import('doing/doing'),
+        name: 'cert',
+        meta: {
+          title: 'cert',
+          icon: 'cert',
         },
       },
       // {
@@ -188,6 +197,29 @@ export const asyncRouterMap = [
       // },
     ],
   },
+  
+  {
+    path: '/project',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'project',
+    meta: {
+      title: 'project',
+      icon: 'project',
+    },
+    children: [
+      {
+        path: 'gc',
+        component: _import('doing/doing'),
+        name: 'gc',
+        meta: {
+          title: 'gc',
+          icon: 'gc2',
+        },
+      },
+    ],
+  },
+  
   {
     path: '/example',
     component: Layout,

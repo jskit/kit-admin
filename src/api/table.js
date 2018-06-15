@@ -7,6 +7,13 @@ export function getTableList(params) {
     params,
   })
 }
+export function getAccountList(params) {
+  return request({
+    url: '/user/account',
+    method: 'get',
+    params,
+  })
+}
 export function getUserList(params) {
   return request({
     url: '/user/list',

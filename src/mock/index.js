@@ -30,6 +30,7 @@ Mock.mock(/\/transaction\/list/, 'get', transactionAPI.getList)
 // Table
 Mock.mock(/\/table\/list/, 'get', transactionAPI.getTableList)
 Mock.mock(/\/user\/list/, 'get', transactionAPI.getUserList)
+Mock.mock(/\/user\/account/, 'get', transactionAPI.getAccountList)
 
 export default Mock
 
