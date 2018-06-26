@@ -92,6 +92,15 @@ export const asyncRouterMap = [
       //   },
       // },
       {
+        path: 'user',
+        component: _import('user/user'),
+        name: 'user',
+        meta: {
+          title: 'user',
+          icon: 'user',
+        },
+      },
+      {
         path: 'account',
         component: _import('user/account'),
         name: 'account',
@@ -197,7 +206,7 @@ export const asyncRouterMap = [
       // },
     ],
   },
-  
+
   {
     path: '/project',
     component: Layout,
@@ -219,7 +228,7 @@ export const asyncRouterMap = [
       },
     ],
   },
-  
+
   {
     path: '/example',
     component: Layout,

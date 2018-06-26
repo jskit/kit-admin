@@ -36,6 +36,7 @@ function request(url, options, success, fail) {
  */
 
 // api 列表
+// https://dapi.cloudai.net/swagger-ui.html
 const modelApis = {
   // 初始化配置
   test: 'https://easy-mock.com/mock/5aa79bf26701e17a67bde1d7/',
@@ -49,6 +50,49 @@ const modelApis = {
   logout: 'POST /user/logout',
   getUserInfo: '/user/info',
   getTableList: '/table/list',
+
+  // 系统管理
+  adminCheck: '/admin/check',
+  login: '/admin/login',
+  logout: '/admin/logout',
+  menu: '/admin/menu',
+  // 用户管理
+  userList: '/sys/user/list',
+  userRoleList: '/sys/user/role/list',
+  saveUser: 'POST /sys/user/save',
+  updateUser: 'POST /sys/user/update',
+  updateUserPwd: 'POST /sys/user/updatePwd',
+  updateUserRole: 'POST /sys/user/role/update',
+  delUser: 'POST /sys/user/delete',
+  // 权限管理
+  savePower: 'POST /sys/permission/save',
+  delPower: 'POST /sys/permission/delete',
+  updatePower: 'POST /sys/permission/update',
+  // 角色管理
+  getRoleList: '/sys/role/permission/list',
+  saveRole: '/sys/role/save',
+  delRole: '/sys/role/delete',
+  updateRole: '/sys/role/update',
+  updateRolePower: '/sys/role/permission/update',
+  // 人员管理
+  getPersonalList: '/org/personal/list',
+  savePersonal: 'POST /org/personal/save',
+  delPersonal: '/org/personal/delete',
+  updatePersonal: 'POST /org/personal/update',
+  searchPersonal: '/org/personal/save',
+  // 人员证书管理
+  getResList: '/personal/resource/list',
+  saveRes: '/personal/resource/save',
+  delRes: '/personal/resource/delete',
+  uploadRes: '/personal/resource/upload',
+  searchRes: '/personal/resource/search',
+
+  // 部门管理
+  getDeptList: '/org/dept/list',
+  saveDept: '/org/dept/save',
+  delDept: '/org/dept/delete',
+  uploadDept: '/org/dept/upload',
+  searchDept: '/org/dept/search',
 }
 
 // 仅限本地调试支持
