@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="220px" height="220px" viewBox="0 0 220 220" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>profile_mask@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="个人主页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M0,0 L220,0 L220,220 L0,220 L0,0 Z M110,10 L23.3974596,60 L23.3974596,160 L110,210 L196.60254,160 L196.60254,60 L110,10 Z" id="profile_mask" fill="currentColor"></path>
+    </g>
+</svg>

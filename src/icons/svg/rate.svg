@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="18px" viewBox="0 0 16 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51 (57462) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_rate_selected@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="文章详情" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon_rate_selected" transform="translate(-1.000000, 0.000000)">
+            <path d="M9,1.15470054 L2.20577137,5.07735027 L2.20577137,12.9226497 L9,16.8452995 L15.7942286,12.9226497 L15.7942286,5.07735027 L9,1.15470054 Z" id="Polygon-Copy" stroke="#FDCC02" stroke-width="2"></path>
+            <polygon id="Polygon-Copy-2" fill="#FDCC02" points="9 4 13.330127 6.5 13.330127 11.5 9 14 4.66987298 11.5 4.66987298 6.5"></polygon>
+        </g>
+    </g>
+</svg>
