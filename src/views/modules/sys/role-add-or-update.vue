@@ -38,7 +38,7 @@
 
 <script>
 // import { isEmail, isMobile } from '@/utils/validate'
-import api from '@/config/api';
+import api from '@/api';
 // import { copy } from 'kit-qs'
 import { treeDataTranslate } from '@/utils';
 

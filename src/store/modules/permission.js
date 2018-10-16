@@ -4,7 +4,7 @@ import {
   // fnDynamicMenuRoutes,
 } from '@/router';
 import { isURL } from '@/utils/validate';
-import api from '@/config/api';
+import api from '@/api';
 // import {
 //   // treeDataTranslate,
 // } from '@/utils';

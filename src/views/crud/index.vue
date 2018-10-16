@@ -272,7 +272,7 @@
 <script>
 import crud from './crud.js';
 import { validatenull } from '../../utils/validate.js';
-import moment from 'moment';
+// import moment from 'moment';
 
 export default {
   name: 'Crud',
@@ -473,7 +473,8 @@ export default {
           const format = column.format
             .replace('dd', 'DD')
             .replace('yyyy', 'YYYY');
-          result = moment(result).format(format);
+          result = format;
+          // result = moment(result).format(format);
         }
         if (column.dicData) {
           result = this.findByvalue(

@@ -6,7 +6,7 @@ console.warn('[bridge.js]');
 // import alipay from './alipay'
 // import env from '@/config/env'
 // import { getAppId } from '@/config'
-// import api from '@/config/api'
+// import api from '@/api'
 const noop = () => {};
 const fnList = ['setShare', 'showShare', 'showOptionMenu', 'hideOptionMenu'];
 const bridge = {};

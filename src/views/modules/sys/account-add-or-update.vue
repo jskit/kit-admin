@@ -54,7 +54,7 @@
 
 <script>
 import { isEmail, isMobile } from '@/utils/validate';
-import api from '@/config/api';
+import api from '@/api';
 
 const modelApi = {
   add: api.addUser,

@@ -108,7 +108,7 @@
 </template>
 
 <script>
-import api from '@/config/api';
+import api from '@/api';
 // import { copy } from 'kit-qs';
 import waves from '@/directive/waves'; // 水波纹指令
 import AddOrUpdate from './dict-add-or-update';

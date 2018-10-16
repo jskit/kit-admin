@@ -11,23 +11,27 @@
  *  1. 通过2-2 添加icons, getNameList方法无法返回对应数据
  */
 
-// requires and returns all modules that match
-const requireAll = requireContext => requireContext.keys().map(requireContext);
+import Vue from 'vue';
+import IconSvg from '@/components/Icon'; // svg组件
+// just for @/views/icons , you can delete it
+import generateIconsView from '@/views/svg-icons/generateIconsView.js';
+import './iconfont.js';
 
-// import all svg
-const svgFiles = require.context('./svg', true, /\.svg$/);
-// const iconList =
-requireAll(svgFiles);
+// register globally
+Vue.component('icon-svg', IconSvg);
+
+const svgFiles = require.context('./svg', false, /\.svg$/);
+const iconList = svgFiles.keys().map(item => svgFiles(item));
 
 // 获取图标icon-(*).svg名称列表, 例如[shouye, xitong, zhedie, ...]
-// export default {
-//   getNameList() {
-//     return iconList.map(item => item.default.id.split('-')[1]);
-//   },
-// };
+export default {
+  getNameList() {
+    return iconList.map(item => item.default.id.split('-')[1]);
+  },
+};
 
-// function requireAll(r) {
-//   r.keys().forEach(r);
-// }
+const requireAll = requireContext => requireContext.keys().map(requireContext);
+const iconMap = requireAll(svgFiles);
 
-// requireAll(require.context('../path-to-icons/', true, /\.svg$/));
+// just for @/views/icons , you can delete it
+generateIconsView.generate(iconMap);

@@ -89,7 +89,7 @@ import {
   // menuLevel,
   treeDataTranslate,
 } from '@/utils';
-import api from '@/config/api';
+import api from '@/api';
 import Icon from '@/icons';
 
 const modelApi = {

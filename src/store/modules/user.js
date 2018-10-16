@@ -3,7 +3,7 @@
 //   logout,
 //   getUserInfo,
 // } from '@/api/login'
-import api from '@/config/api';
+import api from '@/api';
 import { getToken, setToken, removeToken } from '@/utils/auth';
 import { storage } from '@/utils/storage';
 

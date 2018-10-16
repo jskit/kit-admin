@@ -26,7 +26,7 @@
 <script>
 import { Navbar, Sidebar, AppMain, TagsView } from './components';
 import ResizeMixin from './mixin/ResizeHandler';
-// import api from '@/config/api';
+// import api from '@/api';
 
 export default {
   name: 'layout',

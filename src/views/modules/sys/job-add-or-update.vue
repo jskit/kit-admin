@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import api from '@/config/api';
+import api from '@/api';
 
 const modelApi = {
   add: api.addJob,

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import api from '@/config/api';
+import api from '@/api';
 // import { getAccountList } from '@/api/table'
 
 export default {

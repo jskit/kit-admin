@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import api from '@/config/api';
+import api from '@/api';
 // import { copy } from 'kit-qs';
 
 const modelApi = {

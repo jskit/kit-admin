@@ -77,7 +77,7 @@
 </template>
 
 <script>
-// import { ajax } from '@/utils/request';
+// import { ajax } from '@/api/request';
 // import base64 from '@/utils/base64';
 
 function stringify(params = {}) {

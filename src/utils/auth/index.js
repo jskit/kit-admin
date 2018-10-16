@@ -5,7 +5,7 @@ import { storage } from '@/utils/storage';
 import {
   // commonParams,
   headers,
-} from '@/config/api/api.config';
+} from '@/api/api.config';
 
 // export default cookie;
 // export default storage;

@@ -83,7 +83,7 @@
 <script>
 import { isEmail, isMobile } from '@/utils/validate';
 import { treeDataTranslate } from '@/utils';
-import api from '@/config/api';
+import api from '@/api';
 
 const modelApi = {
   add: api.addPersonal,

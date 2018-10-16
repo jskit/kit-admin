@@ -30,7 +30,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import SidebarItem from './SidebarItem';
-// import api from '@/config/api';
+// import api from '@/api';
 
 export default {
   components: { SidebarItem },
