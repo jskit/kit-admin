@@ -95,7 +95,7 @@ a {
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 4px;
   height: 4px;
   background-color: transparent;
 }
@@ -105,15 +105,13 @@ a {
   // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   // border-radius: 4px;
   background-color: transparent;
-  display: none;
 }
 
 /*定义滑块 内阴影+圆角*/
 ::-webkit-scrollbar-thumb {
-  // border-radius: 4px;
+  border-radius: 4px;
   // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  // background-color: rgba(193, 193, 193, 0.5);
-  display: none;
+  background-color: rgba(193, 193, 193, 0.5);
 }
 
 img,
@@ -124,6 +122,10 @@ div {
   touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.gray-mode {
+  filter: grayscale(100%);
 }
 
 .is-spin {
@@ -212,8 +214,7 @@ div {
 // HTML & Body reset
 #app,
 html,
-body {
-  position: absolute 0 0 0 0;
+body, {
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -227,6 +228,13 @@ body {
   overflow-x: hidden;
   overflow-y: scroll;
   z-index: 1;
+}
+
+.page-tpl {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 body {

@@ -1,11 +1,11 @@
-import 'mint-ui/lib/style.css';
 import Vue from 'vue';
+
+import 'normalize.css/normalize.css'; // A modern alternative to CSS resets
+import Element from 'element-ui';
+import 'mint-ui/lib/style.css';
+import 'element-ui/lib/theme-chalk/index.css';
+
 import { sync } from 'vuex-router-sync';
-
-import router from './router';
-import store from './store';
-
-import './utils/bridge/bridgeready';
 
 import './registerServiceWorker';
 import './permission';
@@ -17,24 +17,42 @@ import './utils/filters';
 import './plugins/directive';
 import './icons';
 
-import env from '@/config/env';
+// import env from '@/config/env';
 import mini from '@/utils/mini';
-import { loadJs } from '@/utils/dLoad';
+// import { loadJs } from '@/utils/dLoad';
+
+import i18n from './lang'; // Internationalization
+import { isAuth } from '@/utils';
+import './icons'; // icon
+import './errorLog'; // error log
+import './permission'; // permission control
+// import './mock' // simulation data
+
+import * as filters from '@/utils/filters'; // global filters
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key]);
+});
+
+Vue.use(Element, {
+  size: 'medium', // set element-ui default size
+  i18n: (key, value) => i18n.t(key, value),
+});
 
 // import Page from '@/layout/Page';
 import App from './App.vue';
+import router from './router';
+import store from './store';
 // import '@/config/js-report';
-// import vueLazyload from 'vue-lazyload';
-import { Lazyload } from 'mint-ui'; // 内部使用的就是 vue-lazyload
-// import globalMixin from './mixins/global';
-// import basePlugin from './plugins/base';
+import vueLazyload from 'vue-lazyload';
 
 import imgError from '@/assets/img/error.svg';
 console.warn('[main.js]');
 // 全局组件
 // Vue.component(Page.name, Page);
 
-Vue.use(Lazyload, {
+Vue.use(vueLazyload, {
   lazyComponent: true,
   preLoad: 1.3, // 预加载高度比例
   error: imgError, // 图片路径错误时加载图片
@@ -43,6 +61,9 @@ Vue.use(Lazyload, {
 });
 
 Vue.config.productionTip = false;
+
+// 挂载全局
+Vue.prototype.isAuth = isAuth;
 
 Object.keys(mini).forEach(key => {
   /* eslint no-multi-assign: 0 */
@@ -55,75 +76,9 @@ sync(store, router); // 同步路由数据到 store内;
 console.log(process.env.VUE_APP_VERSION);
 console.log(process.env);
 
-// Vue.mixin(globalMixin);
-// Vue.use(basePlugin);
-
-// Vue.config.optionMergeStrategies._my_test = function _my_test(
-//   parent,
-//   child,
-//   vm
-// ) {
-//   console.log(parent, vm);
-//   return child + 1;
-// };
-// console.log(Vue.config.optionMergeStrategies.created);
-// Vue.extend({
-//   _my_test: 2,
-// });
-// 利用vue 实现跨页面通信
-// window.eventHub = new Vue();
-store.dispatch('initAppConfig');
-function initVue(time = 0) {
-  // 把初始化渲染放到 setTimeout 里，延迟vue初始化，兼顾骨架屏
-  setTimeout(() => {
-    console.info('init Vue');
-    new Vue({
-      router,
-      store,
-      watch: {
-        $route: function(newVal, oldVal) {
-          // console.log('main.js watch: route: ', newVal);
-          // this.getLocation();
-          // console.log(this);
-        },
-      },
-      created() {
-        // 初始化appconfig
-        // window.eventHub.$on('loca', val => {
-        //   // console.log(val);
-        // });
-      },
-      // beforeDestroy() {
-      //   // window.eventHub.$off('loca');
-      // },
-      // _my_test: 1, // 覆盖了 Vue.extend _my_test
-      // mounted() {
-      //   // console.log('main.js mounted: route:', this.$route);
-      // },
-      render: h => h(App),
-      // testFn: () => {
-      //   console.log('测试子实例产看父实例方法');
-      // },
-    }).$mount('#app');
-  }, time);
-}
-
-if (!env.console) {
-  initVue();
-} else {
-  const vConsole = 'https://unpkg.com/kit-debug@latest';
-  loadJs(vConsole, {
-    // async: true,
-    // defer: true,
-    first: true,
-    onload() {
-      /* eslint no-undef: 0 */
-      if (typeof VConsole !== 'undefined') {
-        window.vConsole = new VConsole();
-      }
-      console.info('vConsole loaded');
-
-      initVue();
-    },
-  });
-}
+new Vue({
+  router,
+  store,
+  i18n,
+  render: h => h(App),
+}).$mount('#app');

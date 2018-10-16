@@ -1,71 +1,53 @@
-// 网站设置相关代码，如侧边栏开关、多语言切换等
+import Cookies from 'js-cookie';
 
-// 存在 api 循环引用
-import api from '@/api';
-import * as Types from '../types';
-import { storage } from '@/utils/storage';
-import device from '@/utils/device';
-console.log(api);
 const app = {
-  // TDK?
   state: {
     site: {
-      title: '觅食蜂',
+      title: '后台管理系统',
+      tit: '后台',
     },
-    ani: 'slideleft',
-    keepAliveList: [],
-    appConfig: {},
-
-    showShareMask: false, // 分享遮罩
+    sidebar: {
+      opened: !+Cookies.get('sidebarStatus'),
+      withoutAnimation: false,
+    },
+    device: 'desktop',
+    language: Cookies.get('language') || 'zh',
   },
   mutations: {
-    setAnim(state, data) {
-      state[data.key] = data.key;
+    TOGGLE_SIDEBAR: state => {
+      if (state.sidebar.opened) {
+        Cookies.set('sidebarStatus', 1);
+      } else {
+        Cookies.set('sidebarStatus', 0);
+      }
+      state.sidebar.opened = !state.sidebar.opened;
+      state.sidebar.withoutAnimation = false;
     },
-    ['SET_KEEPALIVELIST'](state, payload = []) {
-      // console.log(payload);
-      state.keepAliveList = payload;
+    CLOSE_SIDEBAR: (state, withoutAnimation) => {
+      Cookies.set('sidebarStatus', 1);
+      state.sidebar.opened = false;
+      state.sidebar.withoutAnimation = withoutAnimation;
     },
-    // 初始化app配置
-    [Types.INIT_APP_CONFIG](state, payload = {}) {
-      // console.log(payload);
-      const { configInfo } = payload;
-      state.appConfig = configInfo;
-      // 存储到本地
-      storage.set('app-config', configInfo, 864000);
+    TOGGLE_DEVICE: (state, device) => {
+      state.device = device;
     },
-    // 分享遮罩显示隐藏
-    ['SET_SHARE_MASK'](state, flag) {
-      state.showShareMask = flag;
+    SET_LANGUAGE: (state, language) => {
+      state.language = language;
+      Cookies.set('language', language);
     },
   },
   actions: {
-    // 初始化app配置
-    initAppConfig({ commit, state }, payload = {}) {
-      // console.log(state);
-      if (!device.msf) {
-        api.getConfig(
-          {
-            // loc_type: 'amap', // 高德
-            showLoading: false,
-          },
-          res => {
-            // console.log(this.$store.state);
-            // console.log(res);
-            commit({ type: Types.INIT_APP_CONFIG, configInfo: res.data });
-          },
-          err => {
-            console.log(err);
-          }
-        );
-      }
+    toggleSideBar({ commit }) {
+      commit('TOGGLE_SIDEBAR');
     },
-    setAppConfig({ commit, state }, payload = {}) {
-      commit({ type: Types.INIT_APP_CONFIG, configInfo: payload });
+    closeSideBar({ commit }, { withoutAnimation }) {
+      commit('CLOSE_SIDEBAR', withoutAnimation);
     },
-    // 分享遮罩显示隐藏
-    setShareMask({ commit, state }, falg) {
-      commit('SET_SHARE_MASK', falg);
+    toggleDevice({ commit }, device) {
+      commit('TOGGLE_DEVICE', device);
+    },
+    setLanguage({ commit }, language) {
+      commit('SET_LANGUAGE', language);
     },
   },
 };
