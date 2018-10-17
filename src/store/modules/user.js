@@ -14,6 +14,7 @@ const user = {
   state: {
     userInfo: userInfo,
     logged: getLoginStatus(userInfo),
+    roles: [],
   },
 
   mutations: {
@@ -35,6 +36,9 @@ const user = {
     },
     SET_SETTING: (state, setting) => {
       state.setting = setting;
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles;
     },
   },
 
@@ -68,6 +72,14 @@ const user = {
             // 由于 mockjs 不支持自定义状态码只能这样hack
             if (!data) {
               reject('error');
+            }
+            data.roles = ['admin'];
+            // 验证返回的roles是否是一个非空数组
+            if (data.roles && data.roles.length > 0) {
+              commit('SET_ROLES', data.roles);
+            } else {
+              /* eslint prefer-promise-reject-errors: 0 */
+              reject('getInfo: roles must be a non-null array !');
             }
             commit('SET_USERINFO', data);
             resolve(res);
