@@ -29,8 +29,6 @@ module.exports = {
     // console.log(config);
     config.resolve.extensions.push('.css', '.styl', '.md');
     config.resolve.alias['assets'] = path.resolve('./src/assets');
-    // if (!config.optimization) config.optimization = {};
-    // config.optimization.removeAvailableModules = false;
 
     const plugins = [];
     if (!__DEV__) {

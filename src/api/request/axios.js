@@ -47,12 +47,12 @@ export default function request({
     ...opts.headers,
     ...header,
   };
-  let hasLoading = false;
-  if (options.showLoading) {
-    hasLoading = true;
-    mini.showLoading();
-  }
-  delete options.showLoading; // 删除loading
+  // let hasLoading = false;
+  // if (options.showLoading) {
+  //   hasLoading = true;
+  //   mini.showLoading();
+  // }
+  // delete options.showLoading; // 删除loading
   if (method === 'GET') {
     opts.method = 'get';
     opts.params = options;
@@ -66,18 +66,19 @@ export default function request({
 
     // Form Data(application/x-www-form-urlencoded)
     // opts.data = stringify(options);
+
     // json(application/json)
     opts.data = `${JSON.stringify(options)}`;
   }
 
   const successCallBack = data => {
-    hasLoading && mini.hideLoading();
+    // hasLoading && mini.hideLoading();
     if (typeof success === 'function') {
       success(data);
     }
   };
   const errorCallBack = (err = {}) => {
-    hasLoading && mini.hideLoading();
+    // hasLoading && mini.hideLoading();
     if (typeof fail === 'function' && fail(err)) {
       return;
     }

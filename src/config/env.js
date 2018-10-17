@@ -105,6 +105,10 @@ location /v2 {
 }
 */
 const baseEnv = {
+  site: {
+    title: 'admin',
+    desc: '后台管理系统',
+  },
   ...ENV['prod'],
   ...debug,
   version, // 应用版本
