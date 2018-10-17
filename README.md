@@ -3,6 +3,7 @@
 ## Project setup
 
 ```bash
+npm i -g @vue/cli
 yarn install
 ```
 
