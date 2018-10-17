@@ -1,10 +1,10 @@
 import cookie from '@/utils/cookie';
+import env from '@/config/env';
 
 const app = {
   state: {
     site: {
-      title: '后台管理系统',
-      tit: '后台',
+      ...env.site,
     },
     sidebar: {
       opened: !+cookie.get('sidebarStatus'),
