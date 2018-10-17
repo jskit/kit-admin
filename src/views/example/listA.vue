@@ -141,7 +141,7 @@ import {
   fetchPv,
   createArticle,
   updateArticle,
-} from '@/api/article';
+} from '@/api/old/article';
 import waves from '@/directive/waves'; // 水波纹指令
 import { parseTime } from '@/utils';
 

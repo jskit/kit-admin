@@ -12,7 +12,7 @@
  */
 
 import Vue from 'vue';
-import IconSvg from '@/components/Icon'; // svg组件
+import IconSvg from '@/components/IconSvg'; // svg组件
 // just for @/views/icons , you can delete it
 import generateIconsView from '@/views/svg-icons/generateIconsView.js';
 import './iconfont.js';

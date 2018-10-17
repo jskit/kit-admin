@@ -132,8 +132,8 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 // 粘性header组件
 import Sticky from '@/components/Sticky';
 import { validateURL } from '@/utils/validate';
-import { fetchArticle } from '@/api/article';
-import { userSearch } from '@/api/remoteSearch';
+import { fetchArticle } from '@/api/old/article';
+import { userSearch } from '@/api/old/remoteSearch';
 
 const defaultForm = {
   status: 'draft',

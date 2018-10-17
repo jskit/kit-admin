@@ -56,7 +56,7 @@
 
 <script>
 import api from '@/api';
-// import { getAccountList } from '@/api/table'
+// import { getAccountList } from '@/api/old/table'
 
 export default {
   data() {

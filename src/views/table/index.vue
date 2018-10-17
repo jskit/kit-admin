@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { getTableList } from '@/api/table';
+import { getTableList } from '@/api/old/table';
 
 export default {
   data() {

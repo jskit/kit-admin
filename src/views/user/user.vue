@@ -138,7 +138,7 @@
 <script>
 import api from '@/api';
 
-// import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
+// import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/old/article'
 import waves from '@/directive/waves'; // 水波纹指令
 import { parseTime } from '@/utils';
 

@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie';
+import cookie from '@/utils/cookie';
 
 const app = {
   state: {
@@ -7,24 +7,24 @@ const app = {
       tit: '后台',
     },
     sidebar: {
-      opened: !+Cookies.get('sidebarStatus'),
+      opened: !+cookie.get('sidebarStatus'),
       withoutAnimation: false,
     },
     device: 'desktop',
-    language: Cookies.get('language') || 'zh',
+    language: cookie.get('language') || 'zh',
   },
   mutations: {
     TOGGLE_SIDEBAR: state => {
       if (state.sidebar.opened) {
-        Cookies.set('sidebarStatus', 1);
+        cookie.set('sidebarStatus', 1);
       } else {
-        Cookies.set('sidebarStatus', 0);
+        cookie.set('sidebarStatus', 0);
       }
       state.sidebar.opened = !state.sidebar.opened;
       state.sidebar.withoutAnimation = false;
     },
     CLOSE_SIDEBAR: (state, withoutAnimation) => {
-      Cookies.set('sidebarStatus', 1);
+      cookie.set('sidebarStatus', 1);
       state.sidebar.opened = false;
       state.sidebar.withoutAnimation = withoutAnimation;
     },
@@ -33,7 +33,7 @@ const app = {
     },
     SET_LANGUAGE: (state, language) => {
       state.language = language;
-      Cookies.set('language', language);
+      cookie.set('language', language);
     },
   },
   actions: {

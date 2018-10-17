@@ -7,25 +7,24 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 import { sync } from 'vuex-router-sync';
 
-import './registerServiceWorker';
-import './permission';
+import '@/registerServiceWorker';
 
 // 外部样式在前面引入，我们的样式在App.vue 中后引入
 // import './style/index.styl';
-import './utils/rem';
-import './utils/filters';
-import './plugins/directive';
-import './icons';
+// import '@/utils/rem';
+// import './utils/filters';
+// import './plugins/directive';
+import '@/icons';
 
 // import env from '@/config/env';
 import mini from '@/utils/mini';
 // import { loadJs } from '@/utils/dLoad';
 
-import i18n from './lang'; // Internationalization
+import i18n from '@/lang'; // Internationalization
 import { isAuth } from '@/utils';
-import './icons'; // icon
-import './errorLog'; // error log
-import './permission'; // permission control
+import '@/icons'; // icon
+import '@/errorLog'; // error log
+import '@/permission'; // permission control
 // import './mock' // simulation data
 
 import * as filters from '@/utils/filters'; // global filters
@@ -41,9 +40,9 @@ Vue.use(Element, {
 });
 
 // import Page from '@/layout/Page';
-import App from './App.vue';
-import router from './router';
-import store from './store';
+import App from '@/App.vue';
+import router from '@/router';
+import store from '@/store';
 // import '@/config/js-report';
 import vueLazyload from 'vue-lazyload';
 

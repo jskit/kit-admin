@@ -1,9 +1,8 @@
-import router from './router';
-import store from './store';
+import router from '@/router';
+import store from '@/store';
 import { Message } from 'element-ui';
 import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
-import { getToken } from '@/utils/auth'; // getToken from cookie
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
@@ -20,7 +19,8 @@ const whiteList = ['/login', '/authredirect'];
 
 router.beforeEach((to, from, next) => {
   NProgress.start(); // start progress bar
-  if (getToken()) {
+  const { logged = false } = store.state.user;
+  if (logged) {
     // determine if there has token
     // has token
     if (to.path === '/login') {
