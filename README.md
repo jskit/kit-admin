@@ -36,6 +36,14 @@ yarn run test:unit
 yarn run test:e2e
 ```
 
+### Deploy
+
+```bash
+yarn deploy
+
+deploy branch gh-pages
+```
+
 ## 项目配置调整以及增强
 
 - [x] vue-cli 3.0 搭建最新vue版本
