@@ -99,7 +99,6 @@ export default function request(
     newOptions.headers = {
       // 我们的get请求 不需要这个
       'Content-Type': 'application/json; charset=utf-8',
-      // 'Content-Type': 'application/json; charset=utf-8',
       ...headers,
     };
     // newOptions.data = JSON.stringify(newOptions.data)

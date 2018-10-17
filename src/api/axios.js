@@ -2,8 +2,7 @@ import env from '@/config/env';
 import { storage } from '@/utils/storage';
 import { compact } from '@/utils';
 import { modelApis, commonParams, headers } from '@/api/api.config';
-import request from '@/api/request';
-console.warn('api axios.js');
+import request from '@/api/request/axios';
 
 let apiBaseUrl;
 apiBaseUrl = `${env.apiBaseUrl}`;

@@ -6,6 +6,8 @@ const svgoConfig = require('./svgo-config.json');
 const qnConfig = require('./qn.private').hsq || {};
 
 // https://cli.vuejs.org/zh/config/
+// https://github.com/HaoChuan9421/vue-cli3-optimization/blob/master/vue.config.js
+// webpack4.x 配置优化 https://segmentfault.com/a/1190000015724077
 
 const __DEV__ = process.env.NODE_ENV === 'development';
 const __PROD__ = process.env.NODE_ENV === 'production';
@@ -25,8 +27,10 @@ module.exports = {
   assetsDir: __DEV__ ? './' : './static',
   configureWebpack: config => {
     // console.log(config);
-    config.resolve.extensions.push('.css', '.md');
+    config.resolve.extensions.push('.css', '.styl', '.md');
     config.resolve.alias['assets'] = path.resolve('./src/assets');
+    // if (!config.optimization) config.optimization = {};
+    // config.optimization.removeAvailableModules = false;
 
     const plugins = [];
     if (!__DEV__) {

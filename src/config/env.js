@@ -76,9 +76,8 @@ export const ENV = {
     // routerMode: 'hash',
     baseUrl: location.host, // localhost
     // apiBaseUrl: 'm.devapi.haoshiqi.net',
-    apiBaseUrl: 'open.dev.mishifeng.com',
-    // apiBaseUrl: 'http://m.betaapi.haoshiqi.net',
-    // apiBaseUrl: 'open.mishifeng.com',
+    // apiBaseUrl: 'open.dev.mishifeng.com',
+    apiBaseUrl: '10.0.6.29:8080',
   },
 };
 
@@ -119,8 +118,8 @@ const baseEnv = {
   spm: '', // spm
   port: location.port,
   host: location.host,
-  // scheme: location.protocol,
-  scheme: 'https:',
+  scheme: location.protocol,
+  // scheme: 'https:',
   routerBase: '',
   routerMode: 'history',
   publicPath: '',

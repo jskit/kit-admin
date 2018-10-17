@@ -2,7 +2,7 @@ import { stringify } from 'kit-qs';
 import env from '@/config/env';
 import { storage } from '@/utils/storage';
 import { modelApis, commonParams, headers } from '@/api/api.config';
-import _request from '@/api/request';
+import _request from '@/api/request/fetch';
 // import mini from '@/utils/mini';
 
 let apiBaseUrl;

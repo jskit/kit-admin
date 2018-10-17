@@ -126,7 +126,7 @@ export default {
             password,
           };
           this.$store
-            .dispatch('LoginByUsername', userInfo)
+            .dispatch('Login', userInfo)
             .then(() => {
               this.loading = false;
               this.$router.push({ path: '/' });

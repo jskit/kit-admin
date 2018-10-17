@@ -5,6 +5,8 @@ import Element from 'element-ui';
 import 'mint-ui/lib/style.css';
 import 'element-ui/lib/theme-chalk/index.css';
 
+import '@/style/index'; // global css
+
 import { sync } from 'vuex-router-sync';
 
 import '@/registerServiceWorker';

@@ -9,7 +9,9 @@
 - 基本数据请求
 - 交互操作
 
-- 使用：
+### usage
+
+```js
 import api from '@/api';
 
 api.setCommonParams({});   // 修改全局参数
@@ -31,3 +33,4 @@ api.login(
     // return true;         // 写 return true; 则会阻止后续错误弹出
   }
 );
+```
