@@ -7,13 +7,16 @@ import {
   session,
 } from '@/utils/storage';
 
-function lazyLoad(page) {
-  if (env.isMode('prod')) {
-    return () => import(/* webpackChunkName: "x-[index]" */ `@/views/${page}`);
-  }
-  return () =>
-    import(/* webpackChunkName: "[request]-[index]" */ `@/views/${page}`);
-}
+const _import = require('./_import_' + process.env.NODE_ENV);
+
+// 使用下面的方法，编译速度很慢
+// function _import(page) {
+//   if (env.isMode('prod')) {
+//     return () => import(/* webpackChunkName: "x-[index]" */ `@/views/${page}`);
+//   }
+//   return () =>
+//     import(/* webpackChunkName: "[request]-[index]" */ `@/views/${page}`);
+// }
 
 // in development-env not use lazy-loading,
 // because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
@@ -56,22 +59,22 @@ function getLayout(key = '') {
 export const constantRouterMap = [
   {
     path: '/login',
-    component: lazyLoad('login/index'),
+    component: _import('login/index'),
     hidden: true,
   },
   {
     path: '/authredirect',
-    component: lazyLoad('login/authredirect'),
+    component: _import('login/authredirect'),
     hidden: true,
   },
   {
     path: '/404',
-    component: lazyLoad('errorPage/404'),
+    component: _import('errorPage/404'),
     hidden: true,
   },
   {
     path: '/401',
-    component: lazyLoad('errorPage/401'),
+    component: _import('errorPage/401'),
     hidden: true,
   },
   {
@@ -81,7 +84,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: lazyLoad('dashboard/index'),
+        component: _import('dashboard/index'),
         name: 'dashboard',
         meta: { title: 'dashboard', icon: 'dashboard', noCache: true },
       },
@@ -112,7 +115,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'account',
-        component: lazyLoad('modules/sys/account'),
+        component: _import('modules/sys/account'),
         name: 'account',
         meta: {
           title: '管理员列表',
@@ -121,7 +124,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'role',
-        component: lazyLoad('modules/sys/role'),
+        component: _import('modules/sys/role'),
         name: 'role',
         meta: {
           title: '角色管理',
@@ -130,7 +133,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'menu',
-        component: lazyLoad('modules/sys/menu'),
+        component: _import('modules/sys/menu'),
         name: 'menu',
         meta: {
           title: '菜单管理',
@@ -139,7 +142,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'sql',
-        component: lazyLoad('modules/sys/sql'),
+        component: _import('modules/sys/sql'),
         name: 'sql',
         meta: {
           title: 'SQL监控',
@@ -148,7 +151,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'job',
-        component: lazyLoad('modules/sys/job'),
+        component: _import('modules/sys/job'),
         name: 'job',
         meta: {
           title: '定时任务',
@@ -157,7 +160,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'dict',
-        component: lazyLoad('modules/sys/dict'),
+        component: _import('modules/sys/dict'),
         name: 'dict',
         meta: {
           title: '数据字典',
@@ -166,7 +169,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'log',
-        component: lazyLoad('modules/sys/log'),
+        component: _import('modules/sys/log'),
         name: 'log',
         meta: {
           title: '系统日志',
@@ -175,7 +178,7 @@ export const asyncRouterMap = [
       },
       // {
       //   path: 'base',
-      //   component: lazyLoad('doing/doing'),
+      //   component: _import('doing/doing'),
       //   name: 'base',
       //   meta: {
       //     title: 'system',
@@ -196,7 +199,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'upload',
-        component: lazyLoad('modules/oss/oss'),
+        component: _import('modules/oss/oss'),
         name: 'upload',
         meta: {
           title: '文件上传',
@@ -217,7 +220,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'dept',
-        component: lazyLoad('modules/org/dept'),
+        component: _import('modules/org/dept'),
         name: 'dept',
         meta: {
           title: '部门管理',
@@ -226,7 +229,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'personnel',
-        component: lazyLoad('modules/org/personnel'),
+        component: _import('modules/org/personnel'),
         name: 'personnel',
         meta: {
           title: '员工管理',
@@ -235,7 +238,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'post',
-        component: lazyLoad('modules/org/post'),
+        component: _import('modules/org/post'),
         name: 'post',
         meta: {
           title: '岗位管理',
@@ -245,7 +248,7 @@ export const asyncRouterMap = [
       // 资源管理
       {
         path: 'res-cert',
-        component: lazyLoad('modules/org/res-cert'),
+        component: _import('modules/org/res-cert'),
         name: 'res-cert',
         meta: {
           title: '证书管理',
@@ -267,7 +270,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'proj',
-        component: lazyLoad('modules/project/proj'),
+        component: _import('modules/project/proj'),
         name: 'proj',
         meta: {
           title: '项目管理',
@@ -276,7 +279,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'detail',
-        component: lazyLoad('modules/project/detail'),
+        component: _import('modules/project/detail'),
         name: 'proj_detail',
         meta: {
           title: '详情',
@@ -285,7 +288,7 @@ export const asyncRouterMap = [
       },
       // {
       //   path: 'tracking',
-      //   component: lazyLoad('modules/project/tracking'),
+      //   component: _import('modules/project/tracking'),
       //   name: 'tracking',
       //   meta: {
       //     title: '项目跟踪',
@@ -294,7 +297,7 @@ export const asyncRouterMap = [
       // },
       {
         path: 'task',
-        component: lazyLoad('modules/project/task'),
+        component: _import('modules/project/task'),
         name: 'task',
         meta: {
           title: '任务管理',
@@ -354,7 +357,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
           route['component'] =
             prePath === '/'
               ? getLayout(componentPath)
-              : lazyLoad(`modules/${componentPath}`) || null;
+              : _import(`modules/${componentPath}`) || null;
         } catch (e) {
           // nothing...
         }
@@ -388,7 +391,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //   children: [
 //     {
 //       path: '/example/table',
-//       component: lazyLoad('example/table/index'),
+//       component: _import('example/table/index'),
 //       redirect: '/example/table/complex-table',
 //       name: 'Table',
 //       meta: {
@@ -398,37 +401,37 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //       children: [
 //         {
 //           path: 'dynamic-table',
-//           component: lazyLoad('example/table/dynamicTable/index'),
+//           component: _import('example/table/dynamicTable/index'),
 //           name: 'dynamicTable',
 //           meta: { title: 'dynamicTable' },
 //         },
 //         {
 //           path: 'drag-table',
-//           component: lazyLoad('example/table/dragTable'),
+//           component: _import('example/table/dragTable'),
 //           name: 'dragTable',
 //           meta: { title: 'dragTable' },
 //         },
 //         {
 //           path: 'inline-edit-table',
-//           component: lazyLoad('example/table/inlineEditTable'),
+//           component: _import('example/table/inlineEditTable'),
 //           name: 'inlineEditTable',
 //           meta: { title: 'inlineEditTable' },
 //         },
 //         {
 //           path: 'tree-table',
-//           component: lazyLoad('example/table/treeTable/treeTable'),
+//           component: _import('example/table/treeTable/treeTable'),
 //           name: 'treeTableDemo',
 //           meta: { title: 'treeTable' },
 //         },
 //         {
 //           path: 'custom-tree-table',
-//           component: lazyLoad('example/table/treeTable/customTreeTable'),
+//           component: _import('example/table/treeTable/customTreeTable'),
 //           name: 'customTreeTableDemo',
 //           meta: { title: 'customTreeTable' },
 //         },
 //         {
 //           path: 'complex-table',
-//           component: lazyLoad('example/table/complexTable'),
+//           component: _import('example/table/complexTable'),
 //           name: 'complexTable',
 //           meta: { title: 'complexTable' },
 //         },
@@ -437,7 +440,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //     {
 //       path: 'tab/index',
 //       icon: 'tab',
-//       component: lazyLoad('example/tab/index'),
+//       component: _import('example/tab/index'),
 //       name: 'tab',
 //       meta: { title: 'tab' },
 //     },
@@ -480,7 +483,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //   children: [
 //     {
 //       path: 'create-form',
-//       component: lazyLoad('form/create'),
+//       component: _import('form/create'),
 //       name: 'createForm',
 //       meta: {
 //         title: 'createForm',
@@ -489,7 +492,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //     },
 //     {
 //       path: 'edit-form',
-//       component: lazyLoad('form/edit'),
+//       component: _import('form/edit'),
 //       name: 'editForm',
 //       meta: {
 //         title: 'editForm',
@@ -511,7 +514,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //   children: [
 //     {
 //       path: '401',
-//       component: lazyLoad('errorPage/401'),
+//       component: _import('errorPage/401'),
 //       name: 'page401',
 //       meta: {
 //         title: 'page401',
@@ -520,7 +523,7 @@ export function fnDynamicMenuRoutes(menuList = [], prePath = '/') {
 //     },
 //     {
 //       path: '404',
-//       component: lazyLoad('errorPage/404'),
+//       component: _import('errorPage/404'),
 //       name: 'page404',
 //       meta: {
 //         title: 'page404',

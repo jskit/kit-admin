@@ -70,7 +70,7 @@ export default {
       this.$store.dispatch('toggleSideBar');
     },
     logout() {
-      this.$store.dispatch('LogOut').then(() => {
+      this.$store.dispatch('Logout').then(() => {
         // 为了重新实例化vue-router对象 避免bug
         window.location.reload();
       });

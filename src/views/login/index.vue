@@ -129,6 +129,7 @@ export default {
             .dispatch('Login', userInfo)
             .then(() => {
               this.loading = false;
+              debugger;
               this.$router.push({ path: '/' });
             })
             .catch(() => {

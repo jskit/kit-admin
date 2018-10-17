@@ -1,13 +1,14 @@
 import api from '@/api';
 import { storage } from '@/utils/storage';
-import cookie from '@/utils/cookie';
+// import cookie from '@/utils/cookie';
+import { isEmptyObj } from '@/utils/is';
 
 let userInfo = storage.get('userInfo') || {};
 
-const cookieKey = 'dwdus_sid';
+// const cookieKey = 'dwdus_sid';
 function getLoginStatus(data = {}) {
-  return !!cookie.get(cookieKey) || !!(data.token && data.id);
-  // return !!(data.token && data.id);
+  // return !!cookie.get(cookieKey) || !!(data.token && data.id);
+  return !!(data.token && data.id);
 }
 
 const user = {
@@ -19,18 +20,26 @@ const user = {
 
   mutations: {
     // 全量更新
-    SET_USERINFO: (state, data) => {
+    SET_USERINFO: (state, data = {}) => {
+      if (isEmptyObj(data)) {
+        state.userInfo = {};
+        state.logged = false;
+        storage.remove('userInfo');
+        return;
+      }
+      data = {
+        ...state.userInfo,
+        ...data,
+      };
       state.userInfo = data;
       state.logged = getLoginStatus(data);
-      console.log('更新用户信息', data);
-
       api.setHeader({
-        token: (data && data.token) || '',
-        userId: (data && data.id) || '',
+        token: data.token || '',
+        userId: data.id || '',
       });
       // api.setCommonParams({
-      //   token: (data && data.token) || '',
-      //   user_id: (data && data.id) || '',
+      //   token: data.token || '',
+      //   userId: data.id || '',
       // });
       storage.set('userInfo', data, 86400 * 30);
     },
@@ -99,7 +108,7 @@ const user = {
         api.logout(
           {},
           res => {
-            commit('SET_USERINFO', '');
+            commit('SET_USERINFO', {});
             resolve({});
           },
           err => {
