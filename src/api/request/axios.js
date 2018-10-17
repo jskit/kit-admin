@@ -1,9 +1,7 @@
 import axios from 'axios';
-import qs from 'qs';
+// import { stringify } from 'kit-qs';
 import { clone } from '@/utils';
 import mini from '@/utils/mini';
-import device from '@/utils/device';
-import bridge from '@/utils/bridge';
 import store from '@/store';
 // import router from '@/router';
 
@@ -25,13 +23,14 @@ const defaultOptions = {
   method: 'get',
   baseURL: '',
   headers: {
-    // 'Content-Type': 'application/json; charset=utf-8',
-    'Content-Type': 'application/x-www-form-urlencoded',
+    'Content-Type': 'application/json; charset=utf-8',
+    // 'Content-Type': 'application/x-www-form-urlencoded',
   },
   params: {},
   data: {},
   responseType: 'json',
   withCredentials: true,
+  timeout: 30000, // 请求超时时间
 };
 
 export default function request({
@@ -64,7 +63,11 @@ export default function request({
     //   query.append(key, options[key]);
     // }
     // opts.data = query;
-    opts.data = qs.stringify(options);
+
+    // Form Data(application/x-www-form-urlencoded)
+    // opts.data = stringify(options);
+    // json(application/json)
+    opts.data = `${JSON.stringify(options)}`;
   }
 
   const successCallBack = data => {
@@ -80,27 +83,10 @@ export default function request({
     }
     const { errmsg = '网络异常，请稍后重试', errno = 'err' } = err;
     console.warn(JSON.stringify(err));
-    // 9610010 未登录 9800001 参数错误
+    // 9610010 未登录
     if (errno === 9610010) {
       store.dispatch('FedLogout');
-      if (device.msf) {
-        bridge.login({
-          success(res) {
-            //..
-            console.log(res);
-            const { data } = res;
-            store.commit('SET_USERINFO', data);
-          },
-          fail(err) {
-            //
-            console.log('app 登录失败！', err);
-            // mini.forward('/index');
-            mini.showToast('登录失败，请重试！');
-          },
-        });
-      } else {
-        mini.forward('/login');
-      }
+      mini.forward('/login');
     } else {
       const message = `${errno}: ${errmsg}`;
       console.log('errmsg:', message);
@@ -109,7 +95,6 @@ export default function request({
   };
 
   function log(res) {
-    // console.log('44444444');
     console.log(`api: ${method} ${res.status} ${url}`);
     return res;
   }
@@ -119,12 +104,18 @@ export default function request({
     .then(checkStatus)
     .then(res => {
       // console.log(JSON.stringify(res));
-      if (res.data.errno === 0) {
-        successCallBack(res.data);
+      const errno = res.data.errno || res.data.statusCode;
+      const errmsg = res.data.errmsg || res.data.message;
+      if (errno === 0) {
+        successCallBack({
+          errno,
+          errmsg,
+          ...res.data,
+        });
       } else {
         errorCallBack({
-          errno: res.data.errno,
-          errmsg: res.data.errmsg,
+          errno,
+          errmsg,
         });
       }
     })
@@ -138,7 +129,7 @@ export default function request({
     });
 }
 
-//以formData形式上传七牛
+// 以formData形式上传七牛
 export function ajaxFormData(formData) {
   return new Promise(function(resolve, reject) {
     axios

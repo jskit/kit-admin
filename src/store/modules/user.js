@@ -22,10 +22,15 @@ const user = {
       state.userInfo = data;
       state.logged = getLoginStatus(data);
       console.log('更新用户信息', data);
-      api.setCommonParams({
+
+      api.setHeader({
         token: (data && data.token) || '',
-        user_id: (data && data.id) || '',
+        userId: (data && data.id) || '',
       });
+      // api.setCommonParams({
+      //   token: (data && data.token) || '',
+      //   user_id: (data && data.id) || '',
+      // });
       storage.set('userInfo', data, 86400 * 30);
     },
     SET_SETTING: (state, setting) => {
@@ -50,25 +55,6 @@ const user = {
             reject(err);
           }
         );
-        // loginByUsername({
-        //   username,
-        //   password: userInfo.password,
-        // }).then((res) => {
-        //   const { data } = res;
-        //   commit('SET_TOKEN', data.token);
-        //   setToken(data.token);
-        //   resolve();
-        // }).catch((err) => {
-        //   reject(err);
-        // })
-        // login(username, userInfo.password).then((response) => {
-        //   const { data } = response
-        //   setToken(data.token)
-        //   commit('SET_TOKEN', data.token)
-        //   resolve()
-        // }).catch((error) => {
-        //   reject(error)
-        // })
       });
     },
 
@@ -102,8 +88,7 @@ const user = {
           {},
           res => {
             commit('SET_USERINFO', '');
-            // removeToken();
-            resolve();
+            resolve({});
           },
           err => {
             reject(err);
@@ -116,9 +101,7 @@ const user = {
     FedLogout({ commit }) {
       return new Promise(resolve => {
         commit('SET_USERINFO', {});
-        // cookie.set(cookieKey, '');
-        // removeToken();
-        resolve();
+        resolve({});
       });
     },
 

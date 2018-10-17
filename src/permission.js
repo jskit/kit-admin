@@ -46,11 +46,12 @@ router.beforeEach((to, from, next) => {
             router.options.isAddDynamicRouters = true;
             // hack方法 确保addRoutes已完成
             // set the replace: true so the navigation will not leave a history record
+            debugger;
             next({ ...to, replace: true });
           });
         })
         .catch((err = {}) => {
-          store.dispatch('FedLogOut').then(() => {
+          store.dispatch('FedLogout').then(() => {
             Message.error(
               err.errmsg || 'Verification failed, please login again'
             );

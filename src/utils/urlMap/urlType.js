@@ -5,12 +5,15 @@
  * @param {any} url [schema, h5, miniapp, other]
  */
 
+// 当前站点判断
+import env from '@/config/env';
+
 const types = {
+  currentH5Site: env.regBaseUrl,
   schemaMsf: /^mishifeng:\/\/native\//i,
   miniapp: /^miniapp:\/\//i,
   // h5打开支付宝小程序
   alipays: /^alipays:\/\/platformapi\/startapp/i,
-  h5Msf: /(m(\.dev|\.beta)?\.mishifeng\.com)/i,
   // 专题
   h5Topic: /(topic(\.dev|\.beta)?\.doweidu\.com)/i,
   h5: /^(https|http):\/\//i,
@@ -22,10 +25,10 @@ const types = {
 
 // 注意匹配顺序，topic必须在h5之前
 export function getUrlType(url) {
+  if (types['currentH5Site'].test(url)) return 'currentH5Site';
   if (types['schemaMsf'].test(url)) return 'schemaMsf';
   if (types['miniapp'].test(url)) return 'miniapp';
   if (types['alipays'].test(url)) return 'alipays';
-  if (types['h5Msf'].test(url)) return 'h5Msf';
   if (types['h5Topic'].test(url)) return 'h5Topic';
   if (types['h5'].test(url)) return 'h5';
   if (types['tel'].test(url)) return 'tel';

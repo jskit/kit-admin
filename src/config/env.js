@@ -112,6 +112,8 @@ const baseEnv = {
   terminal, // 终端
   defaultShareInfo, // 默认分享数据
   tongjiConfig, // 统计相关配置数据
+  // 正则判断当前站点url
+  regBaseUrl: /(m(\.dev|\.beta)?\.mishifeng\.com)/i,
   mode: modes[currentMode] || 'prod', // 运行/编译模式
   stage: 'prod', // 发行版本
   apiEnv: 'prod', // api 环境

@@ -206,3 +206,7 @@ fatal: refusing to merge unrelated histories
 ```bash
 git pull --allow-unrelated-histories
 ```
+
+- RemoveParentModulesPlugin takes a long time with hundreds of chunks
+
+https://github.com/webpack/webpack/issues/6248

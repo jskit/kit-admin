@@ -2,8 +2,7 @@ import qs from 'qs';
 import router from '@/router';
 import { Toast, Indicator, MessageBox } from 'mint-ui';
 // import env from '@/config/env';
-import bridge from '@/utils/bridge';
-import device from '@/utils/device';
+// import device from '@/utils/device';
 
 import { compact } from '@/utils';
 import { stringify } from '@/utils/base';
@@ -15,87 +14,26 @@ const passRoutes = ['d_debug', 'd_host', 'd_console', 'spm', 'channel'];
 const mini = {
   // log: tongji.event,
   showToast(msg, callback) {
-    if (device.msf) {
-      bridge.showToast({
-        content: msg,
-        success(res) {
-          // console.log(res);
-          callback && callback(res);
-        },
-      });
-    } else {
-      Toast(msg);
-    }
+    Toast(msg);
   },
   // showAlert: MessageBox.alert,
   showAlert(title, msg, callback) {
-    if (device.msf) {
-      bridge.showAlert({
-        title: title,
-        content: msg,
-        btns: [
-          {
-            id: 2,
-            type: 'sure',
-            text: '确定',
-          },
-        ],
-        success(res) {
-          // console.log(res);
-          if (res.data && res.data.id == 2) {
-            callback && callback('confirm');
-          } else {
-            callback && callback('error');
-          }
-        },
+    MessageBox.alert(msg, title)
+      .then(res => {
+        callback && callback('confirm');
+      })
+      .catch(err => {
+        callback && callback('error');
       });
-    } else {
-      MessageBox.alert(msg, title)
-        .then(res => {
-          callback && callback('confirm');
-        })
-        .catch(err => {
-          callback && callback('error');
-        });
-    }
   },
   showConfirm(title, msg, callback) {
-    if (device.msf) {
-      bridge.showAlert({
-        title: title,
-        content: msg,
-        btns: [
-          {
-            id: 1,
-            type: 'cancel',
-            text: '取消',
-          },
-          {
-            id: 2,
-            type: 'sure',
-            text: '确定',
-          },
-        ],
-        success(res) {
-          // console.log(res);
-          if (res.data && res.data.id == 2) {
-            callback && callback('confirm');
-          } else if (res.data && res.data.id == 1) {
-            callback && callback('cancel');
-          } else {
-            callback && callback('error');
-          }
-        },
+    MessageBox.confirm(msg, title)
+      .then(res => {
+        callback && callback('confirm');
+      })
+      .catch(err => {
+        callback && callback('cancel');
       });
-    } else {
-      MessageBox.confirm(msg, title)
-        .then(res => {
-          callback && callback('confirm');
-        })
-        .catch(err => {
-          callback && callback('cancel');
-        });
-    }
   },
   showLoading(opts = {}) {
     let op = {
@@ -108,24 +46,14 @@ const mini = {
     if (typeof opts === 'object') {
       Object.assign(op, opts);
     }
-    if (device.msf) {
-      bridge.showLoading({
-        content: op.content,
-      });
-    } else {
-      // type = fading-circle snake triple-bounce double-bounce
-      Indicator.open(
-        compact({ text: op.content, spinnerType: op.type || 'fading-circle' })
-      );
-    }
+    // type = fading-circle snake triple-bounce double-bounce
+    Indicator.open(
+      compact({ text: op.content, spinnerType: op.type || 'fading-circle' })
+    );
   },
   hideLoading(times = 0) {
     setTimeout(() => {
-      if (device.msf) {
-        bridge.hideLoading();
-      } else {
-        Indicator.close();
-      }
+      Indicator.close();
     }, times);
   },
   // forward仅用于站内跳转
@@ -147,7 +75,7 @@ const mini = {
       info.pathname = urlInfo.pathname;
       info.path = '/' + info.pathname;
       info.query = Object.assign({}, passParams, urlInfo.query, query);
-      if (urlType !== 'h5Msf') {
+      if (urlType !== 'currentH5Site') {
         // 站外链接指定打开方式为h5
         info.query.target_type = 'h5';
       }
@@ -177,52 +105,7 @@ const mini = {
         ? window.location.origin + url + '?' + queryString
         : window.location.origin + url;
     }
-    // APP环境内
-    if (device.msf) {
-      // 是msf链接
-      if (urlType === 'h5Msf' || urlType === 'other') {
-        // 目前bridge取不到属性，只能从原window对象上取
-        const bridgePages = bridge._pages;
-        // console.log('bridgePages________________', bridge);
-        if (!bridgePages) {
-          console.warn('bridgePages初始化未完成');
-          return;
-        }
-        // APP开放的page
-        if (bridgePages[info.pathname]) {
-          // 是tab页面
-          if (
-            bridgePages[info.pathname]['isTab'] &&
-            query.target_type != 'native'
-          ) {
-            bridge.switchTab({
-              url: info.link,
-            });
-          } else {
-            // 不是tab页面
-            bridge.navigateTo({
-              url: info.link,
-            });
-          }
-        } else {
-          // 站内跳转，target_type=native/h5/miniapp
-          if (query.target_type === 'native') {
-            bridge.navigateTo({
-              url: info.link,
-            });
-          } else {
-            mini.goRouter(info.path, info.query);
-          }
-        }
-      } else {
-        // 其它链接都走这
-        bridge.navigateTo({
-          url: info.link,
-        });
-      }
-      return;
-    }
-    if (urlType === 'h5Msf' || urlType === 'other') {
+    if (urlType === 'currentH5Site' || urlType === 'other') {
       mini.goRouter(info.path, info.query);
     } else {
       location.href = info.link;
@@ -274,7 +157,7 @@ const mini = {
       // if (device.msf && urlType.indexOf('h5') >= 0) {
       //   const schema = 'mishifeng://native/';
       //   const params = getTargetUrl(link, 'schemaMsf');
-      //   if (params.page && urlType === 'h5Msf') {
+      //   if (params.page && urlType === 'currentH5Site') {
       //     link = schema + params.page + '?' + stringify(params.query);
       //   } else if (link.indexOf(domain) === -1) {
       //     link = 'mishifeng://native/webview?url=' + encodeURIComponent(link);
