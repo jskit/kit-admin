@@ -1,5 +1,5 @@
 
-import qs from 'kit-qs'
+import { parse } from 'kit-qs'
 // import Cache from '@/store/cache'
 // import qs from 'query-string'
 // var aa = qs.parse('https://m.iqianggou.com/?from=singlemessage&isappinstalled=0#bargain?id=646156&platform=5')
@@ -13,7 +13,7 @@ import qs from 'kit-qs'
 
 const { location } = window;
 
-const params = qs.parse(location.href) || {};
+const params = parse(location.href) || {};
 
 // const search = location.search.replace('?', '')
 // const hash = (location.href.split('#')[1] || '').split('?')[1]

@@ -31,24 +31,26 @@ export const ENV = {
   dev: {
     stage: 'dev',
     baseUrl: 'http://m.dev.haoshiqi.net',
-    apiBaseUrl: 'http://m.devapi.haoshiqi.net',
+    apiBaseUrl: 'https://api-dev',
   },
   beta: {
     stage: 'beta',
     baseUrl: 'https://m.beta.haoshiqi.net',
-    apiBaseUrl: 'https://m.betaapi.haoshiqi.net',
+    apiBaseUrl: 'https://api-dev',
   },
   test: {
     stage: 'test',
     routerMode: 'hash',
     baseUrl: location.origin, // 当前地址ip 可以取当前 location.origin
-    apiBaseUrl: 'http://m.devapi.haoshiqi.net',
+    apiBaseUrl: 'https://api-dev',
   },
   local: {
     stage: 'local',
     routerMode: 'hash',
     baseUrl: location.origin, // localhost
-    apiBaseUrl: 'https://api-dev',
+    apiBaseUrl: 'https://dapi.cloudai.net',
+    // apiBaseUrl: 'http://10.0.6.55:8080',
+    // apiBaseUrl: 'https://api-dev',
     // apiBaseUrl: 'http://m.devapi.haoshiqi.net',
     // apiBaseUrl: 'http://m.betaapi.haoshiqi.net',
     // apiBaseUrl: 'http://m.api.haoshiqi.net',
@@ -72,9 +74,9 @@ location /v2 {
 */
 const baseEnv = {
   ...debug,
-  version,  // 应用版本
-  channel, // 渠道信息
-  terminal, // 终端
+  version,    // 应用版本
+  channel,    // 渠道信息
+  terminal,   // 终端
   stage: 'prod', // 发行版本
   spm: '', // spm
   port: 8001,
@@ -82,7 +84,9 @@ const baseEnv = {
   baseUrl: 'https://m.haoshiqi.net',
   apiBaseUrl: 'https://m.api.haoshiqi.net',
   // apiMockUrl: 'https://easy-mock.com/mock/5950a2419adc231f356a6636/vue-admin',
-  apiMockUrl: 'https://easy-mock.com/mock/5b0bcc5e030e617380591803',
+  // apiMockUrl: 'https://easy-mock.com/mock/5b0bcc5e030e617380591803',
+  // apiMockUrl: 'https://api-dev',
+  apiMockUrl: '',
   routerMode: 'history',
   // googleAnalyticsId: 'UA-XXXXX-X',
   // baiduAnalyticsId: 'UA-XXXXX-X',

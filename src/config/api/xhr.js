@@ -1,9 +1,12 @@
 import { stringify } from 'qs'
-import _request from '@/utils/request'
+import _request from '@/utils/request/xhr'
 import mini from '@/utils/mini'
 import env from '@/config/env'
 // import { modelApis, commonParams } from './model'
 // import { version } from '../package.json'
+
+const type = 'xhr';
+// const type = 'fetch';
 
 let apiBaseUrl
 apiBaseUrl = `${env.apiBaseUrl}`
@@ -24,6 +27,16 @@ function compact(obj) {
 
 function request(url, options, success, fail) {
   const originUrl = regHttp.test(url) ? url : `${apiBaseUrl}${url}`
+
+  const { method = 'GET' } = options;
+  if (method === 'GET') {
+    return request({
+      url: originUrl,
+      method: 'get',
+      params: { token },
+    })
+  }
+  if (options.)
   return _request(originUrl, compact(options), success, fail)
 }
 
@@ -52,11 +65,12 @@ const modelApis = {
   getTableList: '/table/list',
 
   // 系统管理
+  login: 'POST /admin/login',
+  // login: 'POST /login/login',
+  logout: 'POST /admin/logout',
   adminCheck: '/admin/check',
-  login: '/admin/login',
-  logout: '/admin/logout',
   menu: '/admin/menu',
-  
+
   // 用户管理
   userList: '/sys/user/list',
   userRoleList: '/sys/user/role/list',
@@ -65,26 +79,26 @@ const modelApis = {
   updateUserPwd: 'POST /sys/user/updatePwd',
   updateUserRole: 'POST /sys/user/role/update',
   delUser: 'POST /sys/user/delete',
-  
+
   // 权限管理
   savePower: 'POST /sys/permission/save',
   delPower: 'POST /sys/permission/delete',
   updatePower: 'POST /sys/permission/update',
-  
+
   // 角色管理
   getRoleList: '/sys/role/permission/list',
   saveRole: '/sys/role/save',
   delRole: '/sys/role/delete',
   updateRole: '/sys/role/update',
   updateRolePower: '/sys/role/permission/update',
-  
+
   // 人员管理
   getPersonalList: '/org/personal/list',
   savePersonal: 'POST /org/personal/save',
   delPersonal: '/org/personal/delete',
   updatePersonal: 'POST /org/personal/update',
   searchPersonal: '/org/personal/save',
-  
+
   // 人员证书管理
   getResList: '/personal/resource/list',
   saveRes: '/personal/resource/save',
