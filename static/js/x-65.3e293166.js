@@ -1,1 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["x-65"],{"4d5d":function(n,o,e){"use strict";e.r(o);var l,t,u=e("2877"),i={},p=Object(u["a"])(i,l,t,!1,null,null,null);p.options.__file="monitor.vue",o["default"]=p.exports}}]);
+//# sourceMappingURL=x-65.3e293166.js.map

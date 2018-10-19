@@ -1,1 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["x-27"],{"918e":function(e,t,n){"use strict";n.r(t);var i=function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("article-detail",{attrs:{"is-edit":!0}})},l=[],a=n("de24"),o={name:"editForm",components:{ArticleDetail:a["default"]}},r=o,s=n("2877"),c=Object(s["a"])(r,i,l,!1,null,null,null);c.options.__file="edit.vue";t["default"]=c.exports}}]);
+//# sourceMappingURL=x-27.86c9da81.js.map
