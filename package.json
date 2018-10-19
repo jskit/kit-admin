@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "deploy": "npm run build && npm run deployOnly",
-    "deployOnly": "git rev-parse --short HEAD | xargs gh-pages -d dist -r git@github.com:jskit/admin-x.git --message",
+    "deployOnly": "git rev-parse --short HEAD | xargs gh-pages -d dist -r git@github.com:jskit/kit-admin.git --message",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e"
   },
@@ -20,8 +20,22 @@
       "git add"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jskit/kit-admin.git"
+  },
+  "keywords": [
+    "admin",
+    "kit-admin",
+    "jskit"
+  ],
+  "author": "cloudyan <1395093509@qq.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jskit/kit-admin/issues"
+  },
+  "homepage": "https://github.com/jskit/kit-admin#readme",
   "dependencies": {
-    "element-ui": "^2.4.8",
     "normalize.css": "^8.0.0",
     "nprogress": "^0.2.0",
     "vue": "^2.5.17",
@@ -46,6 +60,7 @@
     "clipboard": "^2.0.1",
     "colour-palette": "^1.0.7",
     "echarts": "^4.2.0-rc.2",
+    "element-ui": "^2.4.8",
     "eslint-plugin-import": "^2.14.0",
     "file-saver": "^2.0.0-rc.3",
     "gh-pages": "^2.0.0",

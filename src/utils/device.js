@@ -2,27 +2,62 @@
 import debug from '@/config/debug';
 
 const ua = navigator.userAgent;
-const platform = navigator.platform || '';
+const pf = navigator.platform || '';
+
+/**
+浏览器/RunTime | 内核（渲染引擎） | JavaScript 引擎
+=== | === | ===
+Chrome | Blink（28~）Webkit（Chrome 27） | V8
+FireFox | Gecko | SpiderMonkey
+Safari | Webkit | JavaScriptCore
+Edge | EdgeHTML | Chakra(for JavaScript)
+IE | Trident(4-11) | Chakra(for JScript)
+PhantomJS | Webkit | JavaScriptCore
+Node.js | - | V8
+Android 腾讯内 | X5 | -
+*/
 
 const device = {
-  system: '',
-  os: {},
-  host: {},
-  browser: {},
+  ua: '',
   phone: false,
   tablet: false,
   mobileGrade: '',
-  userAgent: ua,
+  // 平台 windows mac xll iphone android
+  platform: {
+    // name: '',
+    // version: '',
+  },
+  // 宿主 wechat aliapy hybrid browser
+  host: {
+    // name: '',
+    // version: '',
+  },
+  // 操作系统 ios android mac windows wp
+  browser: {
+    // name: 'Chrome',
+    // version: '70.0.3538.67',
+    // major: '70',
+  },
+  engine: {
+    // name: 'WebKit',
+    // version: '537.36',
+  },
+  os: {
+    // name: 'Mac OS',
+    // version: '10.13.6',
+  },
+  device: {},
+  cpu: {},
 };
 
-// 系统平台 windows mac xll iphone android
-let system = '';
-// 操作系统 ios android mac windows wp
-const os = {
-  name: '', //
+let platform = {
+  name: '',
   version: '',
 };
-// 宿主 wechat aliapy hybrid browser
+const os = {
+  name: '',
+  version: '',
+};
 const host = {
   name: '',
   version: '',
@@ -43,8 +78,8 @@ const iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
 const webos = ua.match(/(webOS|hpwOS)[\s\/]([\d.]+)/);
 // PC
 const osx = !!ua.match(/\(Macintosh\; Intel /);
-const win = /Win\d{2}|Windows/.test(platform);
-const x11 = platform.indexOf('X11') === 0 || platform.indexOf('Linux') === 0;
+const win = /Win\d{2}|Windows/.test(pf);
+const x11 = pf.indexOf('X11') === 0 || pf.indexOf('Linux') === 0;
 const wp = ua.match(/Windows Phone ([\d.]+)/);
 const touchpad = webos && ua.match(/TouchPad/);
 const kindle = ua.match(/Kindle\/([\d.]+)/);
@@ -182,7 +217,7 @@ if (os.ios && os.version && ua.indexOf('Version/') >= 0) {
 
 // 系统平台/设备
 // prettier-ignore
-system = android ? 'android' :
+platform.name = android ? 'android' :
   iphone ? 'iphone' :
   win ? 'windows' :
   osx ? 'mac' :
@@ -286,7 +321,11 @@ if (webview && innerWidth * innerHeight === screen.width * screen.height) {
 // Classes
 const classNames = [];
 
-classNames.push(`host-${host.name}`, `system-${system}`, `os-${os.name}`);
+classNames.push(
+  `host-${host.name}`,
+  `platform-${platform.name}`,
+  `os-${os.name}`
+);
 
 // Pixel Ratio
 device.pixelRatio = window.devicePixelRatio || 1;
@@ -328,7 +367,7 @@ if (classNames.length > 0) {
 }
 
 Object.assign(device, {
-  system,
+  platform,
   os,
   host,
   browser,
@@ -351,7 +390,7 @@ console.log('device: ', device);
 export default device;
 
 /* eslint max-len: 0 */
-// Mac navigator.platform = "MacIntel"
+// Mac navigator.pf = "MacIntel"
 // Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
 // Linux
 // Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36

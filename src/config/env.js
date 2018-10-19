@@ -52,8 +52,8 @@ console.info('channel:', channel);
 export const ENV = {
   prod: {
     stage: 'prod',
-    baseUrl: 'm.mishifeng.com',
-    apiBaseUrl: 'open.mishifeng.com',
+    baseUrl: 'demo1.cloudai.net',
+    apiBaseUrl: 'api.cloudai.net',
   },
   beta: {
     stage: 'beta',
@@ -117,6 +117,7 @@ const baseEnv = {
   defaultShareInfo, // 默认分享数据
   tongjiConfig, // 统计相关配置数据
   // 正则判断当前站点url
+  baseUrl: location.host,
   regBaseUrl: /(m(\.dev|\.beta)?\.mishifeng\.com)/i,
   mode: modes[currentMode] || 'prod', // 运行/编译模式
   stage: 'prod', // 发行版本
@@ -197,24 +198,23 @@ const regLocalIp = /^(10\.|192\.)/i;
 
 function createEnv(opts = {}) {
   const { host = ENV.baseUrl } = location;
-  const prodEnv = { ...baseEnv, ...ENV.prod };
+  let current = { ...baseEnv, ...ENV.prod };
   if (host === ENV['prod'].baseUrl) {
-    return prodEnv;
+    return current;
   }
-  let current = {};
   if (host === ENV['beta'].baseUrl) {
-    current = { ...prodEnv, ...ENV.beta, ...debugInfo };
+    current = { ...baseEnv, ...ENV.beta, ...debugInfo };
   }
 
   if (host === ENV['dev'].baseUrl) {
-    current = { ...prodEnv, ...ENV.dev, ...debugInfo };
+    current = { ...baseEnv, ...ENV.dev, ...debugInfo };
   }
 
   const isLocal = host.match(regLocal);
   const isLocalIp = host.match(regLocalIp);
   if (isLocal || isLocalIp) {
     current = {
-      ...prodEnv,
+      ...baseEnv,
       ...ENV.local,
       // baseUrl: `${origin}/#`,
       // apiBaseUrl: `${origin}`,

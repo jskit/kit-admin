@@ -103,7 +103,7 @@ module.exports = {
     // modules: false,
     sourceMap: !__PROD__,
   },
-  productionSourceMap: !__PROD__,
+  // productionSourceMap: !__PROD__,
   devServer: {
     overlay: {
       warnings: true,
