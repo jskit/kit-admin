@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-49.42231400.js"
   },
   {
-    "revision": "cd8e22c1599bac3a4eba",
+    "revision": "3cae1711d82164f0a2d6",
     "url": "https://img1.haoshiqi.net/static/css/app.ce14a18d.css"
   },
   {
@@ -288,8 +288,8 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/css/x-49.e77af7b9.css"
   },
   {
-    "revision": "cd8e22c1599bac3a4eba",
-    "url": "https://img1.haoshiqi.net/static/js/app.4fb62638.js"
+    "revision": "3cae1711d82164f0a2d6",
+    "url": "https://img1.haoshiqi.net/static/js/app.763e225a.js"
   },
   {
     "revision": "fb2c8a10eea40f48362c",
@@ -568,7 +568,7 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/robots.txt"
   },
   {
-    "revision": "a81c595dcb8143d31b8ba6ea424f683f",
+    "revision": "6ef490583446f711e6dc0ae0c3065f6f",
     "url": "https://img1.haoshiqi.net/index.html"
   },
   {
