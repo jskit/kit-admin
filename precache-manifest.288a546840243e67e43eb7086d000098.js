@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
     "revision": "d26674aa810bbf1a63e4",
-    "url": "https://img1.haoshiqi.net/static/css/x-49.e77af7b9.css"
+    "url": "https://img1.haoshiqi.net/static/js/x-49.42231400.js"
   },
   {
-    "revision": "717d1f807af5f82ad29d",
+    "revision": "a73851d2186cfaf0cf41",
     "url": "https://img1.haoshiqi.net/static/css/app.ce14a18d.css"
   },
   {
@@ -284,12 +284,12 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-48.1282583c.js"
   },
   {
-    "revision": "717d1f807af5f82ad29d",
-    "url": "https://img1.haoshiqi.net/static/js/app.665a7913.js"
+    "revision": "d26674aa810bbf1a63e4",
+    "url": "https://img1.haoshiqi.net/static/css/x-49.e77af7b9.css"
   },
   {
-    "revision": "d26674aa810bbf1a63e4",
-    "url": "https://img1.haoshiqi.net/static/js/x-49.42231400.js"
+    "revision": "a73851d2186cfaf0cf41",
+    "url": "https://img1.haoshiqi.net/static/js/app.9ebb74d3.js"
   },
   {
     "revision": "fb2c8a10eea40f48362c",
@@ -568,7 +568,11 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/robots.txt"
   },
   {
-    "revision": "717a3d9d2110777d4285279fa7f00b6e",
+    "revision": "49dcee7c2264ea5cdb7eeab7629f0753",
     "url": "https://img1.haoshiqi.net/index.html"
+  },
+  {
+    "revision": "6c3921fec5f2f1c65cb2695e764567bd",
+    "url": "https://img1.haoshiqi.net/CNAME"
   }
 ];
