@@ -4,12 +4,12 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-49.42231400.js"
   },
   {
-    "revision": "a73851d2186cfaf0cf41",
+    "revision": "cd8e22c1599bac3a4eba",
     "url": "https://img1.haoshiqi.net/static/css/app.ce14a18d.css"
   },
   {
-    "revision": "b5ae3d543ef7e266dd7a",
-    "url": "https://img1.haoshiqi.net/static/js/chunk-45ff05b0.1dcc5695.js"
+    "revision": "1174ae444a736814754f",
+    "url": "https://img1.haoshiqi.net/static/js/chunk-45ff05b0.dbaa0e1c.js"
   },
   {
     "revision": "18a4ca1ec641378afc02",
@@ -144,12 +144,12 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-24.f4f52eb3.js"
   },
   {
-    "revision": "1f0701321a621b1f9fa2",
+    "revision": "9aecf880c33b7bbefe90",
     "url": "https://img1.haoshiqi.net/static/css/x-25.568c6b90.css"
   },
   {
-    "revision": "1f0701321a621b1f9fa2",
-    "url": "https://img1.haoshiqi.net/static/js/x-25.23b819d3.js"
+    "revision": "9aecf880c33b7bbefe90",
+    "url": "https://img1.haoshiqi.net/static/js/x-25.64e27ca9.js"
   },
   {
     "revision": "2f5a3fa8d3fcaf17cc75",
@@ -288,8 +288,8 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/css/x-49.e77af7b9.css"
   },
   {
-    "revision": "a73851d2186cfaf0cf41",
-    "url": "https://img1.haoshiqi.net/static/js/app.9ebb74d3.js"
+    "revision": "cd8e22c1599bac3a4eba",
+    "url": "https://img1.haoshiqi.net/static/js/app.4fb62638.js"
   },
   {
     "revision": "fb2c8a10eea40f48362c",
@@ -348,16 +348,16 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-57.5e0d412e.js"
   },
   {
-    "revision": "aa326f38fe8428a53013",
-    "url": "https://img1.haoshiqi.net/static/js/x-58.dec01213.js"
+    "revision": "760e082b0e3417ec5266",
+    "url": "https://img1.haoshiqi.net/static/js/x-58.2597a9c5.js"
   },
   {
-    "revision": "140a659f92bc70f8d875",
+    "revision": "5aeeeba75ed34f86a5ab",
     "url": "https://img1.haoshiqi.net/static/css/x-59.e77af7b9.css"
   },
   {
-    "revision": "140a659f92bc70f8d875",
-    "url": "https://img1.haoshiqi.net/static/js/x-59.babcc31d.js"
+    "revision": "5aeeeba75ed34f86a5ab",
+    "url": "https://img1.haoshiqi.net/static/js/x-59.0af4d2ad.js"
   },
   {
     "revision": "d57f1294ee97bd7437b5",
@@ -368,16 +368,16 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-6.b9096ada.js"
   },
   {
-    "revision": "527e9cf343c4c770f564",
-    "url": "https://img1.haoshiqi.net/static/js/x-60.e488e2c6.js"
+    "revision": "7c28f8b6ece948927ef7",
+    "url": "https://img1.haoshiqi.net/static/js/x-60.3e86d527.js"
   },
   {
-    "revision": "2a730da7ad7b680dbd77",
+    "revision": "a03f0e1e6417c2173f6f",
     "url": "https://img1.haoshiqi.net/static/css/x-61.e77af7b9.css"
   },
   {
-    "revision": "2a730da7ad7b680dbd77",
-    "url": "https://img1.haoshiqi.net/static/js/x-61.22f591f3.js"
+    "revision": "a03f0e1e6417c2173f6f",
+    "url": "https://img1.haoshiqi.net/static/js/x-61.7849332f.js"
   },
   {
     "revision": "ec38415b92421d658940",
@@ -408,16 +408,16 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-65.3e293166.js"
   },
   {
-    "revision": "96ebb67aae4039260bea",
-    "url": "https://img1.haoshiqi.net/static/js/x-66.c231325f.js"
+    "revision": "76047ad8c0516ab5e890",
+    "url": "https://img1.haoshiqi.net/static/js/x-66.caa10eee.js"
   },
   {
-    "revision": "6317f8524354ef79c5cb",
+    "revision": "b6debe1a04208077924a",
     "url": "https://img1.haoshiqi.net/static/css/x-67.e77af7b9.css"
   },
   {
-    "revision": "6317f8524354ef79c5cb",
-    "url": "https://img1.haoshiqi.net/static/js/x-67.089b93b3.js"
+    "revision": "b6debe1a04208077924a",
+    "url": "https://img1.haoshiqi.net/static/js/x-67.6d12dc16.js"
   },
   {
     "revision": "7425951f6e70e1fd1e0d",
@@ -464,12 +464,12 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-74.07d8b55f.js"
   },
   {
-    "revision": "02ac8df0371e969185f1",
+    "revision": "b87f1bc60a3de66c8d83",
     "url": "https://img1.haoshiqi.net/static/css/x-75.47b53916.css"
   },
   {
-    "revision": "02ac8df0371e969185f1",
-    "url": "https://img1.haoshiqi.net/static/js/x-75.f395a77a.js"
+    "revision": "b87f1bc60a3de66c8d83",
+    "url": "https://img1.haoshiqi.net/static/js/x-75.1c209efc.js"
   },
   {
     "revision": "fe76d11138ddfe7c290a",
@@ -520,8 +520,8 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/static/js/x-81.7fbcf98c.js"
   },
   {
-    "revision": "5fe88ca91787575e7e3a",
-    "url": "https://img1.haoshiqi.net/static/js/x-82.62b67715.js"
+    "revision": "03bf1ad542fd3823a8f3",
+    "url": "https://img1.haoshiqi.net/static/js/x-82.b22378f5.js"
   },
   {
     "revision": "6a5b0b88f97bdc15191e",
@@ -568,7 +568,7 @@ self.__precacheManifest = [
     "url": "https://img1.haoshiqi.net/robots.txt"
   },
   {
-    "revision": "49dcee7c2264ea5cdb7eeab7629f0753",
+    "revision": "a81c595dcb8143d31b8ba6ea424f683f",
     "url": "https://img1.haoshiqi.net/index.html"
   },
   {

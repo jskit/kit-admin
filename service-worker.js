@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.2/workbox-sw.js");
 
 importScripts(
-  "https://img1.haoshiqi.net/precache-manifest.288a546840243e67e43eb7086d000098.js"
+  "https://img1.haoshiqi.net/precache-manifest.d7ba4d830ea4c69413ae1eb0741f396e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "admin-x"});
