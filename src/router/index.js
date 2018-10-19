@@ -8,14 +8,14 @@ import {
 } from '@/utils/storage';
 
 const _import = require('./_import_' + process.env.NODE_ENV);
-
 // 使用下面的方法，编译速度很慢
 // function _import(page) {
 //   if (env.isMode('prod')) {
 //     return () => import(/* webpackChunkName: "x-[index]" */ `@/views/${page}`);
 //   }
-//   return () =>
-//     import(/* webpackChunkName: "[request]-[index]" */ `@/views/${page}`);
+//   return () => require(`@/views/${page}.vue`).default;
+//   // return () =>
+//   //   import(/* webpackChunkName: "[request]-[index]" */ `@/views/${page}`);
 // }
 
 // in development-env not use lazy-loading,
