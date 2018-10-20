@@ -39,12 +39,12 @@ console.log('currAddress:', currAddress);
 
 // 公共参数
 headers.init({
-  token: userInfo.token || '',
-  userId: userInfo.id || '', // 用户唯一标志
+  // token: userInfo.token || '',
+  // user_id: userInfo.id || '', // 用户唯一标志
 });
 commonParams.init({
-  // token: userInfo.token,
-  // user_id: userInfo.id, // || '1000001001', // 用户唯一标志
+  token: userInfo.token,
+  user_id: userInfo.id, // || '1000001001', // 用户唯一标志
   udid: env.getUUID(), // 设备唯一标志
   // device: '', // 设备
   // net: '', // 网络

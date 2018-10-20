@@ -44,7 +44,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../style/var';
+@import '~@/style/var';
 
 // 支付宝内滚动抖动，放在滚动元素外就OK了
 .vue-tabbar {

@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../style/var';
+@import '~@/style/var';
 
 .app-wrapper {
   position: relative;

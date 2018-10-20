@@ -97,6 +97,8 @@ export default function request({
 
   function log(res) {
     console.log(`api: ${method} ${res.status} ${url}`);
+    if (!res.errno) res.errno = res.statusCode;
+    if (!res.errmsg) res.errmsg = res.message;
     return res;
   }
 
@@ -105,8 +107,9 @@ export default function request({
     .then(checkStatus)
     .then(res => {
       // console.log(JSON.stringify(res));
-      const errno = res.data.errno || res.data.statusCode;
-      const errmsg = res.data.errmsg || res.data.message;
+      const data = res.data || res || {};
+      const errno = data.errno;
+      const errmsg = data.errmsg;
       if (errno === 0) {
         successCallBack({
           errno,

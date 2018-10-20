@@ -42,6 +42,12 @@ textarea {
   -webkit-font-smoothing: antialiased;
 }
 
+// chrome表单自动填充去掉input黄色背景解决方案
+input:-webkit-autofill {
+  // background-color: #fff;
+  // background-image: none;
+}
+
 // placeholder并不支持padding和height值，在Android手机原生浏览器里面如果设置了line-height的值，比如设为line-height:32px
 // 在Android自带浏览器、百度手机浏览器、小米自带浏览器上出现图一的问题（占位符靠顶部）。uc/qq正常
 // 解决办法：把line-height设置为line-height:normal(或者不设置行高问题，只设置padding即可)

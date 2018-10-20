@@ -33,14 +33,14 @@ const user = {
       };
       state.userInfo = data;
       state.logged = getLoginStatus(data);
-      api.setHeader({
-        token: data.token || '',
-        userId: data.id || '',
-      });
-      // api.setCommonParams({
+      // api.setHeader({
       //   token: data.token || '',
-      //   userId: data.id || '',
+      //   user_id: data.id || '',
       // });
+      api.setCommonParams({
+        token: data.token || '',
+        user_id: data.id || '',
+      });
       storage.set('userInfo', data, 86400 * 30);
     },
     SET_SETTING: (state, setting) => {

@@ -14,8 +14,8 @@
     "loginCount": 13,
     "token": "5fa30fcfda99837723352693984f4ed09a741a6c"
   },
-  "message": "success",
-  "statusCode": 0,
-  "elapsedTime": 99,
+  "errmsg": "success",
+  "errno": 0,
+  "logid": 99,
   "timestamp": 1539757407445
 }
