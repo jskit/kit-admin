@@ -85,7 +85,13 @@ export default {
             //传递给父组件的complete方法
             resData.domain = result.img_domain;
             resData.pic = result.img_domain + resData.key;
-            this.$emit('complete', 200, resData, target, idx);
+            let img = new Image();
+            img.onload = () => {
+              resData.width = img.width;
+              resData.height = img.height;
+              this.$emit('complete', 200, resData, target, idx);
+            };
+            img.src = resData.pic;
           } else {
             this.$emit('complete', 500, '上传七牛失败');
             this.result = {};
