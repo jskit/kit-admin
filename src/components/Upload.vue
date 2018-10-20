@@ -71,6 +71,7 @@ export default {
           },
           error => {
             this.$emit('complete', 500, error.message);
+            event.target.value = null;
           }
         );
       }
