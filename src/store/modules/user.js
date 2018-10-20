@@ -33,10 +33,10 @@ const user = {
       };
       state.userInfo = data;
       state.logged = getLoginStatus(data);
-      // api.setHeader({
-      //   token: data.token || '',
-      //   user_id: data.id || '',
-      // });
+      api.setHeader({
+        token: data.token || '',
+        userId: data.id || '',
+      });
       api.setCommonParams({
         token: data.token || '',
         user_id: data.id || '',

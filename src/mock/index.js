@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+import env from '@/config/env';
 import api from '@/api';
 import loginAPI from './login';
 // import sysApi from './sys';
@@ -22,34 +23,36 @@ Mock.XHR.prototype.send = function(...rest) {
 // https://github.com/nuysoft/Mock/wiki/Mock.mock()
 // 从 1.0 开始，Mock.js 通过覆盖和模拟原生 XMLHttpRequest 的行为来拦截 Ajax 请求，不再依赖于第三方 Ajax 工具库（例如 jQuery、Zepto 等）。
 
-// 登录相关
-Mock.mock(/\/admin\/login/, 'post', loginAPI.login);
-Mock.mock(/\/admin\/logout/, 'post', loginAPI.logout);
-Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
+if (env.isMode('dev')) {
+  // 登录相关
+  Mock.mock(/\/admin\/login/, 'post', loginAPI.login);
+  Mock.mock(/\/admin\/logout/, 'post', loginAPI.logout);
+  Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
 
-// console.log(require('./json/menu'));
-// debugger;
-Mock.mock(/\/admin\/menu/, 'get', require('./json/menu'));
-// Mock.mock(/\/sys\/user\/info/, 'get', sysApi.getUserInfo);
+  // console.log(require('./json/menu'));
+  // debugger;
+  Mock.mock(/\/admin\/menu/, 'get', require('./json/menu'));
+  // Mock.mock(/\/sys\/user\/info/, 'get', sysApi.getUserInfo);
 
-// 文章相关
-Mock.mock(/\/article\/list/, 'get', api.getList);
-Mock.mock(/\/article\/detail/, 'get', api.getArticle);
-Mock.mock(/\/article\/pv/, 'get', api.getPv);
-Mock.mock(/\/article\/create/, 'post', api.createArticle);
-Mock.mock(/\/article\/update/, 'post', api.updateArticle);
+  // 文章相关
+  Mock.mock(/\/article\/list/, 'get', api.getList);
+  Mock.mock(/\/article\/detail/, 'get', api.getArticle);
+  Mock.mock(/\/article\/pv/, 'get', api.getPv);
+  Mock.mock(/\/article\/create/, 'post', api.createArticle);
+  Mock.mock(/\/article\/update/, 'post', api.updateArticle);
 
-// 搜索相关
-Mock.mock(/\/search\/user/, 'get', api.searchUser);
+  // 搜索相关
+  Mock.mock(/\/search\/user/, 'get', api.searchUser);
 
-// 账单相关
-Mock.mock(/\/transaction\/list/, 'get', api.getList);
+  // 账单相关
+  Mock.mock(/\/transaction\/list/, 'get', api.getList);
 
-// Examples
-// Table
-Mock.mock(/\/table\/list/, 'get', api.getTableList);
-Mock.mock(/\/user\/list/, 'get', api.getUserList);
-Mock.mock(/\/user\/account/, 'get', api.getAccountList);
+  // Examples
+  // Table
+  Mock.mock(/\/table\/list/, 'get', api.getTableList);
+  Mock.mock(/\/user\/list/, 'get', api.getUserList);
+  Mock.mock(/\/user\/account/, 'get', api.getAccountList);
+}
 
 export default Mock;
 
