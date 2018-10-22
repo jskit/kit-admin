@@ -39,8 +39,8 @@ console.log('currAddress:', currAddress);
 
 // 公共参数
 headers.init({
-  token: userInfo.token || '',
-  userId: userInfo.id || '', // 用户唯一标志
+  // token: userInfo.token || '',
+  // userId: userInfo.id || '', // 用户唯一标志
 });
 commonParams.init({
   token: userInfo.token,

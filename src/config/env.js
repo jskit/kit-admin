@@ -131,7 +131,7 @@ const baseEnv = {
   routerMode: 'history',
   publicPath: '',
   isMode(current) {
-    const mode = this;
+    const { mode } = this;
     return (
       mode === current || (Array.isArray(current) && current.indexOf(mode) > -1)
     );

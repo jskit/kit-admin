@@ -125,6 +125,7 @@ export default {
             email: username.trim(),
             password,
           };
+          console.log('login');
           this.$store
             .dispatch('Login', userInfo)
             .then(() => {
