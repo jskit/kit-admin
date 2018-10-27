@@ -23,15 +23,19 @@ Mock.XHR.prototype.send = function(...rest) {
 // https://github.com/nuysoft/Mock/wiki/Mock.mock()
 // 从 1.0 开始，Mock.js 通过覆盖和模拟原生 XMLHttpRequest 的行为来拦截 Ajax 请求，不再依赖于第三方 Ajax 工具库（例如 jQuery、Zepto 等）。
 if (env.isMode('dev')) {
-  // 登录相关
-  Mock.mock(/\/admin\/login/, 'post', loginAPI.login);
-  Mock.mock(/\/admin\/logout/, 'post', loginAPI.logout);
+  // 用户相关
+  Mock.mock(/\/user\/login/, 'post', loginAPI.login);
+  Mock.mock(/\/user\/logout/, 'post', loginAPI.logout);
+  Mock.mock(/\/user\/register/, 'post', loginAPI.logout);
+  Mock.mock(/\/user\/forgot/, 'post', loginAPI.logout);
   Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
 
-  // console.log(require('./json/menu'));
-  // debugger;
-  Mock.mock(/\/admin\/menu/, 'get', require('./json/menu'));
-  // Mock.mock(/\/sys\/user\/info/, 'get', sysApi.getUserInfo);
+  Mock.mock(/\/sys\/menu/, 'get', require('./json/menu'));
+  Mock.mock(/\/sys\/account/, 'get', require('./json/menu'));
+  Mock.mock(/\/sys\/role/, 'get', require('./json/menu'));
+  Mock.mock(/\/sys\/notice/, 'get', require('./json/menu'));
+  Mock.mock(/\/sys\/dict/, 'get', require('./json/menu'));
+  Mock.mock(/\/sys\/job/, 'get', require('./json/menu'));
 
   // 文章相关
   Mock.mock(/\/article\/list/, 'get', api.getList);

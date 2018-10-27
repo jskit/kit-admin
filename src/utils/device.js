@@ -18,9 +18,9 @@ Android 腾讯内 | X5 | -
 */
 
 const device = {
-  ua: '',
-  phone: false,
-  tablet: false,
+  ua,
+  phone: false, // 手机
+  tablet: false, // 平板
   mobileGrade: '',
   // 平台 windows mac xll iphone android
   platform: {

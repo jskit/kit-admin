@@ -45,6 +45,33 @@ yarn deploy
 deploy branch gh-pages
 ```
 
+## 规划发展
+
+- 接口命名，良好一致的命名规范
+  - 参考 https://segmentfault.com/user/login
+  - user/login|register|forgot|phoneLogin
+  - sys/menu|account|dict|job|monitor|notice|role|sql
+  - org/dept|res|personnel|post
+  - oss/oss
+  - project/proj|task|tender|tracking
+  - example/xxx
+- 开发示例
+  - 各种组件开发示例等
+- 并行开发流程
+  - MockServer 配置
+- 登录方式
+  - 手机登录 - 短信
+  - 邮箱登录
+  - QQ登录
+  - 微博登录
+  - 微信个人账户
+  - 微信公众账号
+  - 微信小程序
+  - 匿名登录
+  - 集成已有认证方式
+- 用户列表
+  - 用户昵称 手机号码 邮箱 登录方式 创建日期 上次登录 UID
+
 ## 项目配置调整以及增强
 
 - [x] vue-cli 3.0 搭建最新vue版本
@@ -75,6 +102,8 @@ deploy branch gh-pages
 - [x] Debug 调试页面 `/#/debug`
 - [x] bridge `@/utils/bridge`
 - [ ] 统计数据 `@/utils/tongji`
+- [x] 样式引入
+  - `import '~@/'`
 
 ## 功能封装
 
