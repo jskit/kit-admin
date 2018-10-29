@@ -1,3 +1,4 @@
+// ~/.vuerc or ./vue.config.js
 const path = require('path');
 const QiniuPlugin = require('qiniu-webpack-plugin');
 const svgoConfig = require('./svgo-config.json');
