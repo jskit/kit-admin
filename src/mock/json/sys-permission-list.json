@@ -807,8 +807,8 @@
     "type": "2",
     "visible": 1
   }],
-  "message": "success",
-  "statusCode": 0,
-  "elapsedTime": 47,
-  "timestamp": 1540027519867
+  "errmsg": "success",
+  "errno": 0,
+  "logid": 99,
+  "timestamp": 1539757407445
 }

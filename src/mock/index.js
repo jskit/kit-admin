@@ -31,11 +31,29 @@ if (env.isMode('dev')) {
   Mock.mock(/\/user\/info\.*/, 'get', loginAPI.getUserInfo);
 
   Mock.mock(/\/sys\/menu/, 'get', require('./json/menu'));
-  Mock.mock(/\/sys\/account/, 'get', require('./json/menu'));
-  Mock.mock(/\/sys\/role/, 'get', require('./json/menu'));
-  Mock.mock(/\/sys\/notice/, 'get', require('./json/menu'));
-  Mock.mock(/\/sys\/dict/, 'get', require('./json/menu'));
-  Mock.mock(/\/sys\/job/, 'get', require('./json/menu'));
+
+  // Mock.mock(/\/sys\/account/, 'get', require('./json/menu'));
+  // Mock.mock(/\/sys\/role/, 'get', require('./json/menu'));
+  // Mock.mock(/\/sys\/notice/, 'get', require('./json/menu'));
+  // Mock.mock(/\/sys\/dict/, 'get', require('./json/menu'));
+  // Mock.mock(/\/sys\/job/, 'get', require('./json/menu'));
+
+  Mock.mock(/sys\/role\/list/, 'get', require('./json/sys-role-list'));
+  Mock.mock(/sys\/user\/list/, 'get', require('./json/sys-user-list'));
+  Mock.mock(/sys\/dict\/list/, 'get', require('./json/sys-dict-list'));
+  Mock.mock(
+    /sys\/permission\/list/,
+    'get',
+    require('./json/sys-permission-list')
+  );
+  Mock.mock(
+    /sys\/scheduleJob\/list/,
+    'get',
+    require('./json/sys-scheduleJob-list')
+  );
+
+  Mock.mock(/org\/dept\/list/, 'get', require('./json/org-dept-list'));
+  Mock.mock(/org\/personal\/list/, 'get', require('./json/org-personal-list'));
 
   // 文章相关
   Mock.mock(/\/article\/list/, 'get', api.getList);
