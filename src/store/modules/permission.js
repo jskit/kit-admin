@@ -152,6 +152,8 @@ const permission = {
             const { menuList, permissionList } = res.data;
             const { menus, menusMap } = fnDynamicMenu(menuList);
             // const menuListMap = getMenuListMap(menuList);
+
+            // 链接必须先在路由 asyncRouterMap 中添加，然后才能由数据返回结构控制是否注册
             const accessedRouters = filterAsyncRouter2(
               asyncRouterMap,
               menusMap
@@ -160,7 +162,7 @@ const permission = {
             session.set('menuList', menuList, 86400);
             session.set('permissionList', permissionList, 86400);
             // const dynamicMenu = fnDynamicMenu(menuList);
-            console.log(menus);
+            console.log('menus: ', menus);
             commit('SET_MENUS', menus);
             // commit('SET_ROUTERS', dynamicMenuRoutes)
             commit('SET_ROUTERS', accessedRouters);

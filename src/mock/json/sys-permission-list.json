@@ -806,6 +806,17 @@
     "state": 0,
     "type": "2",
     "visible": 1
+  },{
+    "children": [],
+    "icon": "gc1",
+    "id": "8a80869d66768aab0166768cebed0075",
+    "link": "helper/link",
+    "name": "工具助手",
+    "parentId": "8a80869d66768aab0166768cebe00078",
+    "position": 0,
+    "state": 0,
+    "type": "1",
+    "visible": 1
   }],
   "errmsg": "success",
   "errno": 0,

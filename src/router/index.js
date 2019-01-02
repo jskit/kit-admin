@@ -301,6 +301,27 @@ export const asyncRouterMap = [
       },
     ],
   },
+  {
+    path: '/helper',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'helper',
+    meta: {
+      title: '工具助手',
+      icon: 'icon',
+    },
+    children: [
+      {
+        path: 'link',
+        component: _import('modules/helper/link'),
+        name: 'link',
+        meta: {
+          title: '链接生成工具',
+          icon: 'gc1',
+        },
+      },
+    ],
+  },
 
   { path: '*', redirect: '/404', hidden: true },
 ];

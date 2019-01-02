@@ -44,6 +44,7 @@ router.beforeEach((to, from, next) => {
             // 使用本地控制路由
             // store.dispatch('GenerateLocalRoutes', { roles }).then(() => {
             // 动态添加可访问路由表
+            console.log('addRoutes: ', store.getters.addRouters);
             router.addRoutes(store.getters.addRouters);
             router.options.isAddDynamicRouters = true;
             // hack方法 确保addRoutes已完成

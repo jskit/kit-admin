@@ -117,7 +117,7 @@
             "children": [],
             "icon": "documentation",
             "id": "8a80869d66768aab0166768ce74e002a",
-            "link": "oss",
+            "link": "oss/oss",
             "name": "文件管理",
             "parentId": "8a80869d66768aab0166768ce70a0024",
             "position": 1,
@@ -254,6 +254,43 @@
         "name": "项目管理",
         "parentId": "8a80869d66768aab0166768ce52c0000",
         "position": 4,
+        "state": 0,
+        "type": "0",
+        "visible": 1
+      },
+      {
+        "children": [
+          {
+            "children": [],
+            "icon": "navigate",
+            "id": "8a80869d66768aab0166768ce5780011",
+            "link": "helper/link",
+            "name": "链接工具",
+            "parentId": "8a80869d66768aab0166768ce3434343",
+            "position": 0,
+            "state": 0,
+            "type": "1",
+            "visible": 1
+          },
+          {
+            "children": [],
+            "icon": "gc1",
+            "id": "8a80869d66768aab0166768ce5780012",
+            "link": "helper/link-old",
+            "name": "链接工具old",
+            "parentId": "8a80869d66768aab0166768ce3434343",
+            "position": 0,
+            "state": 0,
+            "type": "1",
+            "visible": 1
+          }
+        ],
+        "icon": "icon",
+        "id": "8a80869d66768aab0166768ce3434343",
+        "link": "helper",
+        "name": "链接工具",
+        "parentId": "8a80869d66768aab0166768ce52c0000",
+        "position": 0,
         "state": 0,
         "type": "0",
         "visible": 1
