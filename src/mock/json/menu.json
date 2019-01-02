@@ -283,6 +283,18 @@
             "state": 0,
             "type": "1",
             "visible": 1
+          },
+          {
+            "children": [],
+            "icon": "gc1",
+            "id": "8a80869d66768aab0166768ce5780013",
+            "link": "helper/cdn",
+            "name": "图片CDN",
+            "parentId": "8a80869d66768aab0166768ce3434343",
+            "position": 0,
+            "state": 0,
+            "type": "1",
+            "visible": 1
           }
         ],
         "icon": "icon",

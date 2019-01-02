@@ -320,6 +320,15 @@ export const asyncRouterMap = [
           icon: 'gc1',
         },
       },
+      {
+        path: 'cdn',
+        component: _import('modules/helper/cdn'),
+        name: 'cdn',
+        meta: {
+          title: '图片CDN',
+          icon: 'gc1',
+        },
+      },
     ],
   },
 
