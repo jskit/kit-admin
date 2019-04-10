@@ -1,13 +1,16 @@
 <template>
-  <div class="app-wrapper"
+  <div
+    class="app-wrapper"
     v-loading.fullscreen.lock="loading"
     element-loading-text="拼命加载中"
-    :class="classObj">
+    :class="classObj"
+  >
     <template v-if="!loading">
       <div
         class="drawer-bg"
-        v-if="device==='mobile' && sidebar.opened"
-        @click="handleClickOutside"></div>
+        v-if="device === 'mobile' && sidebar.opened"
+        @click="handleClickOutside"
+      ></div>
       <!-- <div class="kit-sidebar">
 
         <div class="kit-sidebar__body">

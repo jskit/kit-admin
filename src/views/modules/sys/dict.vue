@@ -2,9 +2,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :model="dataForm"
-      :inline="true">
+      <el-form :model="dataForm" :inline="true">
         <el-form-item label="">
           <el-input
             placeholder="名称"
@@ -15,9 +13,28 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleAddOrUpdate()" type="success" icon="el-icon-edit">新增</el-button>
-        <el-button type="danger" @click="handleDelete()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleAddOrUpdate()"
+          type="success"
+          icon="el-icon-edit"
+          >新增</el-button
+        >
+        <el-button
+          type="danger"
+          @click="handleDelete()"
+          :disabled="dataListSelections.length <= 0"
+          >批量删除</el-button
+        >
       </el-form>
     </div>
 
@@ -29,12 +46,13 @@
       border
       highlight-current-row
       @selection-change="handleSelectionChange"
-      >
+    >
       <el-table-column
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        width="50"
+      >
       </el-table-column>
       <!-- <el-table-column
         prop="userId"
@@ -43,44 +61,52 @@
         width="80"
         label="ID">
       </el-table-column> -->
-      <el-table-column
-        prop="label"
-        header-align="center"
-        label="字典名称">
+      <el-table-column prop="label" header-align="center" label="字典名称">
       </el-table-column>
       <el-table-column
         prop="value"
         header-align="center"
         align="center"
         width="200"
-        label="字典值">
+        label="字典值"
+      >
       </el-table-column>
-      <el-table-column
-        prop="type"
-        header-align="center"
-        label="字段类型">
+      <el-table-column prop="type" header-align="center" label="字段类型">
       </el-table-column>
       <el-table-column
         prop="position"
         header-align="center"
         align="center"
-        label="排序">
+        label="排序"
+      >
       </el-table-column>
       <el-table-column
         prop="remark"
         header-align="center"
         align="center"
-        label="备注">
+        label="备注"
+      >
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
         width="200"
-        label="操作">
+        label="操作"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleAddOrUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -94,7 +120,8 @@
         :page-size="pageLimit"
         :total="totalCount"
         :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper">
+        layout="total, sizes, prev, pager, next, jumper"
+      >
       </el-pagination>
     </div>
 
@@ -102,7 +129,8 @@
     <add-or-update
       v-if="addOrUpdateVisible"
       ref="addOrUpdate"
-      @refreshDataList="getDataList">
+      @refreshDataList="getDataList"
+    >
     </add-or-update>
   </div>
 </template>
@@ -252,6 +280,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

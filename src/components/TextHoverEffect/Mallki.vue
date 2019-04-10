@@ -1,6 +1,6 @@
 <template>
   <a class="link--mallki" :class="className" href="#">
-    {{text}}
+    {{ text }}
     <span :data-letters="text"></span>
     <span :data-letters="text"></span>
   </a>
@@ -19,7 +19,6 @@ export default {
   },
 };
 </script>
-
 
 <style>
 /* Mallki */

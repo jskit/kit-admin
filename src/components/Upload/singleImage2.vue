@@ -1,13 +1,20 @@
 <template>
   <div class="singleImageUpload2 upload-container">
-    <el-upload class="image-uploader" :data="dataObj" drag :multiple="false" :show-file-list="false" action="https://httpbin.org/post"
-      :on-success="handleImageScucess">
+    <el-upload
+      class="image-uploader"
+      :data="dataObj"
+      drag
+      :multiple="false"
+      :show-file-list="false"
+      action="https://httpbin.org/post"
+      :on-success="handleImageScucess"
+    >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">Drag或<em>点击上传</em></div>
     </el-upload>
-    <div v-show="imageUrl.length>0" class="image-preview">
-      <div class="image-preview-wrapper" v-show="imageUrl.length>1">
-        <img :src="imageUrl">
+    <div v-show="imageUrl.length > 0" class="image-preview">
+      <div class="image-preview-wrapper" v-show="imageUrl.length > 1">
+        <img :src="imageUrl" />
         <div class="image-preview-action">
           <i @click="rmImage" class="el-icon-delete"></i>
         </div>

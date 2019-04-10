@@ -2,27 +2,38 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="120px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="项目名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="项目名称"></el-input>
       </el-form-item>
       <el-form-item label="项目关键字" prop="keyWord">
-        <el-input v-model="dataForm.keyWord" placeholder="项目关键字"></el-input>
+        <el-input
+          v-model="dataForm.keyWord"
+          placeholder="项目关键字"
+        ></el-input>
       </el-form-item>
       <el-form-item label="项目分类" prop="category">
         <el-input v-model="dataForm.category" placeholder="项目分类"></el-input>
       </el-form-item>
       <el-form-item label="项目创建者" prop="creatorId">
-        <el-input v-model="dataForm.creatorId" placeholder="项目创建者"></el-input>
+        <el-input
+          v-model="dataForm.creatorId"
+          placeholder="项目创建者"
+        ></el-input>
       </el-form-item>
       <el-form-item label="项目负责人" prop="ownerId">
-        <el-input v-model="dataForm.ownerId" placeholder="项目负责人"></el-input>
+        <el-input
+          v-model="dataForm.ownerId"
+          placeholder="项目负责人"
+        ></el-input>
       </el-form-item>
       <el-form-item label="描述" prop="description">
         <el-input v-model="dataForm.description" placeholder="描述"></el-input>

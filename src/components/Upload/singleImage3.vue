@@ -1,21 +1,28 @@
 <template>
   <div class="upload-container">
-    <el-upload class="image-uploader" :data="dataObj" drag :multiple="false" :show-file-list="false" action="https://httpbin.org/post"
-      :on-success="handleImageScucess">
+    <el-upload
+      class="image-uploader"
+      :data="dataObj"
+      drag
+      :multiple="false"
+      :show-file-list="false"
+      action="https://httpbin.org/post"
+      :on-success="handleImageScucess"
+    >
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
     </el-upload>
     <div class="image-preview image-app-preview">
-      <div class="image-preview-wrapper" v-show="imageUrl.length>1">
-        <img :src="imageUrl">
+      <div class="image-preview-wrapper" v-show="imageUrl.length > 1">
+        <img :src="imageUrl" />
         <div class="image-preview-action">
           <i @click="rmImage" class="el-icon-delete"></i>
         </div>
       </div>
     </div>
     <div class="image-preview">
-      <div class="image-preview-wrapper" v-show="imageUrl.length>1">
-        <img :src="imageUrl">
+      <div class="image-preview-wrapper" v-show="imageUrl.length > 1">
+        <img :src="imageUrl" />
         <div class="image-preview-action">
           <i @click="rmImage" class="el-icon-delete"></i>
         </div>

@@ -1,10 +1,12 @@
 <template>
   <div class="app-container">
-    <el-form
-    :inline="true"
-    :model="queryForm">
+    <el-form :inline="true" :model="queryForm">
       <el-form-item label="">
-        <el-input placeholder="姓名或账户" v-model="queryForm.title" @keyup.enter.native="paginate(1)"></el-input>
+        <el-input
+          placeholder="姓名或账户"
+          v-model="queryForm.title"
+          @keyup.enter.native="paginate(1)"
+        ></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="paginate(1)">搜索</el-button>
@@ -12,15 +14,18 @@
       </el-form-item>
     </el-form>
     <el-table
-    :data="list"
-    v-loading.body="listLoading"
-    element-loading-text="Loading"
-    header-row-class-name="el-table-head"
-    border stripe fit highlight-current-row
+      :data="list"
+      v-loading.body="listLoading"
+      element-loading-text="Loading"
+      header-row-class-name="el-table-head"
+      border
+      stripe
+      fit
+      highlight-current-row
     >
-      <el-table-column align="center" label='ID' width="50">
+      <el-table-column align="center" label="ID" width="50">
         <template slot-scope="scope">
-          {{scope.$index}}
+          {{ scope.$index }}
         </template>
       </el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
@@ -32,7 +37,9 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="身份" width="110">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.rule | statusFilter">{{scope.row.rule}}</el-tag>
+          <el-tag :type="scope.row.rule | statusFilter">{{
+            scope.row.rule
+          }}</el-tag>
         </template>
       </el-table-column>
       <!-- <el-table-column label="备注" prop="note" width="110"></el-table-column>

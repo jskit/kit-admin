@@ -2,7 +2,9 @@
   <div class="vue-header" :class="{ 'is-fixed': fixed }">
     <div class="header-left"><slot name="left"></slot></div>
     <div class="header-center">
-      <slot><h3 class="header-title">{{ title }}</h3></slot>
+      <slot
+        ><h3 class="header-title">{{ title }}</h3></slot
+      >
     </div>
     <div class="header-right"><slot name="right"></slot></div>
   </div>

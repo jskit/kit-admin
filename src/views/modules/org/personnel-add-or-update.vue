@@ -2,13 +2,15 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="80px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="姓名" prop="username">
         <el-input v-model="dataForm.username" placeholder="姓名"></el-input>
       </el-form-item>
@@ -34,7 +36,8 @@
         <el-popover
           ref="menuListPopover"
           placement="bottom-start"
-          trigger="click">
+          trigger="click"
+        >
           <el-tree
             :data="menuList"
             :props="menuListTreeProps"
@@ -44,10 +47,17 @@
             @current-change="handleMenuListTreeCurrentChange"
             :default-expand-all="false"
             :highlight-current="true"
-            :expand-on-click-node="false">
+            :expand-on-click-node="false"
+          >
           </el-tree>
         </el-popover>
-        <el-input v-model="dataForm.deptName" v-popover:menuListPopover :readonly="true" placeholder="点击选择所属部门" class="menu-list__input"></el-input>
+        <el-input
+          v-model="dataForm.deptName"
+          v-popover:menuListPopover
+          :readonly="true"
+          placeholder="点击选择所属部门"
+          class="menu-list__input"
+        ></el-input>
       </el-form-item>
       <el-form-item label="学历" prop="education">
         <el-input v-model="dataForm.education" placeholder="学历"></el-input>

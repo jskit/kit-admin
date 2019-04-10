@@ -15,15 +15,28 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="选择页面">
-        <el-input placeholder="如需要参数，请输入参数 如 id=xxx topic_code=xxx" v-model="form.params" class="input-with-select">
+        <el-input
+          placeholder="如需要参数，请输入参数 如 id=xxx topic_code=xxx"
+          v-model="form.params"
+          class="input-with-select"
+        >
           <el-select v-model="form.page" slot="prepend" placeholder="请选择">
             <el-option label="首页 index" value="index"></el-option>
             <el-option label="详情 detail" value="detail"></el-option>
             <el-option label="专题 zt2" value="zt2"></el-option>
             <el-option label="个人中心 profile" value="profile"></el-option>
-            <el-option label="订单列表 order-list" value="order-list"></el-option>
-            <el-option label="订单详情 order-detail" value="order-detail"></el-option>
-            <el-option label="邀请拼团 couple-share" value="couple-share"></el-option>
+            <el-option
+              label="订单列表 order-list"
+              value="order-list"
+            ></el-option>
+            <el-option
+              label="订单详情 order-detail"
+              value="order-detail"
+            ></el-option>
+            <el-option
+              label="邀请拼团 couple-share"
+              value="couple-share"
+            ></el-option>
           </el-select>
         </el-input>
       </el-form-item>
@@ -35,7 +48,11 @@
           <el-radio label="othermini">其他小程序</el-radio>
         </el-radio-group>
         <div v-show="form.dist === 'othermini'">
-          <el-input placeholder="其他小程序链接 如 ${page}?appid=${appId}&xx=xxx" v-model="form.othermini" class="input-with-select"></el-input>
+          <el-input
+            placeholder="其他小程序链接 如 ${page}?appid=${appId}&xx=xxx"
+            v-model="form.othermini"
+            class="input-with-select"
+          ></el-input>
           <div class="content-example">
             <p v-for="(value, key) in otherMinis" :key="key">
               {{ key }}: {{ value }}
@@ -192,8 +209,8 @@ export default {
             params = params
               ? `${params}${channelParams}`
               : channelParams
-                ? `?${channelParams}`
-                : `${channelParams}`;
+              ? `?${channelParams}`
+              : `${channelParams}`;
             return `${getPage(page)}${params}`;
           }
           break;

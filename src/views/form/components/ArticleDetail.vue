@@ -1,21 +1,32 @@
 <template>
   <div class="createPost-container">
-    <el-form class="form-container" :model="postForm" :rules="rules" ref="postForm">
-
-      <sticky :className="'sub-navbar '+postForm.status">
+    <el-form
+      class="form-container"
+      :model="postForm"
+      :rules="rules"
+      ref="postForm"
+    >
+      <sticky :className="'sub-navbar ' + postForm.status">
         <template v-if="fetchSuccess">
-
-          <router-link style="margin-right:15px;" v-show='isEdit' :to="{ path:'create-form'}">
+          <router-link
+            style="margin-right:15px;"
+            v-show="isEdit"
+            :to="{ path: 'create-form' }"
+          >
             <el-button type="info">创建form</el-button>
           </router-link>
 
           <el-dropdown trigger="click">
-            <el-button plain>{{!postForm.comment_disabled?'评论已打开':'评论已关闭'}}
+            <el-button plain
+              >{{ !postForm.comment_disabled ? '评论已打开' : '评论已关闭' }}
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </el-button>
             <el-dropdown-menu class="no-padding" slot="dropdown">
               <el-dropdown-item>
-                <el-radio-group style="padding: 10px;" v-model="postForm.comment_disabled">
+                <el-radio-group
+                  style="padding: 10px;"
+                  v-model="postForm.comment_disabled"
+                >
                   <el-radio :label="true">关闭评论</el-radio>
                   <el-radio :label="false">打开评论</el-radio>
                 </el-radio-group>
@@ -24,13 +35,21 @@
           </el-dropdown>
 
           <el-dropdown trigger="click">
-            <el-button plain>平台
+            <el-button plain
+              >平台
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </el-button>
             <el-dropdown-menu class="no-border" slot="dropdown">
-              <el-checkbox-group v-model="postForm.platforms" style="padding: 5px 15px;">
-                <el-checkbox v-for="item in platformsOptions" :label="item.key" :key="item.key">
-                  {{item.name}}
+              <el-checkbox-group
+                v-model="postForm.platforms"
+                style="padding: 5px 15px;"
+              >
+                <el-checkbox
+                  v-for="item in platformsOptions"
+                  :label="item.key"
+                  :key="item.key"
+                >
+                  {{ item.name }}
                 </el-checkbox>
               </el-checkbox-group>
             </el-dropdown-menu>
@@ -41,24 +60,42 @@
               外链
               <i class="el-icon-caret-bottom el-icon--right"></i>
             </el-button>
-            <el-dropdown-menu class="no-padding no-border" style="width:300px" slot="dropdown">
-              <el-form-item label-width="0px" style="margin-bottom: 0px" prop="source_uri">
-                <el-input placeholder="请输入内容" v-model="postForm.source_uri">
-                  <template slot="prepend">填写url</template>
+            <el-dropdown-menu
+              class="no-padding no-border"
+              style="width:300px"
+              slot="dropdown"
+            >
+              <el-form-item
+                label-width="0px"
+                style="margin-bottom: 0px"
+                prop="source_uri"
+              >
+                <el-input
+                  placeholder="请输入内容"
+                  v-model="postForm.source_uri"
+                >
+                  <template slot="prepend"
+                    >填写url</template
+                  >
                 </el-input>
               </el-form-item>
             </el-dropdown-menu>
           </el-dropdown>
 
-          <el-button v-loading="loading" style="margin-left: 10px;" type="success" @click="submitForm()">发布
+          <el-button
+            v-loading="loading"
+            style="margin-left: 10px;"
+            type="success"
+            @click="submitForm()"
+            >发布
           </el-button>
-          <el-button v-loading="loading" type="warning" @click="draftForm">草稿</el-button>
-
+          <el-button v-loading="loading" type="warning" @click="draftForm"
+            >草稿</el-button
+          >
         </template>
         <template v-else>
           <el-tag>发送异常错误,刷新页面,或者联系程序员</el-tag>
         </template>
-
       </sticky>
 
       <div class="createPost-main-container">
@@ -68,32 +105,69 @@
               <!-- <MDinput name="name" v-model="postForm.title" required :maxlength="100">
                 标题
               </MDinput> -->
-              <span v-show="postForm.title.length>=26" class='title-prompt'>app可能会显示不全</span>
+              <span v-show="postForm.title.length >= 26" class="title-prompt"
+                >app可能会显示不全</span
+              >
             </el-form-item>
 
             <div class="postInfo-container">
               <el-row>
                 <el-col :span="8">
-                  <el-form-item label-width="45px" label="作者:" class="postInfo-container-item">
-                    <multiselect v-model="postForm.author" :options="userLIstOptions" @search-change="getRemoteUserList" placeholder="搜索用户" selectLabel="选择"
-                      deselectLabel="删除" track-by="key" :internalSearch="false" label="key">
-                      <span slot='noResult'>无结果</span>
+                  <el-form-item
+                    label-width="45px"
+                    label="作者:"
+                    class="postInfo-container-item"
+                  >
+                    <multiselect
+                      v-model="postForm.author"
+                      :options="userLIstOptions"
+                      @search-change="getRemoteUserList"
+                      placeholder="搜索用户"
+                      selectLabel="选择"
+                      deselectLabel="删除"
+                      track-by="key"
+                      :internalSearch="false"
+                      label="key"
+                    >
+                      <span slot="noResult">无结果</span>
                     </multiselect>
                   </el-form-item>
                 </el-col>
 
                 <el-col :span="8">
-                  <el-tooltip class="item" effect="dark" content="将替换作者" placement="top">
-                    <el-form-item label-width="50px" label="来源:" class="postInfo-container-item">
-                      <el-input placeholder="将替换作者" style='min-width:150px;' v-model="postForm.source_name">
+                  <el-tooltip
+                    class="item"
+                    effect="dark"
+                    content="将替换作者"
+                    placement="top"
+                  >
+                    <el-form-item
+                      label-width="50px"
+                      label="来源:"
+                      class="postInfo-container-item"
+                    >
+                      <el-input
+                        placeholder="将替换作者"
+                        style="min-width:150px;"
+                        v-model="postForm.source_name"
+                      >
                       </el-input>
                     </el-form-item>
                   </el-tooltip>
                 </el-col>
 
                 <el-col :span="8">
-                  <el-form-item label-width="80px" label="发布时间:" class="postInfo-container-item">
-                    <el-date-picker v-model="postForm.display_time" type="datetime" format="yyyy-MM-dd HH:mm:ss" placeholder="选择日期时间">
+                  <el-form-item
+                    label-width="80px"
+                    label="发布时间:"
+                    class="postInfo-container-item"
+                  >
+                    <el-date-picker
+                      v-model="postForm.display_time"
+                      type="datetime"
+                      format="yyyy-MM-dd HH:mm:ss"
+                      placeholder="选择日期时间"
+                    >
                     </el-date-picker>
                   </el-form-item>
                 </el-col>
@@ -102,10 +176,23 @@
           </el-col>
         </el-row>
 
-        <el-form-item style="margin-bottom: 40px;" label-width="45px" label="摘要:">
-          <el-input type="textarea" class="article-textarea" :rows="1" autosize placeholder="请输入内容" v-model="postForm.content_short">
+        <el-form-item
+          style="margin-bottom: 40px;"
+          label-width="45px"
+          label="摘要:"
+        >
+          <el-input
+            type="textarea"
+            class="article-textarea"
+            :rows="1"
+            autosize
+            placeholder="请输入内容"
+            v-model="postForm.content_short"
+          >
           </el-input>
-          <span class="word-counter" v-show="contentShortLength">{{contentShortLength}}字</span>
+          <span class="word-counter" v-show="contentShortLength"
+            >{{ contentShortLength }}字</span
+          >
         </el-form-item>
 
         <div class="editor-container">
@@ -117,7 +204,6 @@
         </div>
       </div>
     </el-form>
-
   </div>
 </template>
 

@@ -2,9 +2,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :model="dataForm"
-      :inline="true">
+      <el-form :model="dataForm" :inline="true">
         <el-form-item label="">
           <el-input
             placeholder="搜索关键字"
@@ -15,8 +13,22 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleAddOrUpdate()" type="success" icon="el-icon-edit">新增</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleAddOrUpdate()"
+          type="success"
+          icon="el-icon-edit"
+          >新增</el-button
+        >
         <!-- <el-button type="danger" @click="handleDelete()" :disabled="dataListSelections.length <= 0">批量删除</el-button> -->
       </el-form>
     </div>
@@ -29,7 +41,7 @@
       border
       highlight-current-row
       @selection-change="handleSelectionChange"
-      >
+    >
       <!-- <el-table-column
         type="selection"
         header-align="center"
@@ -41,26 +53,30 @@
         header-align="center"
         align="center"
         width="80"
-        label="ID">
+        label="ID"
+      >
       </el-table-column>
       <table-tree-column
         prop="name"
         header-align="center"
         treeKey="id"
         width="180"
-        label="部门名称">
+        label="部门名称"
+      >
       </table-tree-column>
       <el-table-column
         prop="address"
         header-align="center"
         width="200"
-        label="部门地址">
+        label="部门地址"
+      >
       </el-table-column>
       <el-table-column
         prop="url"
         header-align="center"
         width="200"
-        label="部门网址">
+        label="部门网址"
+      >
       </el-table-column>
       <!-- <el-table-column
         prop="parentName"
@@ -69,19 +85,14 @@
         width="120"
         label="上级菜单">
       </el-table-column> -->
-      <el-table-column
-        header-align="center"
-        width="200"
-        label="部门职责">
+      <el-table-column header-align="center" width="200" label="部门职责">
         <template slot-scope="scope">
-          {{scope.row.scope}}
+          {{ scope.row.scope }}
         </template>
       </el-table-column>
-      <el-table-column
-        header-align="center"
-        label="部门负责人">
+      <el-table-column header-align="center" label="部门负责人">
         <template slot-scope="scope">
-          {{scope.row.leader}}
+          {{ scope.row.leader }}
         </template>
       </el-table-column>
       <el-table-column
@@ -89,17 +100,29 @@
         header-align="center"
         align="center"
         width="80"
-        label="排序">
+        label="排序"
+      >
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
         width="200"
-        label="操作">
+        label="操作"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleAddOrUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -121,7 +144,8 @@
     <add-or-update
       v-if="addOrUpdateVisible"
       ref="addOrUpdate"
-      @refreshDataList="getDataList">
+      @refreshDataList="getDataList"
+    >
     </add-or-update>
   </div>
 </template>
@@ -258,6 +282,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

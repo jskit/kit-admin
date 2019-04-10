@@ -2,8 +2,16 @@
   <section class="kit-sidebar">
     <div class="kit-sidebar__header">
       <h1 class="kit-sidebar__brand">
-        <router-link :to="{ name: 'dashboard' }" class="kit-sidebar__brand-lg">{{`${site.title}${site.desc}`}}</router-link>
-        <router-link :to="{ name: 'dashboard' }" class="kit-sidebar__brand-mini">{{site.title}}</router-link>
+        <router-link
+          :to="{ name: 'dashboard' }"
+          class="kit-sidebar__brand-lg"
+          >{{ `${site.title}${site.desc}` }}</router-link
+        >
+        <router-link
+          :to="{ name: 'dashboard' }"
+          class="kit-sidebar__brand-mini"
+          >{{ site.title }}</router-link
+        >
       </h1>
     </div>
     <el-scrollbar class="kit-sidebar__body" wrapClass="scrollbar-wrapper">
@@ -20,7 +28,8 @@
           v-for="route in menus"
           :key="route.name"
           :item="route"
-          :base-path="route.path">
+          :base-path="route.path"
+        >
         </sidebar-item>
       </el-menu>
     </el-scrollbar>

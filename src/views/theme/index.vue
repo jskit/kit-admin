@@ -2,14 +2,18 @@
   <div class="app-container">
     <el-card class="box-card">
       <div slot="header">
-        <a class='link-type link-title' target="_blank" href='https://panjiachen.github.io/vue-element-admin-site/#/theme'>
-        {{$t('theme.documentation')}}
+        <a
+          class="link-type link-title"
+          target="_blank"
+          href="https://panjiachen.github.io/vue-element-admin-site/#/theme"
+        >
+          {{ $t('theme.documentation') }}
         </a>
       </div>
       <div class="box-item">
-        <span class="field-label">{{$t('theme.change')}} : </span>
+        <span class="field-label">{{ $t('theme.change') }} : </span>
         <el-switch v-model="theme"></el-switch>
-        <code style="margin-top:15px;">{{$t('theme.tips')}}</code>
+        <code style="margin-top:15px;">{{ $t('theme.tips') }}</code>
       </div>
     </el-card>
 
@@ -33,8 +37,13 @@
     </div>
 
     <div class="block">
-      <el-tag class='tag-item' v-for="tag in tags" :type="tag.type" :key='tag.type'>
-        {{tag.name}}
+      <el-tag
+        class="tag-item"
+        v-for="tag in tags"
+        :type="tag.type"
+        :key="tag.type"
+      >
+        {{ tag.name }}
       </el-tag>
     </div>
 
@@ -49,7 +58,6 @@
     <div class="block">
       <el-slider v-model="slideValue"></el-slider>
     </div>
-
   </div>
 </template>
 

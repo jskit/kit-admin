@@ -1,12 +1,13 @@
-/**
-* <Upload target="avatar" :idx="index" @complete="onComplete"></Upload>
-* 当页面需要上传不同种类图片时，可传target区分；list多张图片可点击上传时，可传idx下标区分；
-* onComplete(status, result, target, index)，status为返回状态，200为成功（这时result为七牛图片信息，result.pic为https图片链接），其它为失败（这时result为错误信息）；target和index为传入的区分参数、可选项
+/** * <Upload target="avatar" :idx="index" @complete="onComplete"></Upload>
+*
+当页面需要上传不同种类图片时，可传target区分；list多张图片可点击上传时，可传idx下标区分；
+* onComplete(status, result, target,
+index)，status为返回状态，200为成功（这时result为七牛图片信息，result.pic为https图片链接），其它为失败（这时result为错误信息）；target和index为传入的区分参数、可选项
 **/
 <template>
   <label class="mo-upload">
-      <input type="file" :accept="accepts" @change="upload">
-      <slot></slot>
+    <input type="file" :accept="accepts" @change="upload" />
+    <slot></slot>
   </label>
 </template>
 <script>

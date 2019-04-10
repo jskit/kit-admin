@@ -4,13 +4,16 @@
 
     <div :key="key" style="margin-top:30px;">
       <span v-permission="['admin']" class="permission-alert">
-        Only <el-tag class="permission-tag" size="small">admin</el-tag> can see this
+        Only <el-tag class="permission-tag" size="small">admin</el-tag> can see
+        this
       </span>
       <span v-permission="['editor']" class="permission-alert">
-        Only <el-tag class="permission-tag" size="small">editor</el-tag> can see this
+        Only <el-tag class="permission-tag" size="small">editor</el-tag> can see
+        this
       </span>
       <span v-permission="[]" class="permission-alert">
-        Both <el-tag class="permission-tag" size="small">admin</el-tag> and <el-tag class="permission-tag" size="small">editor</el-tag> can see this
+        Both <el-tag class="permission-tag" size="small">admin</el-tag> and
+        <el-tag class="permission-tag" size="small">editor</el-tag> can see this
       </span>
     </div>
   </div>

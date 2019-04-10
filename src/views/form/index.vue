@@ -12,11 +12,21 @@
       </el-form-item>
       <el-form-item label="Activity time">
         <el-col :span="11">
-          <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
+          <el-date-picker
+            type="date"
+            placeholder="Pick a date"
+            v-model="form.date1"
+            style="width: 100%;"
+          ></el-date-picker>
         </el-col>
         <el-col class="line" :span="2">-</el-col>
         <el-col :span="11">
-          <el-time-picker type="fixed-time" placeholder="Pick a time" v-model="form.date2" style="width: 100%;"></el-time-picker>
+          <el-time-picker
+            type="fixed-time"
+            placeholder="Pick a time"
+            v-model="form.date2"
+            style="width: 100%;"
+          ></el-time-picker>
         </el-col>
       </el-form-item>
       <el-form-item label="Instant delivery">

@@ -1,16 +1,39 @@
 <!-- 基础模板 -->
 <template>
-  <section class="layout-base" :class="{'is-header': isShowHeader, 'is-tabbar': isShowTabBar}">
-    <cm-header v-if="isShowHeader" class="layout-header" :class="{ 'show': isShowHeader }" slot="header" absolute :title="title"></cm-header>
+  <section
+    class="layout-base"
+    :class="{ 'is-header': isShowHeader, 'is-tabbar': isShowTabBar }"
+  >
+    <cm-header
+      v-if="isShowHeader"
+      class="layout-header"
+      :class="{ show: isShowHeader }"
+      slot="header"
+      absolute
+      :title="title"
+    ></cm-header>
     <transition :name="transition">
       <keep-alive :include="$store.getters.keepAliveList">
         <div class="router-container">
-          <router-view class="router-view page-container" id="rootContainer"></router-view>
+          <router-view
+            class="router-view page-container"
+            id="rootContainer"
+          ></router-view>
         </div>
       </keep-alive>
     </transition>
-    <tabbar v-if="isShowTabBar" class="layout-tabbar" :class="{ 'show': isShowTabBar }" slot="bottom" :value="tabbarVal"></tabbar>
-    <ShareShade v-if="!ismsf" :showShareShade="showShareMask" @click.native="$store.dispatch('setShareMask', false)"></ShareShade>
+    <tabbar
+      v-if="isShowTabBar"
+      class="layout-tabbar"
+      :class="{ show: isShowTabBar }"
+      slot="bottom"
+      :value="tabbarVal"
+    ></tabbar>
+    <ShareShade
+      v-if="!ismsf"
+      :showShareShade="showShareMask"
+      @click.native="$store.dispatch('setShareMask', false)"
+    ></ShareShade>
   </section>
 </template>
 

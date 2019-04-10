@@ -2,13 +2,15 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="120px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="任务名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="任务名称"></el-input>
       </el-form-item>

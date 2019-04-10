@@ -2,13 +2,15 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="80px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="角色标识" prop="code">
         <el-input v-model="dataForm.code" placeholder="角色标识"></el-input>
       </el-form-item>
@@ -25,7 +27,8 @@
           node-key="id"
           ref="menuListTree"
           :default-expand-all="false"
-          show-checkbox>
+          show-checkbox
+        >
         </el-tree>
       </el-form-item>
     </el-form>

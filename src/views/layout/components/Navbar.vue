@@ -1,13 +1,21 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
-    <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+    <hamburger
+      class="hamburger-container"
+      :toggleClick="toggleSideBar"
+      :isActive="sidebar.opened"
+    ></hamburger>
 
     <breadcrumb class="breadcrumb-container"></breadcrumb>
 
     <div class="right-menu">
       <error-log class="errLog-container right-menu-item"></error-log>
 
-      <el-tooltip effect="dark" :content="$t('navbar.screenfull')" placement="bottom">
+      <el-tooltip
+        effect="dark"
+        :content="$t('navbar.screenfull')"
+        placement="bottom"
+      >
         <screenfull class="screenfull right-menu-item"></screenfull>
       </el-tooltip>
 
@@ -19,14 +27,18 @@
 
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img class="user-avatar" v-if="avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+          <img
+            class="user-avatar"
+            v-if="avatar"
+            :src="avatar + '?imageView2/1/w/80/h/80'"
+          />
           <span :v-else="avatar">{{ name || '管理员' }}</span>
           <i class="el-icon-caret-bottom"></i>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              {{$t('navbar.dashboard')}}
+              {{ $t('navbar.dashboard') }}
             </el-dropdown-item>
           </router-link>
           <!-- <a target='_blank' href="https://github.com/PanJiaChen/vue-element-admin/">
@@ -36,7 +48,9 @@
           </a> -->
           <!-- <el-dropdown-item @click.native="updatePasswordHandle()">修改密码</el-dropdown-item> -->
           <el-dropdown-item divided>
-            <span @click="logout" style="display:block;">{{$t('navbar.logOut')}}</span>
+            <span @click="logout" style="display:block;">{{
+              $t('navbar.logOut')
+            }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

@@ -1,43 +1,65 @@
 <template>
-  <div v-if="!item.hidden&&item.children" class="menu-wrapper">
-
+  <div v-if="!item.hidden && item.children" class="menu-wrapper">
     <router-link
-      v-if="hasOneShowingChild(item.children) && !onlyOneChild.children&&!item.alwaysShow"
+      v-if="
+        hasOneShowingChild(item.children) &&
+          !onlyOneChild.children &&
+          !item.alwaysShow
+      "
       :to="resolvePath(onlyOneChild.path)"
-      :key="onlyOneChild.name">
+      :key="onlyOneChild.name"
+    >
       <el-menu-item
-        :class="{'submenu-title-noDropdown':!isNest}"
-        :index="resolvePath(onlyOneChild.path)">
-        <icon-svg v-if="onlyOneChild.meta&&onlyOneChild.meta.icon" :icon-class="onlyOneChild.meta.icon"></icon-svg>
-        <span v-if="onlyOneChild.meta&&onlyOneChild.meta.title" slot="title">{{generateTitle(onlyOneChild.meta.title)}}</span>
+        :class="{ 'submenu-title-noDropdown': !isNest }"
+        :index="resolvePath(onlyOneChild.path)"
+      >
+        <icon-svg
+          v-if="onlyOneChild.meta && onlyOneChild.meta.icon"
+          :icon-class="onlyOneChild.meta.icon"
+        ></icon-svg>
+        <span
+          v-if="onlyOneChild.meta && onlyOneChild.meta.title"
+          slot="title"
+          >{{ generateTitle(onlyOneChild.meta.title) }}</span
+        >
       </el-menu-item>
     </router-link>
 
-    <el-submenu v-else :index="item.name||item.path" :key="item.name">
+    <el-submenu v-else :index="item.name || item.path" :key="item.name">
       <template slot="title">
-        <icon-svg v-if="item.meta&&item.meta.icon" :icon-class="item.meta.icon"></icon-svg>
-        <span v-if="item.meta&&item.meta.title" slot="title">{{generateTitle(item.meta.title)}}</span>
+        <icon-svg
+          v-if="item.meta && item.meta.icon"
+          :icon-class="item.meta.icon"
+        ></icon-svg>
+        <span v-if="item.meta && item.meta.title" slot="title">{{
+          generateTitle(item.meta.title)
+        }}</span>
       </template>
 
       <template v-for="child in item.children" v-if="!child.hidden">
         <sidebar-item
           class="nest-menu"
-          v-if="child.children&&child.children.length>0"
+          v-if="child.children && child.children.length > 0"
           :is-nest="true"
           :item="child"
           :base-path="resolvePath(child.path)"
-          :key="child.path">
+          :key="child.path"
+        >
         </sidebar-item>
 
         <router-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
-            <icon-svg v-if="child.meta&&child.meta.icon" :icon-class="child.meta.icon"></icon-svg>
-            <span v-if="child.meta&&child.meta.title" slot="title">{{generateTitle(child.meta.title)}}</span>
+            <icon-svg
+              v-if="child.meta && child.meta.icon"
+              :icon-class="child.meta.icon"
+            ></icon-svg>
+            <span v-if="child.meta && child.meta.title" slot="title">{{
+              generateTitle(child.meta.title)
+            }}</span>
           </el-menu-item>
         </router-link>
       </template>
     </el-submenu>
-
   </div>
 </template>
 

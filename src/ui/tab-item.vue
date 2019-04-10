@@ -1,7 +1,9 @@
 <template>
-  <a class="vue-tab-item"
+  <a
+    class="vue-tab-item"
     @click="$parent.$emit('tab-click', id, $event)"
-    :class="{ 'is-selected': $parent.value === id }">
+    :class="{ 'is-selected': $parent.value === id }"
+  >
     <div class="item-icon">
       <slot name="icon"></slot>
     </div>

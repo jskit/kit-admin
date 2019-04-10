@@ -2,9 +2,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :model="dataForm"
-      :inline="true">
+      <el-form :model="dataForm" :inline="true">
         <el-form-item label="">
           <el-input
             placeholder="关键字"
@@ -15,9 +13,28 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleAddOrUpdate()" type="success" icon="el-icon-edit">新增</el-button>
-        <el-button type="danger" @click="handleDelete()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleAddOrUpdate()"
+          type="success"
+          icon="el-icon-edit"
+          >新增</el-button
+        >
+        <el-button
+          type="danger"
+          @click="handleDelete()"
+          :disabled="dataListSelections.length <= 0"
+          >批量删除</el-button
+        >
       </el-form>
     </div>
 
@@ -29,12 +46,13 @@
       border
       highlight-current-row
       @selection-change="handleSelectionChange"
-      >
+    >
       <el-table-column
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        width="50"
+      >
       </el-table-column>
       <!-- <el-table-column
         prop="userId"
@@ -43,21 +61,16 @@
         width="80"
         label="ID">
       </el-table-column> -->
-      <el-table-column
-        prop="name"
-        header-align="center"
-        label="项目名称">
+      <el-table-column prop="name" header-align="center" label="项目名称">
       </el-table-column>
       <el-table-column
         prop="keyWord"
         header-align="center"
         width="200"
-        label="项目关键字">
+        label="项目关键字"
+      >
       </el-table-column>
-      <el-table-column
-        prop="category"
-        header-align="center"
-        label="分类">
+      <el-table-column prop="category" header-align="center" label="分类">
       </el-table-column>
       <!-- <el-table-column
         prop="state"
@@ -73,34 +86,45 @@
         prop="creatorId"
         header-align="center"
         width="180"
-        label="项目创建者">
+        label="项目创建者"
+      >
       </el-table-column>
       <el-table-column
         prop="ownerId"
         header-align="center"
         width="180"
-        label="项目负责人">
+        label="项目负责人"
+      >
       </el-table-column>
       <el-table-column
         prop="createTime"
         header-align="center"
         width="180"
-        label="创建时间">
+        label="创建时间"
+      >
       </el-table-column>
-      <el-table-column
-        prop="status"
-        header-align="center"
-        label="项目状态">
+      <el-table-column prop="status" header-align="center" label="项目状态">
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
         width="200"
-        label="操作">
+        label="操作"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdate(scope.row)">详情</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleAddOrUpdate(scope.row)"
+            >详情</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -114,7 +138,8 @@
         :page-size="pageLimit"
         :total="totalCount"
         :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper">
+        layout="total, sizes, prev, pager, next, jumper"
+      >
       </el-pagination>
     </div>
 
@@ -122,7 +147,8 @@
     <add-or-update
       v-if="addOrUpdateVisible"
       ref="addOrUpdate"
-      @refreshDataList="getDataList">
+      @refreshDataList="getDataList"
+    >
     </add-or-update>
   </div>
 </template>
@@ -308,6 +334,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

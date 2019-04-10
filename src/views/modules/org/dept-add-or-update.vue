@@ -2,18 +2,21 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="100px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="上级部门" prop="parentName">
         <el-popover
           ref="menuListPopover"
           placement="bottom-start"
-          trigger="click">
+          trigger="click"
+        >
           <el-tree
             :data="menuList"
             :props="menuListTreeProps"
@@ -23,10 +26,17 @@
             @current-change="handleMenuListTreeCurrentChange"
             :default-expand-all="false"
             :highlight-current="true"
-            :expand-on-click-node="false">
+            :expand-on-click-node="false"
+          >
           </el-tree>
         </el-popover>
-        <el-input v-model="dataForm.parentName" v-popover:menuListPopover :readonly="true" placeholder="点击选择上级菜单" class="menu-list__input"></el-input>
+        <el-input
+          v-model="dataForm.parentName"
+          v-popover:menuListPopover
+          :readonly="true"
+          placeholder="点击选择上级菜单"
+          class="menu-list__input"
+        ></el-input>
       </el-form-item>
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="dataForm.name" placeholder="部门名称"></el-input>
@@ -44,7 +54,12 @@
         <el-input v-model="dataForm.leader" placeholder="部门负责人"></el-input>
       </el-form-item>
       <el-form-item label="排序" prop="position">
-        <el-input-number v-model="dataForm.position" controls-position="right" :min="0" label="排序"></el-input-number>
+        <el-input-number
+          v-model="dataForm.position"
+          controls-position="right"
+          :min="0"
+          label="排序"
+        ></el-input-number>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">

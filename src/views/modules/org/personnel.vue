@@ -2,9 +2,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :model="dataForm"
-      :inline="true">
+      <el-form :model="dataForm" :inline="true">
         <el-form-item label="">
           <el-input
             placeholder="关键字"
@@ -15,9 +13,28 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleAddOrUpdate()" type="success" icon="el-icon-edit">新增</el-button>
-        <el-button type="danger" @click="handleDelete()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleAddOrUpdate()"
+          type="success"
+          icon="el-icon-edit"
+          >新增</el-button
+        >
+        <el-button
+          type="danger"
+          @click="handleDelete()"
+          :disabled="dataListSelections.length <= 0"
+          >批量删除</el-button
+        >
       </el-form>
     </div>
 
@@ -29,25 +46,28 @@
       border
       highlight-current-row
       @selection-change="handleSelectionChange"
-      >
+    >
       <el-table-column
         type="selection"
         header-align="center"
         align="center"
-        width="50">
+        width="50"
+      >
       </el-table-column>
       <el-table-column
         prop="id"
         header-align="center"
         align="center"
         width="80"
-        label="ID">
+        label="ID"
+      >
       </el-table-column>
       <el-table-column
         prop="username"
         header-align="center"
         align="center"
-        label="姓名">
+        label="姓名"
+      >
       </el-table-column>
       <el-table-column label="性别" width="110">
         <template slot-scope="scope">
@@ -59,40 +79,48 @@
         header-align="center"
         align="center"
         width="200"
-        label="邮箱">
+        label="邮箱"
+      >
       </el-table-column>
       <el-table-column
         prop="mobile"
         header-align="center"
         align="center"
-        label="手机号">
+        label="手机号"
+      >
       </el-table-column>
       <el-table-column
         prop="education"
         header-align="center"
         align="center"
-        label="学历">
+        label="学历"
+      >
       </el-table-column>
       <el-table-column
         prop="deptName"
         header-align="center"
         align="center"
-        label="所属部门">
+        label="所属部门"
+      >
       </el-table-column>
       <el-table-column
         prop="remark"
         header-align="center"
         align="center"
-        label="备注">
+        label="备注"
+      >
       </el-table-column>
       <el-table-column
         prop="state"
         header-align="center"
         align="center"
-        label="状态">
+        label="状态"
+      >
         <template slot-scope="scope">
           <el-tag v-if="scope.row.state === 0" size="small">正常</el-tag>
-          <el-tag v-if="scope.row.state === 1" size="small" type="danger">禁用</el-tag>
+          <el-tag v-if="scope.row.state === 1" size="small" type="danger"
+            >禁用</el-tag
+          >
         </template>
       </el-table-column>
       <!-- <el-table-column
@@ -122,10 +150,21 @@
         header-align="center"
         align="center"
         width="200"
-        label="操作">
+        label="操作"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleAddOrUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -139,7 +178,8 @@
         :page-size="pageLimit"
         :total="totalCount"
         :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper">
+        layout="total, sizes, prev, pager, next, jumper"
+      >
       </el-pagination>
     </div>
 
@@ -147,7 +187,8 @@
     <add-or-update
       v-if="addOrUpdateVisible"
       ref="addOrUpdate"
-      @refreshDataList="getDataList">
+      @refreshDataList="getDataList"
+    >
     </add-or-update>
   </div>
 </template>
@@ -305,6 +346,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

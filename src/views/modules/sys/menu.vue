@@ -2,9 +2,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :model="dataForm"
-      :inline="true">
+      <el-form :model="dataForm" :inline="true">
         <el-form-item label="">
           <el-input
             placeholder="搜索关键字"
@@ -15,8 +13,22 @@
             clearable
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleAddOrUpdate()" type="success" icon="el-icon-edit">新增</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleAddOrUpdate()"
+          type="success"
+          icon="el-icon-edit"
+          >新增</el-button
+        >
         <!-- <el-button type="danger" @click="handleDelete()" :disabled="dataListSelections.length <= 0">批量删除</el-button> -->
       </el-form>
     </div>
@@ -29,7 +41,7 @@
       border
       highlight-current-row
       @selection-change="handleSelectionChange"
-      >
+    >
       <!-- <el-table-column
         type="selection"
         header-align="center"
@@ -48,7 +60,8 @@
         header-align="center"
         treeKey="id"
         width="180"
-        label="名称">
+        label="名称"
+      >
       </table-tree-column>
       <!-- <el-table-column
         prop="parentName"
@@ -57,45 +70,44 @@
         width="120"
         label="上级菜单">
       </el-table-column> -->
-      <el-table-column
-        header-align="center"
-        align="center"
-        label="图标">
+      <el-table-column header-align="center" align="center" label="图标">
         <template slot-scope="scope">
           <icon-svg :icon-class="scope.row.icon || 'menu'"></icon-svg>
         </template>
       </el-table-column>
-      <el-table-column
-        header-align="center"
-        align="center"
-        label="类型">
+      <el-table-column header-align="center" align="center" label="类型">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type === '0'" size="small">目录</el-tag>
-          <el-tag v-else-if="scope.row.type === '1'" size="small" type="success">菜单</el-tag>
-          <el-tag v-else-if="scope.row.type === '2'" size="small" type="info">按钮</el-tag>
+          <el-tag v-else-if="scope.row.type === '1'" size="small" type="success"
+            >菜单</el-tag
+          >
+          <el-tag v-else-if="scope.row.type === '2'" size="small" type="info"
+            >按钮</el-tag
+          >
         </template>
       </el-table-column>
       <el-table-column
         prop="position"
         header-align="center"
         align="center"
-        label="排序号">
+        label="排序号"
+      >
       </el-table-column>
       <el-table-column
         header-align="center"
         width="200"
         :show-overflow-tooltip="true"
-        label="菜单URL">
+        label="菜单URL"
+      >
         <template slot-scope="scope">
-          {{scope.row.type !== '2' ? scope.row.link : ''}}
+          {{ scope.row.type !== '2' ? scope.row.link : '' }}
         </template>
       </el-table-column>
-      <el-table-column
-        header-align="center"
-        align="center"
-        label="可见">
+      <el-table-column header-align="center" align="center" label="可见">
         <template slot-scope="scope">
-          <el-tag v-if="scope.row.visible" size="small" type="success">显示</el-tag>
+          <el-tag v-if="scope.row.visible" size="small" type="success"
+            >显示</el-tag
+          >
           <el-tag v-else size="small" type="info">隐藏</el-tag>
         </template>
       </el-table-column>
@@ -104,17 +116,29 @@
         header-align="center"
         width="150"
         :show-overflow-tooltip="true"
-        label="授权标识">
+        label="授权标识"
+      >
       </el-table-column>
       <el-table-column
         fixed="right"
         header-align="center"
         align="center"
         width="200"
-        label="操作">
+        label="操作"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleAddOrUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
+          <el-button
+            type="primary"
+            size="mini"
+            @click="handleAddOrUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            type="danger"
+            size="mini"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -136,7 +160,8 @@
     <add-or-update
       v-if="addOrUpdateVisible"
       ref="addOrUpdate"
-      @refreshDataList="getDataList">
+      @refreshDataList="getDataList"
+    >
     </add-or-update>
   </div>
 </template>
@@ -269,6 +294,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>

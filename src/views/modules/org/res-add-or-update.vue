@@ -2,21 +2,39 @@
   <el-dialog
     :title="!dataForm.id ? '新增' : '修改'"
     :close-on-click-modal="false"
-    :visible.sync="visible">
+    :visible.sync="visible"
+  >
     <el-form
       label-width="80px"
       :model="dataForm"
       :rules="dataRule"
       @keyup.enter.native="dataFormSubmit()"
-      ref="dataForm">
+      ref="dataForm"
+    >
       <el-form-item label="用户名" prop="username">
         <el-input v-model="dataForm.username" placeholder="登录帐号"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password" :class="{ 'is-required': !dataForm.id }">
-        <el-input v-model="dataForm.password" type="password" placeholder="密码"></el-input>
+      <el-form-item
+        label="密码"
+        prop="password"
+        :class="{ 'is-required': !dataForm.id }"
+      >
+        <el-input
+          v-model="dataForm.password"
+          type="password"
+          placeholder="密码"
+        ></el-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="comfirmPassword" :class="{ 'is-required': !dataForm.id }">
-        <el-input v-model="dataForm.comfirmPassword" type="password" placeholder="确认密码"></el-input>
+      <el-form-item
+        label="确认密码"
+        prop="comfirmPassword"
+        :class="{ 'is-required': !dataForm.id }"
+      >
+        <el-input
+          v-model="dataForm.comfirmPassword"
+          type="password"
+          placeholder="确认密码"
+        ></el-input>
       </el-form-item>
       <el-form-item label="邮箱" prop="email">
         <el-input v-model="dataForm.email" placeholder="邮箱"></el-input>

@@ -1,5 +1,5 @@
 <template>
-  <span class="badge" :class="{ [`${this.position}`]: !!this.position, }">
+  <span class="badge" :class="{ [`${this.position}`]: !!this.position }">
     <slot></slot>
     <sup
       v-if="text"
@@ -7,7 +7,8 @@
       :class="classes"
       :style="styles"
       @click="onClick"
-    >{{badgeText}}</sup>
+      >{{ badgeText }}</sup
+    >
   </span>
 </template>
 

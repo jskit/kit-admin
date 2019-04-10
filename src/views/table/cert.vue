@@ -1,9 +1,7 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-form
-      :inline="true"
-      :model="queryForm">
+      <el-form :inline="true" :model="queryForm">
         <el-form-item label="">
           <el-input
             placeholder="搜索关键字"
@@ -13,8 +11,22 @@
             v-model="queryForm.keywords"
           ></el-input>
         </el-form-item>
-        <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="el-icon-edit">添加</el-button>
+        <el-button
+          class="filter-item"
+          type="primary"
+          v-waves
+          icon="el-icon-search"
+          @click="handleFilter"
+          >搜索</el-button
+        >
+        <el-button
+          class="filter-item"
+          style="margin-left: 10px;"
+          @click="handleCreate"
+          type="primary"
+          icon="el-icon-edit"
+          >添加</el-button
+        >
         <!-- <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">{{$t('table.export')}}</el-button> -->
         <!-- <el-checkbox class="filter-item" style='margin-left:15px;' @change='tableKey=tableKey+1' v-model="showReviewer">{{$t('table.reviewer')}}</el-checkbox> -->
       </el-form>
@@ -27,7 +39,7 @@
       element-loading-text="给我一点时间"
       border
       highlight-current-row
-      >
+    >
       <el-table-column label="姓名" prop="username"></el-table-column>
       <el-table-column label="性别">
         <template slot-scope="scope">
@@ -71,27 +83,46 @@
           <span>{{scope.row.lastVisit | formatDate('Y-M-D H:F')}}</span>
         </template>
       </el-table-column> -->
-      <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
+      <el-table-column
+        align="center"
+        label="操作"
+        width="200"
+        class-name="small-padding fixed-width"
+      >
         <template slot-scope="scope">
-          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="primary" size="mini" @click="handleUpdate(scope.row)"
+            >编辑</el-button
+          >
+          <el-button type="danger" size="mini" @click="handleDelete(scope.row)"
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
 
     <div class="pagination-container" style="margin-top: 16px;">
-      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="queryForm.page" :page-sizes="[10, 20,30, 50]" :page-size="queryForm.size" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryForm.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size="queryForm.size"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
       </el-pagination>
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form
-      :rules="rules"
-      ref="dataForm"
-      :model="temp"
-      label-position="left"
-      label-width="70px"
-      style='min-width: 300px; max-width: 400px; margin-left:50px;'>
+        :rules="rules"
+        ref="dataForm"
+        :model="temp"
+        label-position="left"
+        label-width="70px"
+        style="min-width: 300px; max-width: 400px; margin-left:50px;"
+      >
         <el-form-item label="姓名" prop="username">
           <el-input v-model="temp.username"></el-input>
         </el-form-item>
@@ -109,20 +140,47 @@
           <el-input v-model="temp.email"></el-input>
         </el-form-item>
         <el-form-item label="学历" prop="education">
-          <el-select class="filter-item" v-model="temp.education" placeholder="请选择">
-            <el-option v-for="item in educations" :key="item.id" :label="item.value" :value="item.id">
+          <el-select
+            class="filter-item"
+            v-model="temp.education"
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="item in educations"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="部门" prop="deptId">
-          <el-select class="filter-item" v-model="temp.deptId" placeholder="请选择">
-            <el-option v-for="item in deptIds" :key="item.id" :label="item.value" :value="item.id">
+          <el-select
+            class="filter-item"
+            v-model="temp.deptId"
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="item in deptIds"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            >
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="职称" prop="jobTitle">
-          <el-select class="filter-item" v-model="temp.jobTitle" placeholder="请选择">
-            <el-option v-for="item in jobTitles" :key="item.id" :label="item.value" :value="item.id">
+          <el-select
+            class="filter-item"
+            v-model="temp.jobTitle"
+            placeholder="请选择"
+          >
+            <el-option
+              v-for="item in jobTitles"
+              :key="item.id"
+              :label="item.value"
+              :value="item.id"
+            >
             </el-option>
           </el-select>
         </el-form-item>
@@ -132,7 +190,12 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">确定</el-button>
+        <el-button
+          v-if="dialogStatus == 'create'"
+          type="primary"
+          @click="createData"
+          >确定</el-button
+        >
         <el-button v-else type="primary" @click="updateData">确定</el-button>
       </div>
     </el-dialog>
@@ -402,6 +465,4 @@ export default {
 };
 </script>
 
-<style lang="stylus" scoped>
-
-</style>
+<style lang="stylus" scoped></style>
