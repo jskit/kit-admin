@@ -22,7 +22,7 @@ module.exports = {
   // //默认 '/'，子目录可以配置 '/v2/'，设置为''或'./'，输出为相对目录
   // vue-router history模式下 子路由需要 baseUrl : '/' 为绝对路径
   // hash 模式下 baseUrl : './' 没有问题
-  baseUrl:
+  publicPath:
     __DEV__ && qnConfig.domain ? '/' : `${qnConfig.domain}${qnConfig.prefix}`,
   // outputDir: 'dist',
   assetsDir: __DEV__ ? './' : './static',
