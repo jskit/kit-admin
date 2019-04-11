@@ -1,229 +1,103 @@
-<!-- 基础模板 -->
 <template>
-  <section
-    class="layout-base"
-    :class="{ 'is-header': isShowHeader, 'is-tabbar': isShowTabBar }"
+  <div
+    class="app-wrapper"
+    v-loading.fullscreen.lock="loading"
+    element-loading-text="拼命加载中"
+    :class="classObj"
   >
-    <cm-header
-      v-if="isShowHeader"
-      class="layout-header"
-      :class="{ show: isShowHeader }"
-      slot="header"
-      absolute
-      :title="title"
-    ></cm-header>
-    <transition :name="transition">
-      <keep-alive :include="$store.getters.keepAliveList">
-        <div class="router-container">
-          <router-view
-            class="router-view page-container"
-            id="rootContainer"
-          ></router-view>
+    <template v-if="!loading">
+      <div
+        class="drawer-bg"
+        v-if="device === 'mobile' && sidebar.opened"
+        @click="handleClickOutside"
+      ></div>
+      <!-- <div class="kit-sidebar">
+
+        <div class="kit-sidebar__body">
         </div>
-      </keep-alive>
-    </transition>
-    <tabbar
-      v-if="isShowTabBar"
-      class="layout-tabbar"
-      :class="{ show: isShowTabBar }"
-      slot="bottom"
-      :value="tabbarVal"
-    ></tabbar>
-    <ShareShade
-      v-if="!ismsf"
-      :showShareShade="showShareMask"
-      @click.native="$store.dispatch('setShareMask', false)"
-    ></ShareShade>
-  </section>
+      </div> -->
+      <sidebar class="sidebar-container"></sidebar>
+      <section class="main-container">
+        <navbar></navbar>
+        <tags-view></tags-view>
+        <app-main></app-main>
+      </section>
+    </template>
+  </div>
 </template>
 
 <script>
-// statusbar
-// panel
-// popup
-// const isUnDef = v => {
-//   return typeof v === 'undefined';
-// };
-import {
-  // mapActions,
-  mapState,
-  // mapGetters,
-} from 'vuex';
-import device from '@/utils/device';
-import { Header, ViewBox } from '@/ui';
-import TabBar from '@/components/tabbar.vue';
-import ShareShade from '@/components/ShareShade';
-// console.log(device);
-const hideHeader = [
-  'index',
-  'profile',
-  'searcharticle',
-  'shop',
-  'shopdetail',
-  'setup',
-  'shopsearch',
-  'login',
-];
-const showTabBar = ['index', 'shop', 'message', 'profile'];
+import { Navbar, Sidebar, AppMain, TagsView } from './components';
+import ResizeMixin from './mixin/ResizeHandler';
+// import api from '@/api';
+
 export default {
-  name: 'Layout',
-  props: {
-    keepAlList: Array,
-  },
+  name: 'layout',
   components: {
-    [Header.name]: Header,
-    [ViewBox.name]: ViewBox,
-    [TabBar.name]: TabBar,
-    [ShareShade.name]: ShareShade,
+    Navbar,
+    Sidebar,
+    AppMain,
+    TagsView,
   },
+  mixins: [ResizeMixin],
   data() {
     return {
-      transition: '',
-      // tabbarVal: 'index',
-      // isMsf
-      ismsf: device.msf, // 是否是蜜
+      loading: true,
     };
   },
   computed: {
-    ...mapState({
-      route: state => state.route,
-      path: state => state.route.path,
-      name: state => state.route.name,
-      ani: state => state.app.ani,
-      showShareMask: state => state.app.showShareMask,
-    }),
-    // 是否显示header
-    isShowHeader() {
-      if (device.msf) {
-        return false;
-      }
-      if (hideHeader.indexOf(this.name) > -1) {
-        return false;
-      }
-      return true;
+    sidebar() {
+      return this.$store.state.app.sidebar;
     },
-    // 是否显示tabbar
-    isShowTabBar() {
-      if (device.msf) {
-        return false;
-      }
-      if (showTabBar.indexOf(this.name) > -1) {
-        return true;
-      }
-      return false;
+    device() {
+      return this.$store.state.app.device;
     },
-    tabbarVal() {
-      if (showTabBar.indexOf(this.name) > -1) {
-        return this.name;
-      }
-      return 'index';
-    },
-    // header
-    title() {
-      return (this.route.meta && this.route.meta.title) || '';
+    classObj() {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        withoutAnimation: this.sidebar.withoutAnimation,
+        mobile: this.device === 'mobile',
+      };
     },
   },
-  // watch $route 决定使用哪种过渡
-  watch: {
-    $route(to, from) {
-      // 暂时不启用转场动画
-      // 参见 README.md 转场动画约定
-      // const toDepth = to.path.split('/').length;
-      // const fromDepth = from.path.split('/').length;
-      // const isForward = toDepth < fromDepth;
-      // const toIndex = to.meta.index;
-      // const fromIndex = from.meta.index || 0;
-      // const isBack = toIndex < fromIndex;
-      // if (!isUnDef(toIndex)) {
-      //   this.transition = '';
-      // } else {
-      //   this.transition = isBack ? 'slide-right' : 'slide-left';
-      // }
+  created() {
+    this.getUserInfo();
+  },
+  methods: {
+    handleClickOutside() {
+      this.$store.dispatch('closeSideBar', { withoutAnimation: false });
+    },
+    // 获取当前管理员信息
+    getUserInfo() {
+      // api.getUserInfo()
+      setTimeout(() => {
+        this.loading = false;
+      }, 300);
     },
   },
 };
 </script>
 
 <style lang="stylus" scoped>
-.layout-base{
-  &.is-header .router-container {
-    padding-top: 46px;
-  }
-  &.is-tabbar .router-container {
-    padding-bottom: 49px;
-  }
-}
-.layout-header,.layout-tabbar{
-  display: none;
-  &.show{
-    display: block;
-  }
-}
+@import '~@/style/var';
 
-.transition-box {
-  position: absolute;
-  z-index: 0;
+.app-wrapper {
+  position: relative;
+  height: 100%;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  transition: transform 0.4s cubic-bezier(.55,0,.1,1);
-
-  // height: 100%;
-  height: 100vh;
 }
-
-.slide-left-enter-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  background-color: #fff;
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
 }
-
-.slide-right-leave-to {
-  z-index: 10;
+.kit-sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
 }
-.slide-right-enter {
-  z-index: -1;
-}
-
-.slide-right-leave-to,
-.slide-left-enter {
-  transform: translate3D(100%, 0, 0);
-}
-.slide-right-enter,
-.slide-left-leave-to
-{
-  transform: translate3D(-20%, 0, 0);
-}
-.slide-right-enter-active,
-.slide-left-leave-active {
-  &:after {
-    position: absolute;
-    display: block;
-    left: 0;
-    top: 0;
-    background: rgba(0,0,0,0.1);
-    width: 100%;
-    bottom: 0;
-    content: '';
-    z-index: 10000;
-    transition: opacity 0.4s cubic-bezier(.55,0,.1,1);
-  }
-}
-.slide-right-enter:after {
-  opacity: 1;
-}
-.slide-right-enter-to:after {
-  opacity: 0;
-}
-.slide-left-leave:after {
-  opacity: 0;
-}
-.slide-left-leave-to:after {
-  opacity: 1;
-}
-// .slide-left-leave-active,
-// .slide-right-enter{
-//   opacity: 0;
-//   transform: translate3D(-20%, 0, 0);
-// }
 </style>

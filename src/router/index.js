@@ -20,7 +20,7 @@ const _import =
 Vue.use(Router);
 
 /* Layout */
-import Layout from '@/views/layout/Layout';
+import Layout from '@/layout/Layout';
 
 const layouts = {
   layout: Layout,
@@ -302,10 +302,10 @@ export const asyncRouterMap = [
     ],
   },
   {
-    path: '/helper',
+    path: '/tools',
     component: Layout,
     redirect: 'noredirect',
-    name: 'helper',
+    name: 'tools',
     meta: {
       title: '工具助手',
       icon: 'icon',
@@ -313,7 +313,7 @@ export const asyncRouterMap = [
     children: [
       {
         path: 'link',
-        component: _import('modules/helper/link'),
+        component: _import('modules/tools/link'),
         name: 'link',
         meta: {
           title: '链接生成工具',
@@ -322,7 +322,7 @@ export const asyncRouterMap = [
       },
       {
         path: 'cdn',
-        component: _import('modules/helper/cdn'),
+        component: _import('modules/tools/cdn'),
         name: 'cdn',
         meta: {
           title: '图片CDN',

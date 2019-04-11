@@ -31,28 +31,29 @@ export default {
     },
     className: {
       type: String,
+      default: '',
     },
   },
   data() {
     return {
       active: false,
       position: '',
-      currentTop: '',
       width: undefined,
       height: undefined,
-      child: null,
-      stickyHeight: 0,
+      isSticky: false,
     };
   },
   mounted() {
     this.height = this.$el.getBoundingClientRect().height;
     window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('resize', this.handleReize);
   },
   activated() {
     this.handleScroll();
   },
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.handleReize);
   },
   methods: {
     sticky() {
@@ -62,23 +63,34 @@ export default {
       this.position = 'fixed';
       this.active = true;
       this.width = this.width + 'px';
+      this.isSticky = true;
     },
-    reset() {
+    handleReset() {
       if (!this.active) {
         return;
       }
+      this.reset();
+    },
+    reset() {
       this.position = '';
       this.width = 'auto';
       this.active = false;
+      this.isSticky = false;
     },
     handleScroll() {
-      this.width = this.$el.getBoundingClientRect().width;
+      const width = this.$el.getBoundingClientRect().width;
+      this.width = width || 'auto';
       const offsetTop = this.$el.getBoundingClientRect().top;
-      if (offsetTop <= this.stickyTop) {
+      if (offsetTop < this.stickyTop) {
         this.sticky();
         return;
       }
-      this.reset();
+      this.handleReset();
+    },
+    handleReize() {
+      if (this.isSticky) {
+        this.width = this.$el.getBoundingClientRect().width + 'px';
+      }
     },
   },
 };

@@ -40,9 +40,9 @@ router.beforeEach((to, from, next) => {
           // 根据roles权限生成可访问的路由表
           // GenerateRoutes or GenerateLocalRoutes
           // 使用api控制路由
-          store.dispatch('GenerateRoutes', { roles }).then(() => {
-            // 使用本地控制路由
-            // store.dispatch('GenerateLocalRoutes', { roles }).then(() => {
+          // store.dispatch('GenerateRoutes', { roles }).then(() => {
+          // 使用本地控制路由
+          store.dispatch('GenerateLocalRoutes', { roles }).then(() => {
             // 动态添加可访问路由表
             console.log('addRoutes: ', store.getters.addRouters);
             router.addRoutes(store.getters.addRouters);
