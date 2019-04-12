@@ -321,6 +321,15 @@ export const asyncRouterMap = [
         },
       },
       {
+        path: 'link-old',
+        component: _import('modules/tools/link-old'),
+        name: 'link-old',
+        meta: {
+          title: '链接生成 old',
+          icon: 'gc1',
+        },
+      },
+      {
         path: 'cdn',
         component: _import('modules/tools/cdn'),
         name: 'cdn',

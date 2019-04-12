@@ -4,21 +4,39 @@
       <a
         class="red"
         href="http://bi.doweidu.com/#/manage/spm?show_add=1&is_miniapp=1"
-        >去新站点</a
-      >
+        >去新站点
+      </a>
     </div>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item>
         <!-- <h4>链接种类太多，不知道怎么配置，怎么办？</h4> -->
         <p>
           以下功能支持自动生成 <b>场景A</b> -> <b>场景B</b> 的跳转链接
-          <b> 要使用spm配置</b
-          ><a
+          <b> 要使用spm配置</b>
+          <a
             class="red"
             href="http://bi.doweidu.com/#/manage/spm?show_add=1&is_miniapp=1"
-            >去新站点</a
-          >
+            >去新站点
+          </a>
         </p>
+      </el-form-item>
+      <!--
+        1. 选择小程序类别，默认支付宝小程序
+        2. 输入配置场景(在哪配置)   \
+        3. 选择目标地址(跳转到哪里) / ==> 得出 miniObj 数据对象，以及最终链接的生成规则
+        4. 输入或选择配置数据
+        5. 按规则生成结果
+        6. 辅助
+          - 二维码生成
+          - 短链接入口
+          - 链接解析
+          - 链接正确性校验
+      -->
+      <el-form-item>
+        <el-radio-group v-model="form.minitype">
+          <el-radio-button label="aliapp">支付宝小程序</el-radio-button>
+          <el-radio-button label="wxapp">微信小程序</el-radio-button>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="在哪配置">
         <el-radio-group v-model="form.source">
@@ -26,8 +44,8 @@
             :label="item.label"
             v-for="(item, index) in formList"
             :key="index"
-            >{{ item.text }}</el-radio
-          >
+            >{{ item.text }}
+          </el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="跳转到哪里">
@@ -36,8 +54,8 @@
             :label="item.label"
             v-for="(item, index) in toList"
             :key="index"
-            >{{ item.text }}</el-radio
-          >
+            >{{ item.text }}
+          </el-radio>
         </el-radio-group>
         <div v-show="form.dist === 'othermini'">
           <el-input
@@ -314,6 +332,7 @@ export default {
       hidden: false,
       otherMinis,
       form: {
+        minitype: 'aliapp',
         isWxapp: false,
         useJumpIndex: false,
         createShortUrl: false,
