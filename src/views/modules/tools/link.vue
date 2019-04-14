@@ -1,12 +1,12 @@
 <template>
   <div class="app-container">
-    <div class="full-tip" @click="hideTip" :class="hidden ? 'hidden' : ''">
+    <!-- <div class="full-tip" @click="hideTip" :class="hidden ? 'hidden' : ''">
       <a
         class="red"
         href="http://bi.doweidu.com/#/manage/spm?show_add=1&is_miniapp=1"
         >去新站点
       </a>
-    </div>
+    </div> -->
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item>
         <!-- <h4>链接种类太多，不知道怎么配置，怎么办？</h4> -->
@@ -22,6 +22,7 @@
       </el-form-item>
       <!--
         1. 选择小程序类别，默认支付宝小程序
+          - 关于业务筛选，可以不附加，相同类型的业务可以相互参考
         2. 输入配置场景(在哪配置)   \
         3. 选择目标地址(跳转到哪里) / ==> 得出 miniObj 数据对象，以及最终链接的生成规则
         4. 输入或选择配置数据
@@ -209,7 +210,7 @@ export default {
       options: config.aliapp.toList,
       minitype: 'aliapp',
       selectedOptions: [],
-      hidden: false,
+      // hidden: false,
       form: {
         ...defaultData,
       },
@@ -227,9 +228,8 @@ export default {
       const { toList = [] } = this;
       const curApp = toList.find(item => item.value === appId) || {};
       const pageList = curApp.children || [];
-      console.log(pageList);
+      // console.log(pageList);
       return pageList;
-      // return config[this.form.minitype].toList.filter(item => item.terminal === this.form.terminal);
     },
     output() {
       return '';
@@ -346,7 +346,7 @@ export default {
       });
     },
     hideTip() {
-      this.hidden = true;
+      // this.hidden = true;
     },
   },
 };
