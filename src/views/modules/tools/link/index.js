@@ -1,2 +1,3 @@
+export * from './qs';
 export * from './config';
-export * from './rule';
+export * from './rules';
