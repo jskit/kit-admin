@@ -39,7 +39,7 @@
           <el-radio-button label="wxapp">微信小程序</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="在哪配置">
+      <el-form-item v-show="show('fromApp')" label="在哪配置">
         <el-select v-model="form.fromApp" placeholder="请选择">
           <el-option
             :label="item.label"
@@ -79,10 +79,10 @@
         4. 可配置业务渠道参数
         5. 可配置扩展参数 extraData 等
       -->
-      <el-form-item label="跳转到哪里">
+      <el-form-item v-show="show('toApp')" label="跳转到哪里">
         <el-input
           placeholder="请输入 appid=xxx"
-          v-model="form.distApp"
+          v-model="form.toApp"
           class="input-with-select"
         >
           <!-- <el-cascader
@@ -105,7 +105,7 @@
           </el-select>
         </el-input>
       </el-form-item>
-      <el-form-item label="页面路径">
+      <el-form-item v-show="show('pathname')" label="页面路径">
         <el-input
           placeholder="请输入 pages/xxx/xxx，无数据默认跳首页"
           v-model="form.pathname"
@@ -125,7 +125,7 @@
           </el-select>
         </el-input>
       </el-form-item>
-      <el-form-item v-show="form.pageName !== 'topic'" label="页面参数">
+      <el-form-item v-show="show('pageQuery')" label="页面参数">
         <el-input
           placeholder="如需要参数，请输入页面参数 如 id=xxx topic_code=xxx"
           v-model="form.pageQueryString"
@@ -133,18 +133,26 @@
         >
         </el-input>
       </el-form-item>
-      <el-form-item v-show="form.pageName === 'topic'" label="专题链接">
+      <el-form-item v-show="show('httpsUrl')" label="https链接">
         <el-input
           placeholder="如: https://topic.doweidu.com/?id=6633dc9c5148b8d7a5057bc85d80c922"
-          v-model="form.webviewUrl"
+          v-model="form.httpsUrl"
           class="input"
         >
         </el-input>
       </el-form-item>
-      <el-form-item label="统计参数">
+      <el-form-item v-show="show('bizParams')" label="统计参数">
         <el-input
           placeholder="请输入渠道统计参数 如 spm=xxx&channel_id=xxx"
           v-model="form.bizParamsString"
+          class="input"
+        >
+        </el-input>
+      </el-form-item>
+      <el-form-item v-show="show('extraData')" label="扩展参数">
+        <el-input
+          placeholder="跳转第三方小程序，可能需要扩展参数 格式同 spm=xxx&channel_id=xxx"
+          v-model="form.extraDataString"
           class="input"
         >
         </el-input>
@@ -184,12 +192,12 @@ import { parse } from './link/index';
 
 const defaultData = {
   fromApp: '',
-  distApp: '',
+  toApp: '',
   appId: '',
   pageName: '', // 无，代表默认首页
   pageQueryString: '',
   bizParamsString: '',
-  webviewUrl: '',
+  httpsUrl: '',
   pathname: '',
   tip: '',
   // output: '',
@@ -247,9 +255,9 @@ export default {
     },
     ['form.appId']: function(val, oldVal) {
       if (val !== 0) {
-        this.form.distApp = `appid=${val}`;
+        this.form.toApp = `appid=${val}`;
       } else {
-        this.form.distApp = '';
+        this.form.toApp = '';
       }
     },
     // 没选目标，page 应该是隐藏的
@@ -271,6 +279,33 @@ export default {
       this.form = {
         ...defaultData,
       };
+    },
+    show(type) {
+      const { minitype, form } = this;
+      let bool = false;
+      /* eslint no-duplicate-case: 0 */
+      switch (type) {
+        case 'fromApp':
+        case 'toApp':
+        case 'pathname':
+          bool = minitype !== 'h5';
+          break;
+        case 'httpsUrl':
+          bool = form.pageName === 'topic' || minitype === 'h5';
+          break;
+        case 'pageQuery':
+          bool = form.pageName !== 'topic' && minitype !== 'h5';
+          break;
+        case 'bizParams':
+          bool = true;
+          break;
+        case 'extraData':
+          bool = false;
+          break;
+        default:
+        // do nothing...
+      }
+      return bool;
     },
     handleChange(value) {
       console.log(value);
