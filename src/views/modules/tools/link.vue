@@ -62,7 +62,7 @@
         </el-radio-group>
         <div v-show="form.dist === 'othermini'">
           <el-input
-            placeholder="其他小程序链接 如 ${page}?appid=${appId}&xx=xxx"
+            placeholder="其他小程序链接 如 ${page}?appid=${appid}&xx=xxx"
             v-model="form.othermini"
             class="input-with-select"
           ></el-input>
@@ -95,7 +95,7 @@
             placeholder="请选择"
           >
           </el-cascader> -->
-          <el-select v-model="form.appId" slot="prepend" placeholder="请选择">
+          <el-select v-model="form.appid" slot="prepend" placeholder="请选择">
             <el-option
               :label="item.label"
               :value="item.value"
@@ -194,7 +194,7 @@ import { parse } from './link/index';
 const defaultData = {
   fromApp: '',
   toApp: '',
-  appId: '',
+  appid: '',
   pageName: '', // 无，代表默认首页
   pageQueryString: '',
   bizParamsString: '',
@@ -224,9 +224,9 @@ export default {
       return config[this.minitype].toList;
     },
     pageList() {
-      const { appId } = this.form;
+      const { appid } = this.form;
       const { toList = [] } = this;
-      const curApp = toList.find(item => item.value === appId) || {};
+      const curApp = toList.find(item => item.value === appid) || {};
       const pageList = curApp.children || [];
       // console.log(pageList);
       return pageList;
@@ -253,14 +253,18 @@ export default {
         this.reset();
       }
     },
-    ['form.appId']: function(val, oldVal) {
+    ['form.appid']: function(val, oldVal) {
       if (val !== 0) {
         this.form.toApp = `appid=${val}`;
       } else {
         this.form.toApp = '';
       }
+      if (val !== oldVal) {
+        // 目标 app 变更
+        this.form.pageName = '';
+      }
     },
-    // 没选目标，page 应该是隐藏的
+    // 目标 app 变更，page 应该看情况重置
     // 没选page，query 应该是隐藏的
     ['form.pageName']: function(val, oldVal) {
       if (val) {

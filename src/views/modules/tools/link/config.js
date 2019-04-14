@@ -1,10 +1,12 @@
 // 各种配置数据
 
+const defaultPage = {
+  label: '自定义(无数据默认跳首页)',
+  value: '',
+};
+
 const pages = [
-  {
-    label: '无数据(默认跳首页)',
-    value: '',
-  },
+  defaultPage,
   {
     label: '首页 index',
     value: 'index',
@@ -37,10 +39,6 @@ const pages = [
     label: '订单详情 order-detail',
     value: 'order-detail',
   },
-  {
-    label: '其他页面(自定义)',
-    value: 0,
-  },
 ];
 
 const otherMiniApp = [
@@ -49,7 +47,7 @@ const otherMiniApp = [
     terminal: 'other-mini',
     value: 0,
     type: 'mini',
-    children: [],
+    children: [defaultPage],
   },
 ];
 const aliappList = [
