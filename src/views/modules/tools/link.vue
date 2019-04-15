@@ -130,7 +130,7 @@
       <el-form-item v-show="show('pageQuery')" label="页面参数">
         <el-input
           placeholder="如需要参数，请输入页面参数 如 id=xxx topic_code=xxx"
-          v-model="form.pageQueryInput"
+          v-model="form.pageQueryString"
           class="input"
         >
         </el-input>
@@ -162,7 +162,11 @@
       <el-form-item label="生成结果">
         <div class="output">
           <div class="output-item">{{ output }}</div>
-          <div class="output-item">{{ form.tip }}</div>
+          <div
+            class="output-item"
+            style="white-space: pre;"
+            v-html="form.tip"
+          ></div>
         </div>
       </el-form-item>
       <!-- <el-form-item label="扫码校验" v-if="output">
@@ -190,7 +194,7 @@
 // import { ajax } from '@/utils/request';
 // import base64 from '@/utils/base64';
 import config from './link/config.js';
-import { parse, MiniLink, miniRules } from './link/index';
+import { stringify, parse, MiniLink, miniRules } from './link/index';
 
 // const aliapp = new MiniLink(miniRules.aliapp);
 // const wxapp = new MiniLink(miniRules.wxapp);
@@ -198,13 +202,14 @@ let link = () => {};
 
 const defaultData = {
   fromAppValue: '',
-  appid: '',
-  appidInput: '',
+  appid: '', // appid
+  appidInput: '', // appid=xxx
   pageName: '', // 无，代表默认首页
   pathname: '',
   httpsUrl: '',
-  pageQueryInput: '',
+  pageQueryString: '',
   bizParamsString: '',
+  extraDataString: '',
   tip: '',
   // output: '',
 };
@@ -234,7 +239,7 @@ export default {
       const toApp = toList.find(item => item.value === appid) || {};
       /* eslint vue/no-side-effects-in-computed-properties: 0 */
       // this.toApp = toApp;
-      const pageList = toApp.children || [];
+      let pageList = toApp.children || [];
       // console.log(pageList);
       return pageList;
     },
@@ -244,11 +249,18 @@ export default {
         fromList.find(item => item.value === this.form.fromAppValue) || {};
       const toApp = toList.find(item => item.value === this.form.appid) || {};
       let linkType = fromApp.type;
-      const pageQuery = parse(form.pageQueryInput);
+      const pageQuery = parse(form.pageQueryString);
       const bizParams = parse(form.bizParamsString);
       // const extraData = parse(form.extraDataString);
       if (fromApp.terminal === 'other-mini') {
-        return `配置后将以上数据截图提供给需求方`;
+        this.form.tip = `配置后将以下数据提供给需求方
+{
+  appid: ${form.appid},
+  path: ${form.pathname}${stringify(parse(form.pageQueryString))},
+  extraData: ${form.extraDataString}
+}
+`;
+        return;
       }
       // 确定链接生成类型
       if (fromApp.type === toApp.type && fromApp.value !== toApp.value) {
@@ -256,7 +268,7 @@ export default {
       }
 
       console.log('linkType:', linkType);
-      console.log(parse(form.pageQueryInput));
+      console.log(parse(form.pageQueryString));
       const data = {
         pageQuery,
         bizParams,
@@ -294,7 +306,7 @@ export default {
       }
     },
     ['form.appid']: function(val, oldVal) {
-      if (val !== 0) {
+      if (val && val !== 0) {
         this.form.appidInput = `appid=${val}`;
       } else {
         this.form.appidInput = '';
@@ -319,7 +331,7 @@ export default {
           pathname,
         };
         if (val === 'topic') {
-          newForm.pageQueryInput = defaultData.pageQueryInput;
+          newForm.pageQueryString = defaultData.pageQueryString;
           // 需要校验输入的 httpsUrl
         }
         if (oldVal === 'topic') {
@@ -354,7 +366,10 @@ export default {
           break;
         case 'toApp':
           if (minitype !== 'h5') bool = true;
-          if (form.fromAppValue === 'tplmsg') bool = false;
+          // 这里模板消息可以显示 toApp，但显示此项可以方便选择 pageList
+          // if (form.fromAppValue === 'tplmsg') {
+          //   bool = false;
+          // }
           break;
         case 'httpsUrl':
           bool = form.pageName === 'topic' || minitype === 'h5';
@@ -366,7 +381,7 @@ export default {
           bool = true;
           break;
         case 'extraData':
-          bool = false;
+          bool = form.fromAppValue === 'xxx';
           break;
         default:
         // do nothing...
