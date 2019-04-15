@@ -26,6 +26,7 @@ const pages = [
   {
     label: '五福专题 zt',
     value: 'zt',
+    disabled: true,
   },
   {
     label: '个人中心 profile',
@@ -45,7 +46,7 @@ const otherMiniApp = [
   {
     label: '其他小程序',
     terminal: 'other-mini',
-    value: 0,
+    value: 'xxx',
     type: 'mini',
     children: [defaultPage],
   },
@@ -125,9 +126,9 @@ export default {
     fromList: [
       {
         label: '支付宝-生活号',
-        terminal: 'life',
-        value: 'life',
-        type: 'life',
+        terminal: 'alipays',
+        value: 'alipays',
+        type: 'alipays',
       },
       {
         label: '支付宝-模板消息',

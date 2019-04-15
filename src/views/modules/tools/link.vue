@@ -41,7 +41,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-show="show('fromApp')" label="在哪配置">
-        <el-select v-model="form.fromApp" placeholder="请选择">
+        <el-select v-model="form.fromAppValue" placeholder="请选择">
           <el-option
             :label="item.label"
             :value="item.value"
@@ -83,7 +83,7 @@
       <el-form-item v-show="show('toApp')" label="跳转到哪里">
         <el-input
           placeholder="请输入 appid=xxx"
-          v-model="form.toApp"
+          v-model="form.appidInput"
           class="input-with-select"
         >
           <!-- <el-cascader
@@ -120,6 +120,7 @@
             <el-option
               :label="item.label"
               :value="item.value"
+              :disabled="item.disabled"
               :key="index"
               v-for="(item, index) in pageList"
             ></el-option>
@@ -129,7 +130,7 @@
       <el-form-item v-show="show('pageQuery')" label="页面参数">
         <el-input
           placeholder="如需要参数，请输入页面参数 如 id=xxx topic_code=xxx"
-          v-model="form.pageQueryString"
+          v-model="form.pageQueryInput"
           class="input"
         >
         </el-input>
@@ -189,17 +190,21 @@
 // import { ajax } from '@/utils/request';
 // import base64 from '@/utils/base64';
 import config from './link/config.js';
-import { parse } from './link/index';
+import { parse, MiniLink, miniRules } from './link/index';
+
+// const aliapp = new MiniLink(miniRules.aliapp);
+// const wxapp = new MiniLink(miniRules.wxapp);
+let link = () => {};
 
 const defaultData = {
-  fromApp: '',
-  toApp: '',
+  fromAppValue: '',
   appid: '',
+  appidInput: '',
   pageName: '', // 无，代表默认首页
-  pageQueryString: '',
-  bizParamsString: '',
-  httpsUrl: '',
   pathname: '',
+  httpsUrl: '',
+  pageQueryInput: '',
+  bizParamsString: '',
   tip: '',
   // output: '',
 };
@@ -226,13 +231,44 @@ export default {
     pageList() {
       const { appid } = this.form;
       const { toList = [] } = this;
-      const curApp = toList.find(item => item.value === appid) || {};
-      const pageList = curApp.children || [];
+      const toApp = toList.find(item => item.value === appid) || {};
+      /* eslint vue/no-side-effects-in-computed-properties: 0 */
+      // this.toApp = toApp;
+      const pageList = toApp.children || [];
       // console.log(pageList);
       return pageList;
     },
     output() {
-      return '';
+      const { form, fromList = [], toList = [] } = this;
+      const fromApp =
+        fromList.find(item => item.value === this.form.fromAppValue) || {};
+      const toApp = toList.find(item => item.value === this.form.appid) || {};
+      let linkType = fromApp.type;
+      const pageQuery = parse(form.pageQueryInput);
+      const bizParams = parse(form.bizParamsString);
+      // const extraData = parse(form.extraDataString);
+      if (fromApp.terminal === 'other-mini') {
+        return `配置后将以上数据截图提供给需求方`;
+      }
+      // 确定链接生成类型
+      if (fromApp.type === toApp.type && fromApp.value !== toApp.value) {
+        linkType = 'miniapp';
+      }
+
+      console.log('linkType:', linkType);
+      console.log(parse(form.pageQueryInput));
+      const data = {
+        pageQuery,
+        bizParams,
+        appid: form.appid,
+        pathname: form.pathname,
+        webviewUrl: form.httpsUrl,
+      };
+      if (!linkType) return '';
+      return link
+        .input(data)
+        [linkType]()
+        .toString();
     },
     // output() {
     //   const output = this.computedUrl();
@@ -241,23 +277,27 @@ export default {
     //   this.resultUrl = output;
     //   return output;
     // },
-    // qrcode() {
-    //   return `https://api.v3.iqianggou.com/api/common/qrcode?content=${encodeURIComponent(
-    //     this.output
-    //   )}`;
-    // },
+    qrcode() {
+      if (!this.output) return;
+      return `https://api.v3.iqianggou.com/api/common/qrcode?content=${encodeURIComponent(
+        this.output
+      )}`;
+    },
   },
   watch: {
     ['minitype']: function(val, oldVal) {
       if (val !== oldVal) {
         this.reset();
+        if (['aliapp', 'wxapp'].includes(val)) {
+          link = new MiniLink(miniRules[val]);
+        }
       }
     },
     ['form.appid']: function(val, oldVal) {
       if (val !== 0) {
-        this.form.toApp = `appid=${val}`;
+        this.form.appidInput = `appid=${val}`;
       } else {
-        this.form.toApp = '';
+        this.form.appidInput = '';
       }
       if (val !== oldVal) {
         // 目标 app 变更
@@ -267,15 +307,34 @@ export default {
     // 目标 app 变更，page 应该看情况重置
     // 没选page，query 应该是隐藏的
     ['form.pageName']: function(val, oldVal) {
+      let pathname = '';
       if (val) {
-        this.form.pathname = `pages/${val}/${val}`;
-      } else {
-        this.form.pathname = '';
+        pathname = `pages/${val}/${val}`;
+      }
+      // this.form.pathname = pathname;
+      // 为避免出问题，只设置要重置哪些值
+      if (val !== oldVal) {
+        let newForm = {
+          ...this.form,
+          pathname,
+        };
+        if (val === 'topic') {
+          newForm.pageQueryInput = defaultData.pageQueryInput;
+          // 需要校验输入的 httpsUrl
+        }
+        if (oldVal === 'topic') {
+          newForm.httpsUrl = defaultData.httpsUrl;
+        }
+        this.form = newForm;
       }
     },
   },
   filters: {
     parse,
+  },
+  created() {
+    link = new MiniLink(miniRules[this.minitype]);
+    console.log(link);
   },
   methods: {
     reset() {
@@ -290,9 +349,12 @@ export default {
       /* eslint no-duplicate-case: 0 */
       switch (type) {
         case 'fromApp':
-        case 'toApp':
         case 'pathname':
           bool = minitype !== 'h5';
+          break;
+        case 'toApp':
+          if (minitype !== 'h5') bool = true;
+          if (form.fromAppValue === 'tplmsg') bool = false;
           break;
         case 'httpsUrl':
           bool = form.pageName === 'topic' || minitype === 'h5';

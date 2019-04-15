@@ -22,7 +22,7 @@ export function parse(query) {
 
 // parse('id=123');
 
-export function stringify(obj, prefix = '') {
+export function stringify(obj, prefix = '?') {
   const pairs = [];
 
   //
@@ -31,12 +31,12 @@ export function stringify(obj, prefix = '') {
   // if ('string' !== typeof prefix) prefix = '?';
 
   for (var key in obj) {
-    if (has.call(obj, key)) {
+    if (has.call(obj, key) && ![undefined, null, ''].includes(obj[key])) {
       pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
     }
   }
 
-  return pairs.length ? pairs.join('&') : '';
+  return pairs.length ? prefix + pairs.join('&') : '';
 }
 
 // function stringify(params = {}) {

@@ -5,7 +5,7 @@ const wxapp = new MiniLink(miniRules.wxapp);
 
 const link1 = aliapp
   .input({
-    appId: '123456',
+    appid: '123456',
     pageName: 'detail',
     pageQuery: { id: 123 },
     bizParams: { spm: 'xxx' },
@@ -14,7 +14,7 @@ const link1 = aliapp
   .mini();
 const link2 = wxapp
   .input({
-    appId: '123456',
+    appid: '123456',
     pageName: 'detail',
     pageQuery: { id: 123 },
     bizParams: { spm: 'xxx' },
