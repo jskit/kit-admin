@@ -22,6 +22,12 @@ const pages = [
   {
     label: '新专题 topic',
     value: 'topic',
+    type: 'https',
+  },
+  {
+    label: '通用 https 链接',
+    value: 'webview',
+    type: 'https',
   },
   {
     label: '五福专题 zt',
