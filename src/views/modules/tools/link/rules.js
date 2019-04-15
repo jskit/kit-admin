@@ -35,9 +35,25 @@ export const miniRules = {
     // 微信公众号菜单 --> 小程序
     mp: data => `${data.pathname}${stringify(data.pageQuery)}`,
     // 微信推文 --> 小程序
-    tweet: data => `${data.pathname}.html${stringify(data.pageQuery)}`,
+    tweet: data => {
+      let { pathname } = data;
+      pathname = pathname ? `${pathname}.html` : '';
+      const params = {
+        ...data.pageQuery,
+        ...data.bizParams,
+      };
+      return `${pathname}${stringify(params)}`;
+    },
     // 广告投放 --> 小程序
-    ad: data => `/${data.pathname}${stringify(data.pageQuery)}`,
+    ad: data => {
+      let { pathname } = data;
+      pathname = pathname ? `/${pathname}` : '';
+      const params = {
+        ...data.pageQuery,
+        ...data.bizParams,
+      };
+      return `${pathname}${stringify(params)}`;
+    },
   },
 };
 

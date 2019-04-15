@@ -160,6 +160,7 @@ export default {
         value: 'ad',
         type: 'ad',
       },
+      ...wxappList,
     ],
     toList: [...wxappList],
   },
