@@ -90,15 +90,15 @@ const wxappList = [
   {
     label: 'hsq-拼团小程序',
     terminal: 'hsq-wxapp',
-    value: '444',
+    value: 'wxa090d3923fde0d4b',
     biz: 'hsq',
     type: 'mini',
     children: [...pages],
   },
   {
-    label: '返一半小程序',
-    terminal: 'fyb',
-    value: '444',
+    label: 'fyb-返一半小程序',
+    terminal: 'fyb-wxapp',
+    value: 'wxf5af2f07377df2b1',
     biz: 'hsq',
     type: 'mini',
     children: [...pages],
@@ -106,7 +106,7 @@ const wxappList = [
   {
     label: 'iqg-砍价小程序',
     terminal: 'iqg-wxapp',
-    value: '555',
+    value: 'wxa36b4671d95ba753',
     biz: 'iqg',
     type: 'mini',
     children: [...pages],
@@ -116,7 +116,10 @@ const wxappList = [
 
 export default {
   h5: {
-    // iqg hsq msf fyb
+    // iqg
+    // hsq
+    // msf
+    // fyb
   },
   aliapp: {
     fromList: [
