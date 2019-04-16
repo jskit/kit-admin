@@ -255,10 +255,11 @@ export default {
         fromList.find(item => item.value === this.form.fromAppValue) || {};
       const toApp = toList.find(item => item.value === this.form.toAppId) || {};
       let linkType = fromApp.type;
-      const pageQuery = parse(form.pageQueryString);
-      const bizParams = parse(form.bizParamsString);
-      const extraData = parse(form.extraDataString);
-      const appId = form.toAppId || parse(form.toAppIdString).appid || '';
+      const pageQuery = parse(form.pageQueryString.trim());
+      const bizParams = parse(form.bizParamsString.trim());
+      const extraData = parse(form.extraDataString.trim());
+      const appId =
+        form.toAppId || (parse(form.toAppIdString).appid || '').trim();
       // 确定链接生成类型
       if (fromApp.type === toApp.type && fromApp.value !== toApp.value) {
         linkType = 'miniapp';
