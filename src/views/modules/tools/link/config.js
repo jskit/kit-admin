@@ -28,6 +28,7 @@ const pages = [
     label: '通用 https 链接',
     value: 'webview',
     type: 'https',
+    disabled: true,
   },
   {
     label: '五福专题 zt',

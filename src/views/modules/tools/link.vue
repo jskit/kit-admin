@@ -11,7 +11,7 @@
       <el-form-item class="qrcode" v-show="qrcode">
         <div class="output">
           <div class="output-item">
-            <img :src="qrcode" width="100" height="100%" alt="" />
+            <img :src="qrcode" width="160" height="100%" alt="" />
           </div>
         </div>
       </el-form-item>
@@ -545,8 +545,8 @@ export default {
 }
 .qrcode {
   position: absolute;
-  top: 48px;
-  left: 380px;
+  top: 0px;
+  left: 520px;
 }
 .output {
   max-width: 600px;
