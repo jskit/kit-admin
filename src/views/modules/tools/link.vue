@@ -7,7 +7,14 @@
         >去新站点
       </a>
     </div> -->
-    <el-form ref="form" :model="form" label-width="120px">
+    <el-form ref="form" class="pr" :model="form" label-width="120px">
+      <el-form-item class="qrcode" v-if="output">
+        <div class="output">
+          <div class="output-item">
+            <img :src="qrcode" width="100" height="100%" alt="" />
+          </div>
+        </div>
+      </el-form-item>
       <el-form-item>
         <!-- <h4>链接种类太多，不知道怎么配置，怎么办？</h4> -->
         <p>
@@ -170,11 +177,7 @@
           ></div>
         </div>
       </el-form-item>
-      <!-- <el-form-item label="扫码校验" v-if="output">
-        <div class="output">
-          <div class="output-item"><img :src="qrcode" alt="" /></div>
-        </div>
-      </el-form-item> -->
+
       <!-- <el-button type="primary" @click="onSubmit">生成短链接</el-button> -->
       <!-- <el-button type="danger" @click="onCancel">重置</el-button> -->
       <!-- <el-form-item v-show="form.createShortUrl">
@@ -297,6 +300,7 @@ export default {
     // },
     qrcode() {
       if (!this.output) return;
+      if (!['alipays', 'sms'].includes(this.form.fromAppValue)) return;
       return `https://api.v3.iqianggou.com/api/common/qrcode?content=${encodeURIComponent(
         this.output
       )}`;
@@ -393,7 +397,8 @@ export default {
           bool = true;
           break;
         case 'extraData':
-          bool = form.fromAppValue === '';
+          if (form.fromAppValue === '') bool = true;
+          if (minitype === 'h5') bool = false;
           break;
         default:
         // do nothing...
@@ -481,6 +486,9 @@ export default {
 .line{
   text-align: center;
 }
+.pr {
+  position: relative;
+}
 .inline-item {
   display: inline-flex;
   // justify-content: flex-start;
@@ -491,9 +499,14 @@ export default {
     outline: none;
   }
 }
+.qrcode {
+  position: absolute;
+  top: 48px;
+  left: 380px;
+}
 .output {
   max-width: 600px;
-  padding-top: 10px;
+  padding-top: 8px;
   line-height: 1.5;
   word-break: break-all;
 

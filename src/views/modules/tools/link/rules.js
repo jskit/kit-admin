@@ -24,7 +24,7 @@ export const miniRules = {
     // h5/生活号 --> 支付宝小程序（mini -> alipays）
     alipays: data => {
       const params = {
-        appid: data.appid,
+        appId: data.appid,
         page: data.miniUrl,
         query: stringify(data.bizParams, ''),
       };
