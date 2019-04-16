@@ -50,9 +50,9 @@ const pages = [
 
 const otherMiniApp = [
   {
-    label: '其他小程序',
+    label: '自定义小程序',
     terminal: 'other-mini',
-    value: 'xxx',
+    value: '',
     type: 'mini',
     children: [defaultPage],
   },

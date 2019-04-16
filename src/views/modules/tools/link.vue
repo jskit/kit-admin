@@ -62,7 +62,7 @@
         </el-radio-group>
         <div v-show="form.dist === 'othermini'">
           <el-input
-            placeholder="其他小程序链接 如 ${page}?appid=${appid}&xx=xxx"
+            placeholder="其他小程序链接 如 ${page}?appid=${toAppId}&xx=xxx"
             v-model="form.othermini"
             class="input-with-select"
           ></el-input>
@@ -83,7 +83,8 @@
       <el-form-item v-show="show('toApp')" label="跳转到哪里">
         <el-input
           placeholder="请输入 appid=xxx"
-          v-model="form.appidInput"
+          v-model="form.toAppIdString"
+          :disabled="!!form.toAppId"
           class="input-with-select"
         >
           <!-- <el-cascader
@@ -95,7 +96,7 @@
             placeholder="请选择"
           >
           </el-cascader> -->
-          <el-select v-model="form.appid" slot="prepend" placeholder="请选择">
+          <el-select v-model="form.toAppId" slot="prepend" placeholder="请选择">
             <el-option
               :label="item.label"
               :value="item.value"
@@ -153,7 +154,7 @@
       </el-form-item>
       <el-form-item v-show="show('extraData')" label="扩展参数">
         <el-input
-          placeholder="跳转第三方小程序，可能需要扩展参数 格式同 spm=xxx&channel_id=xxx"
+          placeholder="其他小程序引流，可能需要扩展参数 extraData，格式同 spm=xxx&channel_id=xxx"
           v-model="form.extraDataString"
           class="input"
         >
@@ -202,8 +203,8 @@ let link = () => {};
 
 const defaultData = {
   fromAppValue: '',
-  appid: '', // appid
-  appidInput: '', // appid=xxx
+  toAppId: '', // appid
+  toAppIdString: '', // appid=xxx
   pageName: '', // 无，代表默认首页
   pathname: '',
   httpsUrl: '',
@@ -234,9 +235,9 @@ export default {
       return config[this.minitype].toList;
     },
     pageList() {
-      const { appid } = this.form;
+      const { toAppId } = this.form;
       const { toList = [] } = this;
-      const toApp = toList.find(item => item.value === appid) || {};
+      const toApp = toList.find(item => item.value === toAppId) || {};
       /* eslint vue/no-side-effects-in-computed-properties: 0 */
       // this.toApp = toApp;
       let pageList = toApp.children || [];
@@ -247,17 +248,22 @@ export default {
       const { form, fromList = [], toList = [] } = this;
       const fromApp =
         fromList.find(item => item.value === this.form.fromAppValue) || {};
-      const toApp = toList.find(item => item.value === this.form.appid) || {};
+      const toApp = toList.find(item => item.value === this.form.toAppId) || {};
       let linkType = fromApp.type;
       const pageQuery = parse(form.pageQueryString);
       const bizParams = parse(form.bizParamsString);
+      const appid = form.toAppId || parse(form.toAppIdString).appid || '';
       // const extraData = parse(form.extraDataString);
       if (fromApp.terminal === 'other-mini') {
+        const path =
+          `${form.pathname}${stringify(parse(form.pageQueryString))}` || '无';
+        const extraData =
+          `${stringify(parse(form.extraDataString), '')}` || '无';
         this.form.tip = `配置后将以下数据提供给需求方
 {
-  appid: ${form.appid},
-  path: ${form.pathname}${stringify(parse(form.pageQueryString))},
-  extraData: ${form.extraDataString}
+  appid: ${appid},
+  path: ${path},
+  extraData: ${extraData}
 }
 `;
         return;
@@ -267,12 +273,12 @@ export default {
         linkType = 'miniapp';
       }
 
-      console.log('linkType:', linkType);
-      console.log(parse(form.pageQueryString));
+      // console.log('linkType:', linkType);
+      // console.log(parse(form.pageQueryString));
       const data = {
         pageQuery,
         bizParams,
-        appid: form.appid,
+        appid: appid,
         pathname: form.pathname,
         webviewUrl: form.httpsUrl,
       };
@@ -305,11 +311,17 @@ export default {
         }
       }
     },
-    ['form.appid']: function(val, oldVal) {
+    ['form.fromAppValue']: function(val, oldVal) {
+      if (val !== oldVal) {
+        this.form.tip = '';
+      }
+    },
+    ['form.toAppId']: function(val, oldVal) {
       if (val && val !== 0) {
-        this.form.appidInput = `appid=${val}`;
+        // 此时要设置 input 无法手动修改
+        this.form.toAppIdString = `appid=${val}`;
       } else {
-        this.form.appidInput = '';
+        this.form.toAppIdString = '';
       }
       if (val !== oldVal) {
         // 目标 app 变更
@@ -381,7 +393,7 @@ export default {
           bool = true;
           break;
         case 'extraData':
-          bool = form.fromAppValue === 'xxx';
+          bool = form.fromAppValue === '';
           break;
         default:
         // do nothing...

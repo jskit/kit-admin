@@ -92,7 +92,7 @@ export class MiniLink {
     if (!type || !rule) {
       throw Error(`function next error: you should input ${type} & ${rule}`);
     }
-    console.log('应用规则:', type);
+    // console.log('应用规则:', type);
     if (type !== 'mini' && !this.data.miniUrl) {
       this.mini();
     }
