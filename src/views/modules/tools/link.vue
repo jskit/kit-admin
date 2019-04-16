@@ -391,7 +391,15 @@ export default {
     },
     getOutput(data) {
       // const data = this.appData;
-      const { fromApp, appId, linkType, pathname, pageQuery, extraData } = data;
+      const {
+        appId,
+        fromApp,
+        toApp,
+        linkType,
+        pathname,
+        pageQuery,
+        extraData,
+      } = data;
       // const extraData = parse(form.extraDataString);
       if (linkType === 'sms') this.form.tip = '短信内限制必须使用http协议';
       if (fromApp.terminal === 'other-mini') {
@@ -404,11 +412,13 @@ export default {
     extraData: ${extraDataString}
   }
   `;
-        return;
       }
       // console.log('linkType:', linkType);
       // console.log(data);
       if (!linkType) return '';
+      if (toApp.value && fromApp.value === toApp.value) {
+        return '这里使用 H5链接配置';
+      }
       if (linkType !== 'https' && fromApp.type !== 'mini' && !appId) {
         return '';
       }
@@ -476,7 +486,13 @@ export default {
   },
 };
 </script>
-
+<style lang="stylus" scoped>
+.el-form-item__content {
+  p {
+    margin: 0;
+  }
+}
+</style>
 <style lang="stylus">
 .full-tip {
   position: fixed;
