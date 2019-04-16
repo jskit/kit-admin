@@ -8,7 +8,7 @@
       </a>
     </div> -->
     <el-form ref="form" class="pr" :model="form" label-width="120px">
-      <el-form-item class="qrcode" v-if="output">
+      <el-form-item class="qrcode" v-show="qrcode">
         <div class="output">
           <div class="output-item">
             <img :src="qrcode" width="100" height="100%" alt="" />
@@ -223,6 +223,8 @@ export default {
     return {
       options: config.aliapp.toList,
       minitype: 'aliapp',
+      output: '',
+      qrcode: '',
       selectedOptions: [],
       // hidden: false,
       form: {
@@ -247,49 +249,34 @@ export default {
       // console.log(pageList);
       return pageList;
     },
-    output() {
-      const { form, fromList = [], toList = [] } = this;
+    appData() {
+      const { minitype, form, fromList = [], toList = [] } = this;
       const fromApp =
         fromList.find(item => item.value === this.form.fromAppValue) || {};
       const toApp = toList.find(item => item.value === this.form.toAppId) || {};
       let linkType = fromApp.type;
       const pageQuery = parse(form.pageQueryString);
       const bizParams = parse(form.bizParamsString);
-      const appid = form.toAppId || parse(form.toAppIdString).appid || '';
-      // const extraData = parse(form.extraDataString);
-      if (fromApp.terminal === 'other-mini') {
-        const path =
-          `${form.pathname}${stringify(parse(form.pageQueryString))}` || '无';
-        const extraData =
-          `${stringify(parse(form.extraDataString), '')}` || '无';
-        this.form.tip = `配置后将以下数据提供给需求方
-{
-  appid: ${appid},
-  path: ${path},
-  extraData: ${extraData}
-}
-`;
-        return;
-      }
+      const extraData = parse(form.extraDataString);
+      const appId = form.toAppId || parse(form.toAppIdString).appid || '';
       // 确定链接生成类型
       if (fromApp.type === toApp.type && fromApp.value !== toApp.value) {
         linkType = 'miniapp';
+      } else if (minitype === 'h5') {
+        linkType = 'https';
       }
-
-      // console.log('linkType:', linkType);
-      // console.log(parse(form.pageQueryString));
-      const data = {
+      return {
+        minitype,
+        appId,
         pageQuery,
         bizParams,
-        appid: appid,
+        extraData,
         pathname: form.pathname,
         webviewUrl: form.httpsUrl,
+        linkType,
+        fromApp,
+        toApp,
       };
-      if (!linkType) return '';
-      return link
-        .input(data)
-        [linkType]()
-        .toString();
     },
     // output() {
     //   const output = this.computedUrl();
@@ -298,13 +285,6 @@ export default {
     //   this.resultUrl = output;
     //   return output;
     // },
-    qrcode() {
-      if (!this.output) return;
-      if (!['alipays', 'sms'].includes(this.form.fromAppValue)) return;
-      return `https://api.v3.iqianggou.com/api/common/qrcode?content=${encodeURIComponent(
-        this.output
-      )}`;
-    },
   },
   watch: {
     ['minitype']: function(val, oldVal) {
@@ -356,13 +336,16 @@ export default {
         this.form = newForm;
       }
     },
-  },
-  filters: {
-    parse,
+    ['appData']: function(val, oldVal) {
+      this.qrcode = '';
+      if (val !== oldVal) {
+        this.output = this.outLink(val);
+        this.qrcode = this.qrCode(val);
+      }
+    },
   },
   created() {
     link = new MiniLink(miniRules[this.minitype]);
-    console.log(link);
   },
   methods: {
     reset() {
@@ -381,6 +364,7 @@ export default {
           bool = minitype !== 'h5';
           break;
         case 'toApp':
+          // bool = true;
           if (minitype !== 'h5') bool = true;
           // 这里模板消息可以显示 toApp，但显示此项可以方便选择 pageList
           // if (form.fromAppValue === 'tplmsg') {
@@ -404,6 +388,45 @@ export default {
         // do nothing...
       }
       return bool;
+    },
+    outLink(data) {
+      // const data = this.appData;
+      const { fromApp, appId, linkType, pathname, pageQuery, extraData } = data;
+      // const extraData = parse(form.extraDataString);
+      if (fromApp.terminal === 'other-mini') {
+        const path = `${pathname}${stringify(pageQuery)}` || '无';
+        const extraDataString = `${stringify(extraData, '')}` || '无';
+        this.form.tip = `配置后将以下数据提供给需求方
+{
+    appId: ${appId || '必须配置'},
+    path: ${path},
+    extraData: ${extraDataString}
+  }
+  `;
+        return;
+      }
+      // console.log('linkType:', linkType);
+      // console.log(data);
+      if (!linkType) return '';
+      return link
+        .input(data)
+        [linkType]()
+        .toString();
+    },
+    qrCode(data) {
+      const { minitype, appId, linkType } = data;
+      if (minitype === 'wxapp') return;
+      if (!appId) return;
+      if (['alipays', 'sms', 'miniapp', 'tplmsg', 'mini'].includes(linkType)) {
+        const output = link
+          .input(data)
+          .alipays()
+          .toString();
+        if (!output) return;
+        const prefixQr =
+          'https://api.v3.iqianggou.com/api/common/qrcode?content=';
+        return `${prefixQr}${encodeURIComponent(output)}`;
+      }
     },
     handleChange(value) {
       console.log(value);

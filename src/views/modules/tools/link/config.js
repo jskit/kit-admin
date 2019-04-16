@@ -127,6 +127,43 @@ export default {
     // hsq
     // msf
     // fyb
+    toList: [
+      {
+        label: 'iqg-H5',
+        terminal: 'h5-iqg',
+        value: 'h5-iqg',
+        biz: 'h5-iqg',
+        type: 'https',
+        // disabled: true,
+        children: [...pages],
+      },
+      {
+        label: 'hsq-H5',
+        terminal: 'h5-hsq',
+        value: 'h5-hsq',
+        biz: 'h5-hsq',
+        type: 'https',
+        // disabled: true,
+        children: [...pages],
+      },
+      {
+        label: 'msf-H5',
+        terminal: 'h5-msf',
+        value: 'h5-msf',
+        biz: 'h5-msf',
+        type: 'https',
+        children: [...pages],
+      },
+      {
+        label: 'fyb-H5',
+        terminal: 'h5-fyb',
+        value: 'h5-fyb',
+        biz: 'h5-fyb',
+        type: 'https',
+        disabled: true,
+        children: [...pages],
+      },
+    ],
   },
   aliapp: {
     fromList: [
