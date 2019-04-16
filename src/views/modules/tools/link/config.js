@@ -179,6 +179,12 @@ export default {
         value: 'tplmsg',
         type: 'tplmsg',
       },
+      {
+        label: '支付宝-短信',
+        terminal: 'sms',
+        value: 'sms',
+        type: 'sms',
+      },
       ...aliappList,
     ],
     toList: [...aliappList],

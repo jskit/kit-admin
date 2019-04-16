@@ -339,8 +339,8 @@ export default {
     ['appData']: function(val, oldVal) {
       this.qrcode = '';
       if (val !== oldVal) {
-        this.output = this.outLink(val);
-        this.qrcode = this.qrCode(val);
+        this.output = this.getOutput(val);
+        this.qrcode = this.getQrcode(val);
       }
     },
   },
@@ -389,10 +389,11 @@ export default {
       }
       return bool;
     },
-    outLink(data) {
+    getOutput(data) {
       // const data = this.appData;
       const { fromApp, appId, linkType, pathname, pageQuery, extraData } = data;
       // const extraData = parse(form.extraDataString);
+      if (linkType === 'sms') this.form.tip = '短信内限制必须使用http协议';
       if (fromApp.terminal === 'other-mini') {
         const path = `${pathname}${stringify(pageQuery)}` || '无';
         const extraDataString = `${stringify(extraData, '')}` || '无';
@@ -408,12 +409,15 @@ export default {
       // console.log('linkType:', linkType);
       // console.log(data);
       if (!linkType) return '';
+      if (linkType !== 'https' && fromApp.type !== 'mini' && !appId) {
+        return '';
+      }
       return link
         .input(data)
         [linkType]()
         .toString();
     },
-    qrCode(data) {
+    getQrcode(data) {
       const { minitype, appId, linkType } = data;
       if (minitype === 'wxapp') return;
       if (!appId) return;
