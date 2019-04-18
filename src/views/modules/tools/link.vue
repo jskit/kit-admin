@@ -545,6 +545,7 @@ export default {
 }
 .qrcode {
   position: absolute;
+  z-index: 1;
   top: 0px;
   left: 520px;
 }
