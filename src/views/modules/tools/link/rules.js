@@ -27,7 +27,13 @@ export const miniRules = {
       return `miniapp://${data.pathname}${stringify(params)}`;
     },
     // 模板消息 --> 小程序
-    tplmsg: data => `${data.pathname}${stringify(data.pageQuery)}`,
+    tplmsg: data => {
+      const params = {
+        ...data.pageQuery,
+        ...data.bizParams,
+      };
+      return `${data.pathname}${stringify(params)}`;
+    },
   },
   aliapp: {
     // 生活号菜单 --> 小程序
@@ -49,7 +55,13 @@ export const miniRules = {
   },
   wxapp: {
     // 微信公众号菜单 --> 小程序
-    mp: data => `${data.pathname}${stringify(data.pageQuery)}`,
+    mp: data => {
+      const params = {
+        ...data.pageQuery,
+        ...data.bizParams,
+      };
+      return `${data.pathname}${stringify(params)}`;
+    },
     // 微信推文 --> 小程序
     tweet: data => {
       let { pathname } = data;
