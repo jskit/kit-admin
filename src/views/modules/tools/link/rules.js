@@ -72,7 +72,8 @@ export const miniRules = {
       };
       return `${pathname}${stringify(params)}`;
     },
-    // 广告投放 --> 小程序
+    // 广告投放 --> 小程序 https://ad.weixin.qq.com/guide/679
+    // /page/item/detail/detail?sku=1077777&platform=1&gdt_vid=wx0ewinbalytpt ma00&weixinadinfo=20966864.wx0ewinbalytptma00.0.1
     ad: data => {
       let { pathname } = data;
       pathname = pathname ? `/${pathname}` : '';
