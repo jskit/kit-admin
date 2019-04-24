@@ -16,7 +16,7 @@
         v-model="textarea"
       >
       </el-input>
-      <p>结果如下：{{ linkCheckTip }}</p>
+      <p>解析如下：{{ linkCheckTip }}</p>
       <div class="content">
         <pre class="parse-code">{{ parseTextarea }}</pre>
       </div>
@@ -244,15 +244,15 @@ export default {
       form: {
         ...defaultData,
       },
-      textarea:
-        // 'alipays://platformapi/startapp?appId=2019032563719067&page=pages%2findex&query=source%3d%e5%a5%bd%e9%a3%9f%e6%9c%9f',
-        'alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Ftopic%2Ftopic%3Furl%3Dhttps%253A%252F%252Ftopic.doweidu.com%252F%253Fid%253D6633dc9c5148b8d7a5057bc85d80c922&query=spm%3D123%26channel_id%3D456',
+      textarea: '',
+      // 'alipays://platformapi/startapp?appId=2019032563719067&page=pages%2findex&query=source%3d%e5%a5%bd%e9%a3%9f%e6%9c%9f',
+      // 'alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Ftopic%2Ftopic%3Furl%3Dhttps%253A%252F%252Ftopic.doweidu.com%252F%253Fid%253D6633dc9c5148b8d7a5057bc85d80c922&query=spm%3D123%26channel_id%3D456',
     };
   },
   computed: {
     linkCheckTip() {
       if (this.textarea === '') return;
-      return '(暂不支持正确性校验)';
+      return '(暂未支持正确性校验)';
     },
     fromList() {
       return config[this.minitype].fromList;
@@ -309,6 +309,9 @@ export default {
       //  alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Fdetail%2Fdetail%3Fid%3D123&query=spm%3D456%26channel_id%3Dhuabei
       const textarea = this.textarea.trim() || '';
       const result = {};
+      if (textarea) {
+        this.qrcode = textarea;
+      }
       let temp = parse(textarea);
       if (/^https:\/\/ds\.alipay\.com\//.test(textarea)) {
         const schemeArr = temp.scheme.split('?');
@@ -569,9 +572,9 @@ export default {
 .link-parse {
   margin: 0 20px;
   line-height: 36px;
-  width: 300px;
+  width: 320px;
   font-size: 14px;
-  margin-left: 22px;
+  margin-left: 24px;
 
   >>> .el-textarea__inner {
     word-break: break-all;
