@@ -7,6 +7,20 @@
         >去新站点
       </a>
     </div> -->
+    <div class="fr link-parse">
+      <h4>链接解析与校验</h4>
+      <el-input
+        type="textarea"
+        :rows="9"
+        placeholder="请输入内容"
+        v-model="textarea"
+      >
+      </el-input>
+      <p>结果如下：{{ linkCheckTip }}</p>
+      <div class="content">
+        <pre class="parse-code">{{ parseTextarea }}</pre>
+      </div>
+    </div>
     <el-form ref="form" class="pr" :model="form" label-width="120px">
       <el-form-item class="qrcode" v-show="qrcode">
         <div class="output">
@@ -230,9 +244,16 @@ export default {
       form: {
         ...defaultData,
       },
+      textarea:
+        // 'alipays://platformapi/startapp?appId=2019032563719067&page=pages%2findex&query=source%3d%e5%a5%bd%e9%a3%9f%e6%9c%9f',
+        'alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Ftopic%2Ftopic%3Furl%3Dhttps%253A%252F%252Ftopic.doweidu.com%252F%253Fid%253D6633dc9c5148b8d7a5057bc85d80c922&query=spm%3D123%26channel_id%3D456',
     };
   },
   computed: {
+    linkCheckTip() {
+      if (this.textarea === '') return;
+      return '(暂不支持正确性校验)';
+    },
     fromList() {
       return config[this.minitype].fromList;
     },
@@ -278,6 +299,55 @@ export default {
         fromApp,
         toApp,
       };
+    },
+    parseTextarea() {
+      // 提取必要数据
+      // appId pathname pageQuery query extraData 等
+      // https://topic.doweidu.com/?id=6633dc9c5148b8d7a5057bc85d80c922
+      // alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Ftopic%2Ftopic%3Furl%3Dhttps%253A%252F%252Ftopic.doweidu.com%252F%253Fid%253D6633dc9c5148b8d7a5057bc85d80c922&query=spm%3D123%26channel_id%3D456
+
+      //  alipays://platformapi/startApp?appId=2017112000051610&page=pages%2Fdetail%2Fdetail%3Fid%3D123&query=spm%3D456%26channel_id%3Dhuabei
+      const textarea = this.textarea.trim() || '';
+      const result = {};
+      let temp = parse(textarea);
+      if (/^https:\/\/ds\.alipay\.com\//.test(textarea)) {
+        const schemeArr = temp.scheme.split('?');
+        temp = parse(schemeArr[1]);
+        Object.assign(result, {
+          type: 'sms',
+          desc: '适用于发送短信',
+        });
+      } else if (/^alipay/.test(textarea)) {
+        const schemeArr = textarea.split('?');
+        temp = parse(schemeArr[1]);
+        Object.assign(result, {
+          type: 'alipays',
+          desc: '适用于唤醒支付宝内页面，支持小程序',
+        });
+      } else if (/^minitype/.test(textarea)) {
+        Object.assign(result, {
+          type: 'minitype',
+          desc: '适用于多维度小程序主体内向其他小程序跳转（包含同主体的）',
+        });
+      }
+      if (temp.page) {
+        const pageArr = temp.page.split('?');
+        result.pathname = pageArr[0];
+        if (pageArr[0]) {
+          const t = parse(pageArr[1]);
+          if (t.url) {
+            result.webviewUrl = t.url;
+            delete t.url;
+          }
+          result.pageQuery = stringify(t, '');
+        }
+      }
+      Object.assign(result, {
+        appId: temp.appId || temp.appid,
+        query: temp.query,
+      });
+      if (JSON.stringify(result) === '{}') return '';
+      return JSON.stringify(result, null, 2);
     },
     // output() {
     //   const output = this.computedUrl();
@@ -491,6 +561,31 @@ export default {
 .el-form-item__content {
   p {
     margin: 0;
+  }
+}
+.el-form {
+  overflow: hidden;
+}
+.link-parse {
+  margin: 0 20px;
+  line-height: 36px;
+  width: 300px;
+  font-size: 14px;
+  margin-left: 22px;
+
+  >>> .el-textarea__inner {
+    word-break: break-all;
+  }
+
+  .content {
+    font-size: 12px;
+  }
+
+  .parse-code {
+    white-space: pre-wrap;
+    word-break: break-all;
+    line-height: 1.5;
+    font-size: 12px;
   }
 }
 </style>
