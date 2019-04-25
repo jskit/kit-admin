@@ -561,6 +561,9 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
+.fr {
+  float: right;
+}
 .el-form-item__content {
   p {
     margin: 0;

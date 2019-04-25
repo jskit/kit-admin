@@ -27,13 +27,7 @@ export const miniRules = {
       return `miniapp://${data.pathname}${stringify(params)}`;
     },
     // 模板消息 --> 小程序
-    tplmsg: data => {
-      const params = {
-        ...data.pageQuery,
-        ...data.bizParams,
-      };
-      return `${data.pathname}${stringify(params)}`;
-    },
+    tplmsg: data => `${data.pathname}${stringify(data.pageQuery)}`,
   },
   aliapp: {
     // 生活号菜单 --> 小程序
@@ -55,13 +49,7 @@ export const miniRules = {
   },
   wxapp: {
     // 微信公众号菜单 --> 小程序
-    mp: data => {
-      const params = {
-        ...data.pageQuery,
-        ...data.bizParams,
-      };
-      return `${data.pathname}${stringify(params)}`;
-    },
+    mp: data => `${data.pathname}${stringify(data.pageQuery)}`,
     // 微信推文 --> 小程序
     tweet: data => {
       let { pathname } = data;
@@ -72,8 +60,7 @@ export const miniRules = {
       };
       return `${pathname}${stringify(params)}`;
     },
-    // 广告投放 --> 小程序 https://ad.weixin.qq.com/guide/679
-    // /page/item/detail/detail?sku=1077777&platform=1&gdt_vid=wx0ewinbalytpt ma00&weixinadinfo=20966864.wx0ewinbalytptma00.0.1
+    // 广告投放 --> 小程序
     ad: data => {
       let { pathname } = data;
       pathname = pathname ? `/${pathname}` : '';
