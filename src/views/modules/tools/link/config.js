@@ -117,7 +117,17 @@ const wxappList = [
     value: 'wxa36b4671d95ba753',
     biz: 'iqg',
     type: 'mini',
-    children: [...pages],
+    children: [
+      ...pages,
+      {
+        label: '一元券 ticket',
+        value: 'ticket',
+      },
+      {
+        label: '活动分类列表 activity-category',
+        value: 'activity-category',
+      },
+    ],
   },
   ...otherMiniApp,
 ];
