@@ -5,18 +5,13 @@ const defaultPage = {
   value: '',
 };
 
-const pages = [
-  defaultPage,
+const commonTopPages = [
   {
     label: '首页 index',
     value: 'index',
   },
   {
-    label: '详情 detail',
-    value: 'detail',
-  },
-  {
-    label: '专题 zt2',
+    label: '老专题 zt2',
     value: 'zt2',
   },
   {
@@ -24,17 +19,9 @@ const pages = [
     value: 'topic',
     type: 'https',
   },
-  {
-    label: '通用 https 链接',
-    value: 'webview',
-    type: 'https',
-    disabled: true,
-  },
-  {
-    label: '五福专题 zt',
-    value: 'zt',
-    disabled: true,
-  },
+];
+
+const commonBottomPages = [
   {
     label: '个人中心 profile',
     value: 'profile',
@@ -47,6 +34,74 @@ const pages = [
     label: '订单详情 order-detail',
     value: 'order-detail',
   },
+  {
+    label: '客服页 service',
+    value: 'service',
+  },
+];
+
+const hsqPages = [
+  {
+    label: '拼团详情 couple-detail',
+    value: 'couple-detail',
+  },
+  {
+    label: '单品详情 detail',
+    value: 'detail',
+  },
+  {
+    label: '五福专题 zt',
+    value: 'zt',
+    disabled: true,
+  },
+  {
+    label: '搜索结果页 couple-search-list',
+    value: 'couple-search-list',
+  },
+  {
+    label: '商家主页 merchant',
+    value: 'merchant',
+  },
+  {
+    label: '助力免单列表 zl-list',
+    value: 'zl-list',
+  },
+  {
+    label: '抽奖团列表 lottery-list',
+    value: 'lottery-list',
+  },
+];
+
+const h5Pages = [
+  defaultPage,
+  ...commonTopPages,
+  // costom pages
+  {
+    label: '详情 detail',
+    value: 'detail',
+  },
+  ...commonBottomPages,
+];
+
+const miniPages = [
+  defaultPage,
+  ...commonTopPages,
+  {
+    label: '拼团详情 detail',
+    value: 'detail',
+  },
+  {
+    label: '通用 https 链接',
+    value: 'webview',
+    type: 'https',
+    disabled: true,
+  },
+  {
+    label: '五福专题 zt',
+    value: 'zt',
+    disabled: true,
+  },
+  ...commonBottomPages,
 ];
 
 const otherMiniApp = [
@@ -65,7 +120,7 @@ const aliappList = [
     value: '2017112000051610',
     biz: 'hsq',
     type: 'mini',
-    children: [...pages],
+    children: [...miniPages],
   },
   {
     label: 'hsq-积分小程序',
@@ -73,7 +128,7 @@ const aliappList = [
     value: '2018051160096372',
     biz: 'hsq',
     type: 'mini',
-    children: [...pages],
+    children: [...miniPages],
   },
   {
     label: 'hsq-芝麻信用小程序',
@@ -81,7 +136,7 @@ const aliappList = [
     value: '2018121062522053',
     biz: 'hsq',
     type: 'mini',
-    children: [...pages],
+    children: [...miniPages],
   },
   {
     label: 'iqg-一元餐小程序',
@@ -90,7 +145,7 @@ const aliappList = [
     biz: 'iqg',
     type: 'mini',
     disabled: true,
-    children: [...pages],
+    children: [...miniPages],
   },
   ...otherMiniApp,
 ];
@@ -101,7 +156,7 @@ const wxappList = [
     value: 'wxa090d3923fde0d4b',
     biz: 'hsq',
     type: 'mini',
-    children: [...pages],
+    children: [...miniPages],
   },
   {
     label: 'fyb-返一半小程序',
@@ -109,7 +164,7 @@ const wxappList = [
     value: 'wxf5af2f07377df2b1',
     biz: 'hsq',
     type: 'mini',
-    children: [...pages],
+    children: [...miniPages],
   },
   {
     label: 'iqg-砍价小程序',
@@ -118,7 +173,7 @@ const wxappList = [
     biz: 'iqg',
     type: 'mini',
     children: [
-      ...pages,
+      ...miniPages,
       {
         label: '一元券 ticket',
         value: 'ticket',
@@ -140,39 +195,53 @@ export default {
     // fyb
     toList: [
       {
-        label: 'iqg-H5',
-        terminal: 'h5-iqg',
-        value: 'h5-iqg',
-        biz: 'h5-iqg',
-        type: 'https',
-        // disabled: true,
-        children: [...pages],
-      },
-      {
-        label: 'hsq-H5',
+        label: 'h5-好食期',
         terminal: 'h5-hsq',
-        value: 'h5-hsq',
+        value: 'https://m.haoshiqi.net',
         biz: 'h5-hsq',
         type: 'https',
         // disabled: true,
-        children: [...pages],
+        children: [
+          defaultPage,
+          ...commonTopPages,
+          ...hsqPages,
+          ...commonBottomPages,
+        ],
       },
       {
-        label: 'msf-H5',
+        label: 'h5-爱抢购',
+        terminal: 'h5-iqg',
+        value: 'https://m.iqianggou.com',
+        biz: 'h5-iqg',
+        type: 'https',
+        // disabled: true,
+        children: [...h5Pages],
+      },
+      {
+        label: 'h5-觅食蜂',
         terminal: 'h5-msf',
-        value: 'h5-msf',
+        value: 'https://m.mishifeng.net',
         biz: 'h5-msf',
         type: 'https',
-        children: [...pages],
+        children: [...h5Pages],
       },
       {
-        label: 'fyb-H5',
+        label: 'h5-爱抢购商户',
+        terminal: 'h5-iqgsh',
+        value: 'https://stats-m.iqianggou.com',
+        biz: 'h5-iqgsh',
+        type: 'https',
+        disabled: true,
+        children: [...h5Pages],
+      },
+      {
+        label: 'h5-返一半',
         terminal: 'h5-fyb',
         value: 'h5-fyb',
         biz: 'h5-fyb',
         type: 'https',
         disabled: true,
-        children: [...pages],
+        children: [...h5Pages],
       },
     ],
   },
