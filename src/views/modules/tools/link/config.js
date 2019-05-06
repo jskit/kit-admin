@@ -11,10 +11,6 @@ const commonTopPages = [
     value: 'index',
   },
   {
-    label: '老专题 zt2',
-    value: 'zt2',
-  },
-  {
     label: '新专题 topic',
     value: 'topic',
     type: 'https',
@@ -41,6 +37,10 @@ const commonBottomPages = [
 ];
 
 const hsqPages = [
+  {
+    label: '老专题 zt2',
+    value: 'zt2',
+  },
   {
     label: '拼团详情 couple-detail',
     value: 'couple-detail',
@@ -214,7 +214,7 @@ export default {
         value: 'https://m.iqianggou.com',
         biz: 'h5-iqg',
         type: 'https',
-        // disabled: true,
+        disabled: true,
         children: [...h5Pages],
       },
       {

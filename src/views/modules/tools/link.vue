@@ -61,8 +61,16 @@
           <el-radio-button label="wxapp">微信小程序</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item v-show="show('fromApp')" label="在哪配置">
-        <el-select v-model="form.fromAppValue" placeholder="请选择">
+      <el-form-item
+        v-show="show('fromApp')"
+        :label="minitype !== 'h5' ? '在哪配置' : '提示'"
+      >
+        <div v-show="minitype === 'h5'">首页改版上线后启用</div>
+        <el-select
+          v-show="minitype !== 'h5'"
+          v-model="form.fromAppValue"
+          placeholder="请选择"
+        >
           <el-option
             :label="item.label"
             :value="item.value"
@@ -455,7 +463,8 @@ export default {
       /* eslint no-duplicate-case: 0 */
       switch (type) {
         case 'fromApp':
-          bool = minitype !== 'h5';
+          bool = true;
+          // bool = minitype !== 'h5';
           break;
         case 'pathname':
           bool = true;
