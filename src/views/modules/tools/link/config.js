@@ -11,7 +11,7 @@ const commonTopPages = [
     value: 'index',
   },
   {
-    label: '新专题 topic',
+    label: '新专题 topic(包含五福)',
     value: 'topic',
     type: 'https',
   },
@@ -40,6 +40,7 @@ const hsqPages = [
   {
     label: '老专题 zt2',
     value: 'zt2',
+    disabled: true,
   },
   {
     label: '拼团详情 couple-detail',

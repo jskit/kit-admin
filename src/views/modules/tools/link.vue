@@ -165,14 +165,14 @@
         >
         </el-input>
       </el-form-item>
-      <!-- <el-form-item v-show="show('httpsUrl')" label="https链接">
+      <el-form-item v-show="show('httpsUrl')" label="https链接">
         <el-input
           placeholder="如: https://topic.doweidu.com/?id=6633dc9c5148b8d7a5057bc85d80c922"
           v-model="form.httpsUrl"
           class="input"
         >
         </el-input>
-      </el-form-item> -->
+      </el-form-item>
       <el-form-item v-show="show('bizParams')" label="统计参数">
         <el-input
           placeholder="请输入渠道统计参数 如 spm=xxx&channel_id=xxx"
@@ -479,10 +479,12 @@ export default {
           // }
           break;
         case 'httpsUrl':
-          bool = form.pageName === 'topic' || minitype === 'h5';
+          bool = form.pageName === 'topic' && minitype !== 'h5';
           break;
         case 'pageQuery':
-          bool = form.pageName !== 'topic'; // && minitype !== 'h5';
+          bool =
+            minitype === 'h5' ||
+            (form.pageName !== 'topic' && minitype !== 'h5');
           break;
         case 'bizParams':
           bool = true;
