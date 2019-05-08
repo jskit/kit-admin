@@ -55,6 +55,10 @@ const hsqPages = [
     value: 'detail',
   },
   {
+    label: '拼团分享 couple-share',
+    value: 'couple-share',
+  },
+  {
     label: '五福专题 zt',
     value: 'zt',
     disabled: true,
