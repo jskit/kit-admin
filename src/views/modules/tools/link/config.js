@@ -47,6 +47,10 @@ const hsqPages = [
     value: 'couple-detail',
   },
   {
+    label: '积分详情 point-detail',
+    value: 'point-detail',
+  },
+  {
     label: '单品详情 detail',
     value: 'detail',
   },
