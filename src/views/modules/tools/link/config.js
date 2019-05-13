@@ -123,6 +123,7 @@ const otherMiniApp = [
   },
 ];
 const aliappList = [
+  ...otherMiniApp,
   {
     label: 'hsq-拼团小程序',
     terminal: 'hsq-couple',
@@ -156,9 +157,9 @@ const aliappList = [
     disabled: true,
     children: [...miniPages],
   },
-  ...otherMiniApp,
 ];
 const wxappList = [
+  ...otherMiniApp,
   {
     label: 'hsq-拼团小程序',
     terminal: 'hsq-wxapp',
@@ -193,7 +194,6 @@ const wxappList = [
       },
     ],
   },
-  ...otherMiniApp,
 ];
 
 export default {

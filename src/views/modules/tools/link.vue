@@ -553,7 +553,15 @@ export default {
       const { minitype, appId, linkType } = data;
       if (minitype === 'wxapp') return;
       if (!appId) return;
-      if (['alipays', 'sms', 'miniapp', 'tplmsg', 'mini'].includes(linkType)) {
+      const useQRCode = [
+        'alipays',
+        'sms',
+        'miniapp',
+        'ssp',
+        'tplmsg',
+        'mini',
+      ].includes(linkType);
+      if (useQRCode) {
         const output = link
           .input(data)
           .alipays()
