@@ -96,7 +96,7 @@ const miniPages = [
   defaultPage,
   ...commonTopPages,
   {
-    label: '拼团详情 detail',
+    label: '详情 detail',
     value: 'detail',
   },
   {
@@ -261,6 +261,12 @@ export default {
         terminal: 'alipays',
         value: 'alipays',
         type: 'alipays',
+      },
+      {
+        label: '支付宝-推广助手投放',
+        terminal: 'ssp',
+        value: 'ssp',
+        type: 'ssp',
       },
       {
         label: '支付宝-模板消息',

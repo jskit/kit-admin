@@ -46,6 +46,17 @@ export const miniRules = {
       };
       return `alipays://platformapi/startApp${stringify(params)}`;
     },
+    // alipays://platformapi/startapp?appId={appId}&page=a/b/c
+    // 后面的 page 可以 encode 也可以不用
+    // 这里 startapp 的 a 必须要小写(支付宝大小写都支持)
+    ssp: data => {
+      const params = {
+        appId: data.appId,
+        page: data.miniUrl,
+        query: stringify(data.bizParams, ''),
+      };
+      return `alipays://platformapi/startapp${stringify(params)}`;
+    },
   },
   wxapp: {
     // 微信公众号菜单 --> 小程序
