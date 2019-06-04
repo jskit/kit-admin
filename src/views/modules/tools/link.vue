@@ -310,7 +310,7 @@ export default {
         bizParams,
         extraData,
         pathname: form.pathname,
-        webviewUrl: form.httpsUrl.replace('https://topic.doweidu.com', ''),
+        webviewUrl: form.httpsUrl, // .replace('https://topic.doweidu.com', ''),
         linkType,
         fromApp,
         toApp,
@@ -544,14 +544,13 @@ export default {
       if (linkType !== 'https' && fromApp.type !== 'mini' && !appId) {
         return '';
       }
-      console.log();
       const result = link
         .input(data)
         [linkType]()
         .toString();
       if (result.length > 100) {
         // 微信第三方平台配置路径，很多有长度限制，过长会被截断
-        console.warn(`链接过长，请控制在 100 以内`);
+        console.warn(`链接过长 ${result.length}，请控制在 100 以内`);
       }
       return result;
     },
