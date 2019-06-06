@@ -189,18 +189,33 @@
         >
         </el-input>
       </el-form-item>
+      <!-- <el-form-item label="开关" v-show="show('shorUrl')">
+        <label class="inline-item">
+          使用短链接 &nbsp;<el-switch v-model="form.useShortUrl"></el-switch
+        ></label>
+      </el-form-item> -->
       <el-form-item label="生成结果">
         <div class="output">
           <div class="output-item">{{ output }}</div>
           <div
             class="output-item"
-            style="white-space: pre;"
+            style="white-space: pre; color: red;"
             v-html="form.tip"
           ></div>
         </div>
+        <div class="output" v-show="show('shorUrl')">
+          <el-button class="mtb10" type="primary" @click="onSubmit">
+            使用短链接
+          </el-button>
+          <!-- <div class="output-item" v-show="shortTargetUrl">
+            原链接地址：
+          </div>
+          <div class="output-item">{{ shortTargetUrl }}</div> -->
+          <!-- <div class="output-item" v-show="shortUrl">短链接地址：</div> -->
+          <div class="output-item" :title="shortTargetUrl">{{ shortUrl }}</div>
+        </div>
       </el-form-item>
 
-      <!-- <el-button type="primary" @click="onSubmit">生成短链接</el-button> -->
       <!-- <el-button type="danger" @click="onCancel">重置</el-button> -->
       <!-- <el-form-item v-show="form.createShortUrl">
         <a href="http://dwz.wailian.work/" target="_blank">
@@ -219,12 +234,15 @@
 <script>
 // import { ajax } from '@/utils/request';
 // import base64 from '@/utils/base64';
+import axios from 'axios';
 import config from './link/config.js';
 import { stringify, parse, MiniLink, miniRules } from './link/index';
 
 // const aliapp = new MiniLink(miniRules.aliapp);
 // const wxapp = new MiniLink(miniRules.wxapp);
 let link = () => {};
+
+// https://short.doweidu.com/yourls-api.php?signature=468b913cc6&action=shorturl&url=https%3A%2F%2Fdoweidu.com%3Fa%3Db%26c%3Dd&format=json
 
 const defaultData = {
   fromAppValue: '',
@@ -240,6 +258,11 @@ const defaultData = {
   // output: '',
 };
 
+function isValidUrl(url) {
+  const pattern = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+  return !!pattern.test(url);
+}
+
 export default {
   data() {
     return {
@@ -247,6 +270,8 @@ export default {
       minitype: 'h5',
       output: '',
       qrcode: '',
+      shortUrl: '',
+      shortTargetUrl: '',
       selectedOptions: [],
       // hidden: false,
       form: {
@@ -303,18 +328,24 @@ export default {
       } else if (minitype === 'h5') {
         linkType = 'https';
       }
-      return {
+      const data = {
         minitype,
         appId,
         pageQuery,
         bizParams,
         extraData,
+        pageName: form.pageName,
         pathname: form.pathname,
         webviewUrl: form.httpsUrl, // .replace('https://topic.doweidu.com', ''),
         linkType,
         fromApp,
         toApp,
       };
+      // if (form.useShortUrl && form.httpsUrl) {
+      //   data.shortUrl = '';
+      // }
+      console.log(data);
+      return data;
     },
     parseTextarea() {
       // 提取必要数据
@@ -441,11 +472,19 @@ export default {
     },
     ['appData']: function(val, oldVal) {
       this.qrcode = '';
+      this.shortUrl = '';
+      this.form.tip = '';
+      this.shortTargetUrl = '';
       if (val !== oldVal) {
-        this.output = this.getOutput(val);
-        this.qrcode = this.getQrcode(val);
+        this.output = this.getOutput();
+        this.qrcode = this.getQrcode();
       }
     },
+    // ['form.httpsUrl']: function(val, oldVal) {
+    //   if (val === '') return;
+    //   if (val === oldVal) return;
+    //   this.fetchShortUrl(val);
+    // },
   },
   created() {
     link = new MiniLink(miniRules[this.minitype]);
@@ -493,13 +532,33 @@ export default {
           if (form.fromAppValue === '') bool = true;
           if (minitype === 'h5') bool = false;
           break;
+        case 'shorUrl':
+          if (minitype === 'h5' && form.pathname) bool = true;
+          if (minitype !== 'h5') {
+            // 输入 topic 专题时，使用 httpsUrl 生成短链接
+            // 否则使用 alipays 时，可以生成短链接
+            if (
+              minitype === 'wxapp' &&
+              form.pageName === 'topic' &&
+              form.httpsUrl
+            ) {
+              bool = true;
+            } else if (
+              minitype === 'alipay' &&
+              this.appData.linkType === 'sms'
+            ) {
+              bool = true;
+            }
+          }
+          break;
         default:
         // do nothing...
       }
       return bool;
     },
-    getOutput(data) {
+    getOutput(shortUrl) {
       // const data = this.appData;
+      const data = this.appData;
       const {
         appId,
         fromApp,
@@ -544,17 +603,21 @@ export default {
       if (linkType !== 'https' && fromApp.type !== 'mini' && !appId) {
         return '';
       }
+      if (shortUrl) {
+        data.webviewUrl = shortUrl;
+      }
       const result = link
         .input(data)
         [linkType]()
         .toString();
-      if (result.length > 100) {
+      if (this.minitype === 'wxapp' && result.length > 100) {
         // 微信第三方平台配置路径，很多有长度限制，过长会被截断
-        console.warn(`链接过长 ${result.length}，请控制在 100 以内`);
+        this.form.tip = `链接总长 ${result.length} 超过 100，请使用短链接优化`;
       }
       return result;
     },
-    getQrcode(data) {
+    getQrcode() {
+      const data = this.appData;
       const { minitype, appId, linkType } = data;
       if (minitype === 'wxapp') return;
       if (!appId) return;
@@ -580,15 +643,74 @@ export default {
     handleChange(value) {
       console.log(value);
     },
-    onSubmit() {
-      if (this.form.fromApp !== 'message') {
-        this.$message({
-          message: '暂时只支持短信配置生成短链接',
-          type: 'warning',
-        });
-        return;
+    async fetchShortUrl(url) {
+      if (!url) return;
+      if (!isValidUrl(url)) return;
+      // https://topic.doweidu.com/zt?id=c1c0813ad706d98f84dd0f00bf6b6a63&spm=wxapp%2Fxs3ff&d_console=1
+      // https://short.doweidu.com/yourls-api.php?signature=468b913cc6&action=shorturl&url=https://doweidu.com?a=b&c=d&format=json
+      const res = await axios({
+        method: 'get',
+        url: 'https://short.doweidu.com/yourls-api.php',
+        // get
+        params: {
+          signature: '468b913cc6',
+          action: 'shorturl',
+          format: 'json',
+          url: encodeURIComponent(url),
+        },
+        // post
+        // data: {
+        //   lastName: 'Flintstone',
+        // },
+      });
+
+      console.warn('短链接', res);
+      const { data = {} } = res || {};
+      // this.shortUrl = data.shorturl;
+      return data.shorturl;
+
+      // .then(res => {
+      //   debugger;
+      // console.log('shortUrl', data.shorturl);
+      // if (data.shorturl) {
+      //   this.form.shortUrl = data.shorturl;
+      // } else {
+      //   this.form.shortUrl = l;
+      //   console.log('短链接生成失败');
+      // }
+      // });
+    },
+    async onSubmit() {
+      const { minitype, form } = this;
+      if (minitype === 'h5' && form.pathname) {
+        this.shortTargetUrl = this.output;
+        this.shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
+      }
+      if (minitype !== 'h5') {
+        // 输入 topic 专题时，使用 httpsUrl 生成短链接
+        // 否则使用 alipays 时，可以生成短链接
+        if (
+          minitype === 'wxapp' &&
+          form.pageName === 'topic' &&
+          form.httpsUrl
+        ) {
+          this.shortTargetUrl = form.httpsUrl;
+          let shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
+          this.shortUrl = this.getOutput(shortUrl);
+          // this.shortUrl = await this.fetchShortUrl(shortUrl);
+        } else if (minitype === 'alipay' && this.appData.linkType === 'sms') {
+          this.shortTargetUrl = this.output;
+          this.shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
+        }
       }
 
+      // if (
+      //   this.appData.linkType === 'alipays' ||
+      //   (minitype !== 'h5' && form.pageName === 'topic')
+      // ) {
+      //   let l = this.form.httpsUrl;
+      //   if (!isValidUrl(l)) return;
+      // }
       // this.shortUrl = '请打开链接自己生成';
       // 都存在跨域问题，无法直接调用生成结果
       // http://dwz.wailian.work/
@@ -694,6 +816,9 @@ export default {
 }
 .pr {
   position: relative;
+}
+.mtb10 {
+  margin: 10px 0;
 }
 .inline-item {
   display: inline-flex;
