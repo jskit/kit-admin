@@ -544,7 +544,7 @@ export default {
             ) {
               bool = true;
             } else if (
-              minitype === 'alipay' &&
+              minitype === 'aliapp' &&
               this.appData.linkType === 'sms'
             ) {
               bool = true;
@@ -698,7 +698,7 @@ export default {
           let shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
           this.shortUrl = this.getOutput(shortUrl);
           // this.shortUrl = await this.fetchShortUrl(shortUrl);
-        } else if (minitype === 'alipay' && this.appData.linkType === 'sms') {
+        } else if (minitype === 'aliapp' && this.appData.linkType === 'sms') {
           this.shortTargetUrl = this.output;
           this.shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
         }
