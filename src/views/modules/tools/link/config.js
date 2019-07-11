@@ -15,6 +15,10 @@ const commonTopPages = [
     value: 'topic',
     type: 'https',
   },
+  {
+    label: '购物车 shopping-cart',
+    value: 'shopping-cart',
+  },
 ];
 
 const commonBottomPages = [
@@ -197,6 +201,7 @@ const wxappList = [
 ];
 
 export default {
+  short: {},
   h5: {
     // iqg
     // hsq

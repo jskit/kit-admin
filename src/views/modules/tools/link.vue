@@ -59,6 +59,7 @@
           <el-radio-button label="h5">H5</el-radio-button>
           <el-radio-button label="aliapp">支付宝小程序</el-radio-button>
           <el-radio-button label="wxapp">微信小程序</el-radio-button>
+          <el-radio-button label="short">短链接</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item
@@ -259,7 +260,7 @@ const defaultData = {
 };
 
 function isValidUrl(url) {
-  const pattern = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+  const pattern = /^(?:(?:https?):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,}))\.?)(?::\d{2,5})?(?:[/?#]\S*)?$/i;
   return !!pattern.test(url);
 }
 
@@ -503,11 +504,9 @@ export default {
       switch (type) {
         case 'fromApp':
           bool = true;
-          // bool = minitype !== 'h5';
           break;
         case 'pathname':
           bool = true;
-          // bool = minitype !== 'h5';
           break;
         case 'toApp':
           bool = true;
@@ -518,12 +517,10 @@ export default {
           // }
           break;
         case 'httpsUrl':
-          bool = form.pageName === 'topic' && minitype !== 'h5';
+          bool = form.pageName === 'topic' || minitype === 'short';
           break;
         case 'pageQuery':
-          bool =
-            minitype === 'h5' ||
-            (form.pageName !== 'topic' && minitype !== 'h5');
+          bool = form.pageName !== 'topic';
           break;
         case 'bizParams':
           bool = true;
@@ -533,8 +530,16 @@ export default {
           if (minitype === 'h5') bool = false;
           break;
         case 'shorUrl':
-          if (minitype === 'h5' && form.pathname) bool = true;
-          if (minitype !== 'h5') {
+          if (minitype === 'short') {
+            bool = true;
+          } else if (minitype === 'h5') {
+            if (form.pageName === 'topic' && isValidUrl(form.httpsUrl)) {
+              bool = true;
+            }
+            if (form.pathname && form.pageName !== 'topic') {
+              bool = true;
+            }
+          } else if (minitype !== 'h5') {
             // 输入 topic 专题时，使用 httpsUrl 生成短链接
             // 否则使用 alipays 时，可以生成短链接
             if (
@@ -554,6 +559,9 @@ export default {
         default:
         // do nothing...
       }
+      if (minitype === 'short' && !['httpsUrl', 'shorUrl'].includes(type)) {
+        bool = false;
+      }
       return bool;
     },
     getOutput(shortUrl) {
@@ -568,18 +576,41 @@ export default {
         pageQuery,
         bizParams,
         extraData,
+        webviewUrl,
       } = data;
       if (this.minitype === 'h5') {
         const query = { ...pageQuery, ...bizParams };
         let domain = toApp.value || '';
         let path = pathname;
         if (pathname === 'topic') {
-          domain = 'https://topic.doweidu.com';
+          domain = webviewUrl;
           path = '';
         }
         path = path ? `/${path}` : '';
-        return `${domain}${path}${stringify(query)}`;
+        const result = `${domain}${path}${stringify(query)}`;
+        this.$emit('resultUrl', {
+          errno: 0,
+          errmsg: '这是 H5 链接',
+          data: {
+            ...data,
+            output: result,
+          },
+        });
+        return result;
         // return;
+      }
+      if (this.minitype === 'short') {
+        const result = `${webviewUrl}`;
+        this.$emit('resultUrl', {
+          errno: 0,
+          errmsg: '这是短链接',
+          data: {
+            ...data,
+            output: result,
+          },
+        });
+        return result;
+        // return `${webviewUrl}${stringify(bizParams)}`;
       }
       // const extraData = parse(form.extraDataString);
       if (linkType === 'sms') this.form.tip = '短信内限制必须使用http协议';
@@ -596,11 +627,23 @@ export default {
       }
       // console.log('linkType:', linkType);
       // console.log(data);
-      if (!linkType) return '';
       if (toApp.value && fromApp.value === toApp.value) {
+        this.$emit('resultUrl', {
+          errno: 2,
+          errmsg: '这里请选择 H5 类型生成链接',
+          data: {},
+        });
         return '这里请选择 H5 类型生成链接';
       }
-      if (linkType !== 'https' && fromApp.type !== 'mini' && !appId) {
+      if (
+        !linkType ||
+        (linkType !== 'https' && fromApp.type !== 'mini' && !appId)
+      ) {
+        this.$emit('resultUrl', {
+          errno: 1,
+          errmsg: '不支持此类型',
+          data: {},
+        });
         return '';
       }
       if (shortUrl) {
@@ -614,6 +657,14 @@ export default {
         // 微信第三方平台配置路径，很多有长度限制，过长会被截断
         this.form.tip = `链接总长 ${result.length} 超过 100，请使用短链接优化`;
       }
+      this.$emit('resultUrl', {
+        errno: 0,
+        errmsg: '',
+        data: {
+          ...data,
+          output: result,
+        },
+      });
       return result;
     },
     getQrcode() {
@@ -650,7 +701,7 @@ export default {
       // https://short.doweidu.com/yourls-api.php?signature=468b913cc6&action=shorturl&url=https://doweidu.com?a=b&c=d&format=json
       const res = await axios({
         method: 'get',
-        url: 'https://short.doweidu.com/yourls-api.php',
+        url: 'https://dwdurl.cn/yourls-api.php',
         // get
         params: {
           signature: '468b913cc6',
@@ -684,6 +735,10 @@ export default {
       const { minitype, form } = this;
       if (minitype === 'h5' && form.pathname) {
         this.shortTargetUrl = this.output;
+        this.shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
+      }
+      if (minitype === 'short' && form.httpsUrl) {
+        this.shortTargetUrl = form.httpsUrl;
         this.shortUrl = await this.fetchShortUrl(this.shortTargetUrl);
       }
       if (minitype !== 'h5') {
