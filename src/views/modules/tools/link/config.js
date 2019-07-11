@@ -104,6 +104,10 @@ const miniPages = [
     value: 'detail',
   },
   {
+    label: '普通品详情 detail2',
+    value: 'detail2',
+  },
+  {
     label: '通用 https 链接',
     value: 'webview',
     type: 'https',
